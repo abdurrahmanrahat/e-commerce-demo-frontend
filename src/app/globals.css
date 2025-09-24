@@ -1,0 +1,14 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  /* make it 100 - 900 variants for primary color */
+  --color-primary: #06923e;
+  --color-secondary: #058338;
+
+  --shadow-cardLightShadow: rgba(100, 100, 111, 0.1) 0px 7px 29px 0px;
+  --shadow-cardDarkShadow: rgba(0, 0, 0, 0.6) 0px 7px 29px 0px;
+  --shadow-topUpShadow: 0 5px 20px rgba(0, 0, 0, .2)
+}
