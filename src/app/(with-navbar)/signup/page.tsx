@@ -11,8 +11,6 @@ import { loginUser } from "@/services/actions/loginUser";
 import { registerUser } from "@/services/actions/registerUser";
 import { storeUserInfo } from "@/services/auth.services";
 import { decodedToken } from "@/utils/jwt";
-import axios from "axios";
-import { Sparkles } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -47,17 +45,11 @@ export default function SignUp() {
 
         if (userRes.success) {
           const accessToken = userRes.data.accessToken;
-          const refreshToken = userRes.data.refreshToken;
+
           const user = decodedToken(accessToken);
 
-          dispatch(setUser({ user, accessToken, refreshToken }));
-
-          storeUserInfo({ accessToken: userRes.data.accessToken });
-          // 🎯 Set HttpOnly cookie from client via API
-          await axios.post("/api/auth/set-cookies", {
-            accessToken,
-            refreshToken,
-          });
+          dispatch(setUser({ user }));
+          storeUserInfo({ accessToken });
 
           toast.success(userRes.message);
 
@@ -83,16 +75,10 @@ export default function SignUp() {
     <div className="min-h-screen w-full flex justify-center items-center bg-white dark:bg-gray-950 text-gray-900 dark:text-gray-100">
       <Container className="max-w-md">
         <div className="flex flex-col justify-center space-y-6 shadow-cardLightShadow dark:shadow-cardDarkShadow rounded-md p-6 md:p-8 bg-white dark:bg-gray-900">
-          {/* Brand */}
-          <div className="flex items-center gap-2">
-            <Sparkles className="h-6 w-6 text-primary" />
-            <span className="text-xl font-bold">Brand Name</span>
-          </div>
-
           {/* Title & Subtitle */}
-          <div className="space-y-2">
+          <div className="space-y-2 text-center mb-8">
             <h1 className="text-2xl font-bold tracking-tight md:text-3xl">
-              Create an account
+              Sign Up
             </h1>
             <p className="text-gray-500 dark:text-gray-400">
               Enter your details to sign up for an account
@@ -119,11 +105,7 @@ export default function SignUp() {
                   >
                     Name
                   </label>
-                  <MYInput
-                    name="name"
-                    placeholder="Enter your full name"
-                    className="bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100"
-                  />
+                  <MYInput name="name" placeholder="Enter your full name" />
                 </div>
 
                 {/* Email */}
@@ -138,7 +120,6 @@ export default function SignUp() {
                     name="email"
                     type="email"
                     placeholder="example@gmail.com"
-                    className="bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100"
                   />
                 </div>
 
@@ -154,8 +135,6 @@ export default function SignUp() {
                     name="password"
                     type="password"
                     placeholder="Enter password"
-                    className="bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100"
-                    autoComplete="new-password"
                   />
                 </div>
               </div>

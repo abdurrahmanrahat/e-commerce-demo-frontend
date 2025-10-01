@@ -5,7 +5,8 @@
 
 @theme {
   /* make it 100 - 900 variants for primary color */
-  --color-primary: #06923e;
+  --color-primary: #DD3333;
+  --color-light-gray: #F1F1F1;
   --color-secondary: #058338;
 
   --shadow-cardLightShadow: rgba(100, 100, 111, 0.1) 0px 7px 29px 0px;

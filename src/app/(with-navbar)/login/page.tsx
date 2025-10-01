@@ -11,8 +11,6 @@ import { setUser } from "@/redux/reducers/authSlice";
 import { loginUser } from "@/services/actions/loginUser";
 import { storeUserInfo } from "@/services/auth.services";
 import { decodedToken } from "@/utils/jwt";
-import axios from "axios";
-import { Sparkles } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -33,27 +31,17 @@ export default function LoginPage() {
   const router = useRouter();
 
   const handleLogin = async (values: FieldValues) => {
-    console.log(values);
     setIsLoading(true);
     try {
       const res = await loginUser(values);
 
       if (res.success) {
         const accessToken = res.data.accessToken;
-        const refreshToken = res.data.refreshToken;
+
         const user = decodedToken(accessToken);
+        storeUserInfo({ accessToken });
 
-        dispatch(setUser({ user, accessToken, refreshToken }));
-
-        console.log("accessToken login", accessToken);
-
-        // set to local storage
-        storeUserInfo({ accessToken: res.data.accessToken });
-        // 🎯 Set HttpOnly cookie from client via API
-        await axios.post("/api/auth/set-cookies", {
-          accessToken,
-          refreshToken,
-        });
+        dispatch(setUser({ user }));
 
         toast.success(res.message);
 
@@ -78,17 +66,11 @@ export default function LoginPage() {
     <div className="min-h-screen w-full flex justify-center items-center bg-background text-foreground">
       <Container className="max-w-md">
         <div className="flex flex-col justify-center space-y-6 shadow-cardLightShadow dark:shadow-cardDarkShadow rounded-md p-6 md:p-8 bg-white dark:bg-gray-900">
-          {/* Brand */}
-          <div className="flex items-center gap-2">
-            <Sparkles className="h-6 w-6 text-primary" />
-            <span className="text-xl font-bold">Brand Name</span>
-          </div>
-
           {/* Title & Subtitle */}
-          <div className="space-y-2">
-            <h1 className="text-2xl font-bold tracking-tight md:text-3xl">
-              Welcome back
-            </h1>
+          <div className="space-y-2 text-center mb-8">
+            <h2 className="text-2xl font-bold tracking-tight md:text-3xl">
+              Login
+            </h2>
             <p className="text-gray-500 dark:text-gray-400">
               Enter your credentials to access your account
             </p>
@@ -115,7 +97,6 @@ export default function LoginPage() {
                     name="email"
                     type="email"
                     placeholder="example@gmail.com"
-                    className=""
                   />
                 </div>
 
@@ -128,8 +109,6 @@ export default function LoginPage() {
                     name="password"
                     type="password"
                     placeholder="Enter your password"
-                    className=""
-                    autoComplete="current-password"
                   />
                 </div>
               </div>

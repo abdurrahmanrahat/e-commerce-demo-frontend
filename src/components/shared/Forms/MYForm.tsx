@@ -1,35 +1,32 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ReactNode } from "react";
 import {
-  FieldValues,
   FormProvider,
   SubmitHandler,
   useForm,
   UseFormProps,
 } from "react-hook-form";
-import { ZodSchema } from "zod";
+import { z, ZodTypeAny } from "zod";
 
-type TFormProps<T extends FieldValues> = {
+type TFormProps<TSchema extends ZodTypeAny> = {
   children: ReactNode;
-  onSubmit: SubmitHandler<T>;
-  defaultValues: UseFormProps<T>["defaultValues"];
-  schema: ZodSchema<T>;
+  onSubmit: SubmitHandler<z.infer<TSchema>>;
+  defaultValues: UseFormProps<z.infer<TSchema>>["defaultValues"];
+  schema: TSchema;
 };
 
-const MYForm = <T extends FieldValues>({
+const MYForm = <TSchema extends ZodTypeAny>({
   children,
   onSubmit,
   defaultValues,
   schema,
-}: TFormProps<T>) => {
-  const formConfig: UseFormProps<T> = {
+}: TFormProps<TSchema>) => {
+  const methods = useForm<z.infer<TSchema>>({
     defaultValues,
     resolver: zodResolver(schema),
-  };
+  });
 
-  const methods = useForm<T>(formConfig);
-
-  const submit: SubmitHandler<T> = (data) => {
+  const submit: SubmitHandler<z.infer<TSchema>> = (data) => {
     onSubmit(data);
     methods.reset();
   };

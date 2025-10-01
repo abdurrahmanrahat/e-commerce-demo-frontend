@@ -1,11 +1,10 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { accessAuthKey, refreshAuthKey } from "@/constants/authKey";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { logout, useCurrentUser } from "@/redux/reducers/authSlice";
+import { removeTokensFromCookies } from "@/services/actions/token";
 import { removeUser } from "@/services/auth.services";
-import axios from "axios";
 import { AnimatePresence, motion } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import Link from "next/link";
@@ -31,13 +30,9 @@ const Navbar = () => {
 
   // logout user
   const handleLogout = async () => {
-    // 🎯 remove HttpOnly cookie from client via API
-    await axios.post("/api/auth/remove-cookies", {
-      accessToken: accessAuthKey,
-      refreshToken: refreshAuthKey, // send more name for removing
-    });
+    await removeTokensFromCookies();
     dispatch(logout());
-    removeUser();
+    removeUser(); // from local storage
 
     toast.success("Logged out successfully");
 

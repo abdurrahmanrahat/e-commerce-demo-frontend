@@ -23,18 +23,12 @@ const GoogleLogin = () => {
           `${BACKED_URL}/auth/google?code=${authResult.code}`
         );
 
-        const { accessToken, refreshToken } = res.data.data;
+        const { accessToken } = res.data.data;
 
         if (accessToken) {
           const user = decodedToken(accessToken);
-          dispatch(setUser({ user, token: accessToken }));
+          dispatch(setUser({ user }));
           storeUserInfo({ accessToken }); // local storage
-
-          // 🎯 Set HttpOnly cookie from client via API
-          await axios.post("/api/auth/set-cookies", {
-            accessToken,
-            refreshToken,
-          });
 
           toast.success(res.data.message);
 
