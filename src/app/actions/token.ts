@@ -13,7 +13,6 @@ export const setTokensToCookies = async (
   refreshToken: string
 ) => {
   const cookieStore = await cookies();
-  console.log("hello");
 
   cookieStore.set(accessAuthKey, accessToken, {
     httpOnly: true,
@@ -36,4 +35,16 @@ export const removeTokensFromCookies = async () => {
 
   cookieStore.delete(accessAuthKey);
   cookieStore.delete(refreshAuthKey);
+};
+
+export const setAccessTokenToCookies = async (accessToken: string) => {
+  const cookieStore = await cookies();
+
+  cookieStore.set(accessAuthKey, accessToken, {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production",
+    sameSite: "lax",
+    path: "/",
+    maxAge: accessExpiry,
+  });
 };

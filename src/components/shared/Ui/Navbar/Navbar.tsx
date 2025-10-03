@@ -1,10 +1,9 @@
 "use client";
 
+import { removeTokensFromCookies } from "@/app/actions/token";
 import { Button } from "@/components/ui/button";
-import { useAppDispatch, useAppSelector } from "@/redux/hooks";
-import { logout, useCurrentUser } from "@/redux/reducers/authSlice";
-import { removeTokensFromCookies } from "@/services/actions/token";
-import { removeUser } from "@/services/auth.services";
+import { useGetCurrentUser } from "@/hooks/useGetCurrentUser";
+import { useLogoutUser } from "@/hooks/useLogoutUser";
 import { AnimatePresence, motion } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import Link from "next/link";
@@ -21,9 +20,11 @@ const Navbar = () => {
   const navRef = useRef<HTMLDivElement>(null);
   const pathname = usePathname();
 
-  const user = useAppSelector(useCurrentUser);
-  const dispatch = useAppDispatch();
+  const user = useGetCurrentUser();
+
   const router = useRouter();
+
+  const logoutUser = useLogoutUser();
 
   const isAdmin = user?.role === "admin";
   const isStudent = user?.role === "user";
@@ -31,8 +32,8 @@ const Navbar = () => {
   // logout user
   const handleLogout = async () => {
     await removeTokensFromCookies();
-    dispatch(logout());
-    removeUser(); // from local storage
+
+    logoutUser();
 
     toast.success("Logged out successfully");
 

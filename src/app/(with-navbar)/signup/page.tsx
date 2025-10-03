@@ -1,5 +1,7 @@
 "use client";
 
+import { loginUser } from "@/app/actions/loginUser";
+import { registerUser } from "@/app/actions/registerUser";
 import MYForm from "@/components/shared/Forms/MYForm";
 import MYInput from "@/components/shared/Forms/MYInput";
 import Container from "@/components/shared/Ui/Container";
@@ -7,8 +9,6 @@ import { LoaderSpinner } from "@/components/shared/Ui/LoaderSpinner";
 import { Button } from "@/components/ui/button";
 import { useAppDispatch } from "@/redux/hooks";
 import { setUser } from "@/redux/reducers/authSlice";
-import { loginUser } from "@/services/actions/loginUser";
-import { registerUser } from "@/services/actions/registerUser";
 import { storeUserInfo } from "@/services/auth.services";
 import { decodedToken } from "@/utils/jwt";
 import Link from "next/link";

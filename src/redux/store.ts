@@ -1,4 +1,4 @@
-import { authKey } from "@/constants/authKey";
+import { accessExpiry, authKey } from "@/constants/authKey";
 import authReducer from "@/redux/reducers/authSlice";
 import { configureStore } from "@reduxjs/toolkit";
 import {
@@ -11,12 +11,12 @@ import {
   REGISTER,
   REHYDRATE,
 } from "redux-persist";
-import storage from "redux-persist/lib/storage";
 import { baseApi } from "./api/baseApi";
+import { createExpireStorage } from "./createExpireStorage";
 
 const persistConfig = {
   key: authKey,
-  storage,
+  storage: createExpireStorage(accessExpiry * 1000),
 };
 
 const persistedAuthReducer = persistReducer(persistConfig, authReducer);
