@@ -36,11 +36,20 @@ const ParentCategoryForm = () => {
 
       const slug = createSlug(values.name);
 
-      const newCategoryData = { name: values.name, slug, image };
+      const newCategoryData = {
+        name: values.name,
+        slug,
+        image,
+        subCategoryOf: null, // no subcategory for parent category
+      };
 
-      await addCategoryToDB(newCategoryData);
+      const res = await addCategoryToDB(newCategoryData);
 
-      toast.success("Parent category added successfully!");
+      if (res?.success) {
+        toast.success("Parent category added successfully!");
+      } else {
+        toast.error(res?.errorSources[0]?.message || "Something went wrong!");
+      }
     } catch (error: any) {
       toast.error(error?.message || "Something went wrong!");
     } finally {
@@ -51,7 +60,6 @@ const ParentCategoryForm = () => {
   // handle image upload
   const handleImageUpload = async (event: ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
-    console.log("file", file);
 
     if (!file) return;
 
@@ -79,7 +87,8 @@ const ParentCategoryForm = () => {
         toast.success("Image uploaded successfully!");
       }
     } catch (error: any) {
-      toast.error(error.message || "Image upload failed.");
+      console.log("error full", error);
+      toast.error(error?.errorSources[0].message || "Image upload failed.");
     } finally {
       setIsImageUploading(false);
     }
@@ -98,17 +107,6 @@ const ParentCategoryForm = () => {
       <div className="flex flex-col gap-6">
         {/* fields */}
         <div className="flex flex-col gap-4">
-          {/* Name */}
-          <div className="grid gap-[6px]">
-            <label
-              htmlFor="name"
-              className="text-sm font-medium text-gray-700 dark:text-gray-300"
-            >
-              Category Name <span className="text-red-500 font-medium">*</span>
-            </label>
-            <MYInput name="name" placeholder="Enter category name" />
-          </div>
-
           {/* image */}
           <div className="grid gap-[6px]">
             <label
@@ -139,14 +137,14 @@ const ParentCategoryForm = () => {
                         isImageUploading
                           ? "text-primary animate-pulse"
                           : "text-gray-400"
-                      } mb-4 mx-auto`}
+                      } mb-2 mx-auto`}
                     />
-                    <p className="text-gray-900 dark:text-white">
+                    <p className="text-sm text-gray-900 dark:text-white">
                       {isImageUploading
                         ? "Uploading..."
                         : "Click to upload image"}
                     </p>
-                    <p className="text-sm text-gray-500 dark:text-gray-400">
+                    <p className="text-xs text-gray-500 dark:text-gray-400 mt-0.5">
                       PNG, JPG up to 2MB
                     </p>
                   </label>
@@ -170,12 +168,27 @@ const ParentCategoryForm = () => {
               )}
             </div>
           </div>
+
+          {/* Name */}
+          <div className="grid gap-[6px]">
+            <label
+              htmlFor="name"
+              className="text-sm font-medium text-gray-700 dark:text-gray-300"
+            >
+              Category Name <span className="text-red-500 font-medium">*</span>
+            </label>
+            <MYInput name="name" placeholder="Enter category name" />
+          </div>
         </div>
 
         {/* button */}
         <div className="mt-2 w-full">
           <DialogClose asChild>
-            <Button className="h-11 cursor-pointer w-full" type="submit">
+            <Button
+              className="h-11 cursor-pointer w-full"
+              type="submit"
+              disabled={isLoading || isImageUploading}
+            >
               {isLoading ? (
                 <span className="flex gap-2">
                   <LoaderSpinner /> <span>Adding...</span>

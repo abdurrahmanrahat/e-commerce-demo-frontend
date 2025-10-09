@@ -15,7 +15,7 @@ export async function fetchWithAuth(
   const doFetch = async (token?: string) => {
     const headers = {
       ...(requestOptions?.headers || {}),
-      ...(token ? { Authorization: `Bearer ${token}` } : {}),
+      ...(accessToken ? { Authorization: `Bearer ${token}` } : {}),
     };
 
     return fetch(url, {

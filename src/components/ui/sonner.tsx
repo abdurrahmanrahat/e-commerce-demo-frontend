@@ -12,6 +12,7 @@ const Toaster = ({ ...props }) => {
       className="toaster group"
       toastOptions={{
         duration: 3000,
+        // duration: 300,
 
         classNames: {
           toast:

@@ -34,7 +34,7 @@ export function LoaderSpinner({
           cx="12"
           cy="12"
           r="10"
-          className="fill-none stroke-primary"
+          className="fill-none stroke-primary/80"
           strokeWidth={strokeWidth}
         />
         {/* Spinner arc - showing only 25% of the circle */}

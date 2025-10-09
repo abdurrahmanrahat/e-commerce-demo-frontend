@@ -1,3 +1,4 @@
+import { getAllCategoriesFromDB } from "@/app/actions/categories";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -8,10 +9,18 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { TCategory } from "@/types";
 import ParentCategoryForm from "./ParentCategoryForm";
 import SubCategoryForm from "./SubCategoryForm";
 
 export default async function AddCategory() {
+  const categories = await getAllCategoriesFromDB();
+
+  const parentCategories = categories?.data.map((category: TCategory) => ({
+    value: category._id,
+    label: category.name,
+  }));
+
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -43,7 +52,7 @@ export default async function AddCategory() {
 
           {/* Subcategory Form */}
           <TabsContent value="sub" className="mt-2">
-            <SubCategoryForm />
+            <SubCategoryForm parentCategories={parentCategories} />
           </TabsContent>
         </Tabs>
       </DialogContent>

@@ -6,16 +6,11 @@ import MYInput from "@/components/shared/Forms/MYInput";
 import MYSelect from "@/components/shared/Forms/MYSelect";
 import { LoaderSpinner } from "@/components/shared/Ui/LoaderSpinner";
 import { Button } from "@/components/ui/button";
+import { DialogClose } from "@/components/ui/dialog";
 import { createSlug } from "@/utils/createSlug";
 import { useState } from "react";
 import { toast } from "sonner";
 import { z } from "zod";
-
-// Example parent list (replace later with API data)
-const parentCategories = [
-  { value: "1", label: "Food" },
-  { value: "2", label: "Clothes" },
-];
 
 const subCategorySchema = z.object({
   name: z.string().min(1, "Please provide a subcategory name."),
@@ -24,7 +19,13 @@ const subCategorySchema = z.object({
 
 type SubCategoryFormValues = z.infer<typeof subCategorySchema>;
 
-export default function SubCategoryForm() {
+type TSubCategoryFormProps = {
+  parentCategories: { value: string; label: string }[];
+};
+
+export default function SubCategoryForm({
+  parentCategories,
+}: TSubCategoryFormProps) {
   const [isLoading, setIsLoading] = useState(false);
 
   const handleAddSubCategory = async (values: SubCategoryFormValues) => {
@@ -36,12 +37,17 @@ export default function SubCategoryForm() {
       const newCategoryData = {
         name: values.name,
         slug,
+        image: null, // no image for subcategory
         subCategoryOf: values.subCategoryOf,
       };
 
-      await addCategoryToDB(newCategoryData);
+      const res = await addCategoryToDB(newCategoryData);
 
-      toast.success("Subcategory added successfully!");
+      if (res?.success) {
+        toast.success("Subcategory added successfully!");
+      } else {
+        toast.error(res?.errorSources[0]?.message || "Something went wrong!");
+      }
     } catch (error: any) {
       toast.error(error?.message || "Something went wrong!");
     } finally {
@@ -95,19 +101,21 @@ export default function SubCategoryForm() {
 
         {/* Submit Button */}
         <div className="mt-2 w-full">
-          <Button
-            type="submit"
-            disabled={isLoading}
-            className="h-11 cursor-pointer w-full bg-primary text-white hover:bg-primary/90"
-          >
-            {isLoading ? (
-              <span className="flex items-center gap-2">
-                <LoaderSpinner /> <span>Adding...</span>
-              </span>
-            ) : (
-              "Add Subcategory"
-            )}
-          </Button>
+          <DialogClose asChild>
+            <Button
+              type="submit"
+              disabled={isLoading}
+              className="h-11 cursor-pointer w-full bg-primary text-white hover:bg-primary/90"
+            >
+              {isLoading ? (
+                <span className="flex items-center gap-2">
+                  <LoaderSpinner /> <span>Adding...</span>
+                </span>
+              ) : (
+                "Add Subcategory"
+              )}
+            </Button>
+          </DialogClose>
         </div>
       </div>
     </MYForm>
