@@ -3,9 +3,10 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { TCategory, TSubCategory } from "@/types";
-import { ChevronDown, ChevronUp, Edit, Trash2 } from "lucide-react";
+import { ChevronDown, ChevronUp, Edit } from "lucide-react";
 import Image from "next/image";
 import { useState } from "react";
+import DeleteCategory from "./DeleteCategory";
 
 const CategoryCard = ({ category }: { category: TCategory }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -40,31 +41,25 @@ const CategoryCard = ({ category }: { category: TCategory }) => {
           </div>
 
           {/* Action Buttons */}
-          <div className="flex items-center gap-2">
+          <div className="flex items-center">
             {!hasSubCategories ? (
               // Show edit/delete for categories without subcategories
               <>
                 <Button
                   variant="ghost"
                   size="icon"
-                  className="h-9 w-9 text-muted-foreground hover:text-primary hover:bg-primary/10"
+                  className="h-7 w-7 hover:text-primary hover:bg-primary/10"
                 >
                   <Edit className="h-4 w-4" />
                 </Button>
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  className="h-9 w-9 text-muted-foreground hover:text-destructive hover:bg-destructive/10"
-                >
-                  <Trash2 className="h-4 w-4" />
-                </Button>
+                <DeleteCategory categoryId={category._id} />
               </>
             ) : (
               // Show toggle arrow for categories with subcategories
               <Button
                 variant="ghost"
                 size="icon"
-                className="h-9 w-9 text-muted-foreground hover:text-primary hover:bg-primary/10"
+                className="h-8 w-8 hover:text-primary hover:bg-primary/10"
                 onClick={() => setIsOpen(!isOpen)}
               >
                 {isOpen ? (
@@ -106,17 +101,11 @@ const CategoryCard = ({ category }: { category: TCategory }) => {
                     <Button
                       variant="ghost"
                       size="icon"
-                      className="h-8 w-8 hover:text-primary hover:bg-primary/10"
+                      className="h-7 w-7 hover:text-primary hover:bg-primary/10"
                     >
-                      <Edit className="h-3.5 w-3.5" />
+                      <Edit className="h-4 w-4" />
                     </Button>
-                    <Button
-                      variant="ghost"
-                      size="icon"
-                      className="h-8 w-8 text-primary hover:text-destructive hover:bg-destructive/10"
-                    >
-                      <Trash2 className="h-3.5 w-3.5" />
-                    </Button>
+                    <DeleteCategory categoryId={sub._id} />
                   </div>
                 </div>
               ))}
