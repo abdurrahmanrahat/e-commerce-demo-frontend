@@ -3,10 +3,11 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { TCategory, TSubCategory } from "@/types";
-import { ChevronDown, ChevronUp, Edit } from "lucide-react";
+import { ChevronDown, ChevronUp } from "lucide-react";
 import Image from "next/image";
 import { useState } from "react";
 import DeleteCategory from "./DeleteCategory";
+import UpdateCategory from "./UpdateCategory";
 
 const CategoryCard = ({ category }: { category: TCategory }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -45,13 +46,15 @@ const CategoryCard = ({ category }: { category: TCategory }) => {
             {!hasSubCategories ? (
               // Show edit/delete for categories without subcategories
               <>
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  className="h-7 w-7 hover:text-primary hover:bg-primary/10"
-                >
-                  <Edit className="h-4 w-4" />
-                </Button>
+                <UpdateCategory
+                  isParentUpdate={true}
+                  category={{
+                    _id: category._id,
+                    name: category.name,
+                    slug: category.slug,
+                    image: category.image,
+                  }}
+                />
                 <DeleteCategory categoryId={category._id} />
               </>
             ) : (
@@ -98,13 +101,14 @@ const CategoryCard = ({ category }: { category: TCategory }) => {
 
                   {/* Subcategory Actions */}
                   <div className="flex items-center  opacity-0 group-hover/sub:opacity-100 transition-opacity">
-                    <Button
-                      variant="ghost"
-                      size="icon"
-                      className="h-7 w-7 hover:text-primary hover:bg-primary/10"
-                    >
-                      <Edit className="h-4 w-4" />
-                    </Button>
+                    <UpdateCategory
+                      isParentUpdate={false}
+                      category={{
+                        _id: sub._id,
+                        name: sub.name,
+                        slug: sub.slug,
+                      }}
+                    />
                     <DeleteCategory categoryId={sub._id} />
                   </div>
                 </div>

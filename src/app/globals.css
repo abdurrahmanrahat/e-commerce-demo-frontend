@@ -13,3 +13,27 @@
   --shadow-cardDarkShadow: rgba(0, 0, 0, 0.6) 0px 7px 29px 0px;
   --shadow-topUpShadow: 0 5px 20px rgba(0, 0, 0, .2)
 }
+
+/* Light and dark mode text selection for input fields */
+input::selection {
+  background-color: #DD3333;
+  /* Your primary or accent color */
+  color: #ffffff;
+  /* White text */
+}
+
+input::-moz-selection {
+  background-color: #DD3333;
+  color: #ffffff;
+}
+
+/* Optional: textareas too */
+textarea::selection {
+  background-color: #DD3333;
+  color: #ffffff;
+}
+
+textarea::-moz-selection {
+  background-color: #DD3333;
+  color: #ffffff;
+}

@@ -77,9 +77,9 @@ export const deleteCategoryFromDB = async (categoryId: string) => {
       }
     );
 
-    if (!res.ok) {
-      throw new Error(`Failed to delete category. Status: ${res.status}`);
-    }
+    // if (!res.ok) {
+    //   throw new Error(`Failed to delete category. Status: ${res.status}`);
+    // }
 
     const data = await res.json();
 
@@ -90,6 +90,39 @@ export const deleteCategoryFromDB = async (categoryId: string) => {
   } catch (error: any) {
     throw new Error(
       error.message || "Something went wrong while deleting the category."
+    );
+  }
+};
+
+export const updateCategoryInDB = async (
+  categoryId: string,
+  categoryData: Record<string, any>
+) => {
+  try {
+    const res = await fetchWithAuth(
+      `${process.env.NEXT_PUBLIC_BACKED_URL}/categories/${categoryId}`,
+      {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(categoryData),
+        cache: "no-store",
+      }
+    );
+
+    // if (!res.ok) {
+    //   throw new Error(`Failed to update category. Status: ${res.status}`);
+    // }
+
+    const data = await res.json();
+
+    revalidateTag(tagLists.CATEGORY);
+
+    return data;
+  } catch (error: any) {
+    throw new Error(
+      error.message || "Something went wrong while updating category."
     );
   }
 };
