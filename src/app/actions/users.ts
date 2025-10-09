@@ -2,7 +2,7 @@
 
 import { fetchWithAuth } from "./fetchWithAuth";
 
-export const getMe = async () => {
+export const getMeFromDB = async () => {
   const res = await fetchWithAuth(
     `${process.env.NEXT_PUBLIC_BACKED_URL}/users/get-me`
   );

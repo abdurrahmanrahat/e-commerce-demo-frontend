@@ -20,6 +20,11 @@ export const userSidebarItems = [
 export const adminSidebarItems = [
   { text: "Dashboard", href: "/dashboard/admin", icon: LayoutDashboard },
   {
+    text: "Manage Categories",
+    href: "/dashboard/admin/manage-categories",
+    icon: Settings,
+  },
+  {
     text: "Add Product",
     href: "/dashboard/admin/add-product",
     icon: MessageSquarePlus,
