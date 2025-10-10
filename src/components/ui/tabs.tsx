@@ -43,11 +43,9 @@ function TabsTrigger({
     <TabsPrimitive.Trigger
       {...props}
       className={cn(
-        "relative flex-1 select-none text-sm font-medium rounded-md px-4 py-2 transition-all duration-200",
+        "relative flex-1 select-none text-sm font-medium px-4 py-2 transition-all duration-300",
         "text-gray-600 dark:text-gray-300 hover:text-primary",
-        "data-[state=active]:bg-white dark:data-[state=active]:bg-gray-900",
         "data-[state=active]:text-primary data-[state=active]:shadow-[0_0_10px_rgba(0,0,0,0.05)] font-medium cursor-pointer",
-        "data-[state=active]:border data-[state=active]:border-gray-200 dark:data-[state=active]:border-gray-700",
 
         // 🚫 Kill ALL outlines, borders, and rings on focus or click
         "focus:outline-none focus:ring-0 focus-visible:ring-0 focus:ring-offset-0 focus-visible:ring-offset-0",

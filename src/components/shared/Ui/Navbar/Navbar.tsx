@@ -1,95 +1,54 @@
-"use client";
-
-import { removeTokensFromCookies } from "@/app/actions/token";
-import { Button } from "@/components/ui/button";
-import { useGetCurrentUser } from "@/hooks/useGetCurrentUser";
-import { useLogoutUser } from "@/hooks/useLogoutUser";
-import { AnimatePresence, motion } from "framer-motion";
-import { Menu, X } from "lucide-react";
+import { getAllCategoriesFromDB } from "@/app/actions/categories";
+import { TResponseUser } from "@/types";
+import { getUserFromCookies } from "@/utils/getUserFromCookies";
+import { decodedToken } from "@/utils/jwt";
+import { Heart, ShoppingCart } from "lucide-react";
 import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
-import { useEffect, useRef, useState } from "react";
-import { toast } from "sonner";
 import ActiveLink from "../ActiveLink";
 import Container from "../Container";
+import MobileNavSheet from "./MobileNavSheet";
 import { navItems } from "./navbar.utils";
+import SearchInput from "./SearchInput";
 import ThemeToggle from "./ThemeToggle";
+import UserMenu from "./UserMenu";
 
-const Navbar = () => {
-  const [isOpen, setIsOpen] = useState(false);
-  const navRef = useRef<HTMLDivElement>(null);
-  const pathname = usePathname();
+export default async function Navbar() {
+  const categories = await getAllCategoriesFromDB();
 
-  const user = useGetCurrentUser();
+  const token = await getUserFromCookies();
 
-  const router = useRouter();
+  let user;
 
-  const logoutUser = useLogoutUser();
+  if (token) {
+    user = decodedToken(token as string);
+  }
 
   const isAdmin = user?.role === "admin";
-  const isStudent = user?.role === "user";
-
-  // logout user
-  const handleLogout = async () => {
-    await removeTokensFromCookies();
-
-    logoutUser();
-
-    toast.success("Logged out successfully");
-
-    router.push("/");
-  };
-
-  // close menu when clicking outside
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (navRef.current && !navRef.current.contains(event.target as Node)) {
-        setIsOpen(false);
-      }
-    };
-
-    document.addEventListener("mousedown", handleClickOutside);
-
-    return () => {
-      document.addEventListener("mousedown", handleClickOutside);
-    };
-  }, []);
-
-  // Close menu when route changes
-  useEffect(() => {
-    setIsOpen(false);
-  }, [pathname]);
+  // const isUser = user?.role === "user";
 
   return (
-    <nav
-      className="relative w-full border-b border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 shadow-sm dark:shadow-md"
-      ref={navRef}
-    >
-      <Container>
-        <div className="flex h-16 items-center justify-between">
-          <div className="flex gap-2">
-            {/* Mobile menu toggle */}
-            <button
-              className="lg:hidden text-gray-900 dark:text-gray-100"
-              onClick={() => setIsOpen(!isOpen)}
-            >
-              {isOpen ? (
-                <X className="w-6 h-6 transition-all duration-300" />
-              ) : (
-                <Menu className="w-6 h-6 transition-all duration-300" />
-              )}
-            </button>
+    <nav className="sticky top-0 z-40 w-full border-b border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 shadow-sm dark:shadow-md">
+      <Container className="">
+        <div className="flex h-12 md:h-16 items-center justify-between">
+          {/* Left: Logo + Mobile Menu */}
+          <div className="flex items-center gap-3">
+            {/* Mobile Drawer (client) */}
+            <div className="block lg:hidden">
+              <MobileNavSheet
+                user={user as TResponseUser | null}
+                categories={categories?.data}
+              />
+            </div>
 
-            {/* Logo */}
             <Link
-              href={`/`}
+              href="/"
               className="text-xl font-semibold text-gray-900 dark:text-gray-100"
             >
               Brand Name
             </Link>
           </div>
 
-          {/* Desktop nav */}
+          {/* Desktop Nav */}
           <div className="hidden lg:flex lg:items-center lg:gap-6">
             {navItems.map((item, index) => (
               <ActiveLink
@@ -98,7 +57,7 @@ const Navbar = () => {
                 exact={item.href === "/"}
               >
                 <span className="lg:text-[17px] transition-colors duration-300 hover:text-primary">
-                  {item.label}
+                  {item.name}
                 </span>
               </ActiveLink>
             ))}
@@ -106,14 +65,7 @@ const Navbar = () => {
             {user && (
               <>
                 {isAdmin && (
-                  <ActiveLink href={`/dashboard/admin`}>
-                    <span className="lg:text-[17px] transition-colors duration-300 hover:text-primary">
-                      Dashboard
-                    </span>
-                  </ActiveLink>
-                )}
-                {isStudent && (
-                  <ActiveLink href={`/dashboard/user`}>
+                  <ActiveLink href="/dashboard/admin">
                     <span className="lg:text-[17px] transition-colors duration-300 hover:text-primary">
                       Dashboard
                     </span>
@@ -123,69 +75,37 @@ const Navbar = () => {
             )}
           </div>
 
-          {/* Buttons */}
-          <div className="flex items-center gap-4">
-            <ThemeToggle />
+          {/* Right: Theme Toggle + Auth */}
+          <div className="flex items-center gap-3 md:gap-4">
+            <div className="hidden md:block">
+              <SearchInput />
+            </div>
+
+            <div className="hidden md:block">
+              <ThemeToggle />
+            </div>
+
+            <div className="flex items-center gap-3">
+              <Heart className="w-5 h-5" />
+              <ShoppingCart className="w-5 h-5" />
+            </div>
+
             {user ? (
-              <Button className="" onClick={handleLogout}>
-                Logout
-              </Button>
+              <UserMenu user={user} />
             ) : (
-              <Link href={`/login`}>
-                <Button className="">Login</Button>
+              <Link
+                href="/login"
+                className="text-primary hover:text-primary/90 font-medium"
+              >
+                Login
               </Link>
             )}
           </div>
         </div>
-
-        {/* Mobile menu */}
-        <AnimatePresence>
-          {isOpen && (
-            <motion.div
-              initial={{ opacity: 0, y: -20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -20 }}
-              transition={{ duration: 0.3 }}
-              className="lg:hidden absolute top-[64px] left-0 w-full z-[999] bg-white dark:bg-gray-900 border-b border-gray-300 dark:border-gray-700 backdrop-blur-sm"
-            >
-              <div className="w-[90%] mx-auto py-4 flex flex-col space-y-4 text-gray-900 dark:text-gray-100">
-                {navItems.map((item, index) => (
-                  <ActiveLink
-                    href={item.href}
-                    key={index}
-                    exact={item.href === "/"}
-                  >
-                    <span className="transition-colors duration-300 hover:text-primary">
-                      {item.label}
-                    </span>
-                  </ActiveLink>
-                ))}
-
-                {user && (
-                  <>
-                    {isAdmin && (
-                      <ActiveLink href={`/dashboard/admin`}>
-                        <span className="transition-colors duration-300 hover:text-primary">
-                          Dashboard
-                        </span>
-                      </ActiveLink>
-                    )}
-                    {isStudent && (
-                      <ActiveLink href={`/dashboard/user`}>
-                        <span className="transition-colors duration-300 hover:text-primary">
-                          Dashboard
-                        </span>
-                      </ActiveLink>
-                    )}
-                  </>
-                )}
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
+        <div className="md:hidden mb-4">
+          <SearchInput />
+        </div>
       </Container>
     </nav>
   );
-};
-
-export default Navbar;
+}
