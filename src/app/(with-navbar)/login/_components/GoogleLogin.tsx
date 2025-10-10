@@ -1,3 +1,5 @@
+"use client";
+
 import { IMAGES } from "@/image-data";
 import { useAppDispatch } from "@/redux/hooks";
 import { setUser } from "@/redux/reducers/authSlice";

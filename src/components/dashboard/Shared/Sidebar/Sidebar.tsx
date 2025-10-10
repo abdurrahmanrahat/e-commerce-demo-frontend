@@ -7,7 +7,7 @@ import { adminSidebarItems, userSidebarItems } from "./sidebar.utils";
 const Sidebar = ({ role }: { role: "user" | "admin" }) => {
   return (
     <div className="h-screen border-r border-gray-200 dark:border-gray-700">
-      <div className="py-10 mx-4">
+      <div className="py-10 mx-3 2xl:mx-4">
         {/* logo section */}
         <div className="flex justify-center items-center">
           <Link href="/">

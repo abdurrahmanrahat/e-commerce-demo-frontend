@@ -1,12 +1,9 @@
-import HomePage from "@/components/common/Home/HomePage";
+import HeroBanner from "./_components/HeroBanner/HeroBanner";
 
-export default function Home() {
+export default function HomePage() {
   return (
-    <div className="p-8">
-      <h1 className="text-3xl font-bold underline text-primary shadow-cardLightShadow">
-        Hello world!
-      </h1>
-      <HomePage />
+    <div>
+      <HeroBanner />
     </div>
   );
 }

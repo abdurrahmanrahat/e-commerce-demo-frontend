@@ -37,12 +37,12 @@ export async function middleware(request: NextRequest) {
       return NextResponse.redirect(new URL("/", request.url));
     }
 
-    if (userInfo.role === "user") {
-      if (pathname.startsWith("/dashboard/user")) {
-        return NextResponse.next();
-      }
-      return NextResponse.redirect(new URL("/", request.url));
-    }
+    // if (userInfo.role === "user") {
+    //   if (pathname.startsWith("/dashboard/user")) {
+    //     return NextResponse.next();
+    //   }
+    //   return NextResponse.redirect(new URL("/", request.url));
+    // }
 
     return NextResponse.redirect(new URL("/login", request.url));
   }

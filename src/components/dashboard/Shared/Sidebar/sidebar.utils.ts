@@ -10,7 +10,7 @@ import {
 export const userSidebarItems = [
   { text: "Dashboard", href: "/dashboard/user", icon: LayoutDashboard },
   {
-    text: "Products",
+    text: "My Products",
     href: "/dashboard/user/cart-products",
     icon: ShoppingCart,
   },
