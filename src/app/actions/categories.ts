@@ -2,25 +2,56 @@
 
 import { tagLists } from "@/constants/tag";
 import { TCategoryUploadData } from "@/types";
+import { TServerResponse } from "@/types/action.type";
 import { revalidateTag } from "next/cache";
 import { fetchWithAuth } from "./fetchWithAuth";
 
-export const getAllCategoriesFromDB = async () => {
-  const res = await fetchWithAuth(
-    `${process.env.NEXT_PUBLIC_BACKED_URL}/categories`,
-    {
-      cache: "force-cache",
-      next: {
-        tags: [tagLists.CATEGORY],
-      },
-    }
-  );
-  const categories = await res.json();
+/* ============================================
+   Get All categories : use here normal fetch, do not need auth token 
+============================================ */
+export const getAllCategoriesFromDB = async (
+  params?: Record<string, any>
+): Promise<TServerResponse> => {
+  try {
+    const queryParams = params
+      ? "?" + new URLSearchParams(params).toString()
+      : "";
 
-  return categories;
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_BACKED_URL}/categories${queryParams}`,
+      {
+        cache: "force-cache",
+        next: { tags: [tagLists.CATEGORY] },
+      }
+    );
+
+    if (!res.ok) {
+      return {
+        success: false,
+        data: [],
+        message: "Failed to fetch categories",
+      };
+    }
+
+    const data = await res.json();
+
+    return {
+      success: data?.success ?? true,
+      data: data?.data || [],
+      message: data?.message,
+    };
+  } catch (error: any) {
+    console.error("Error fetching categories:", error);
+    return { success: false, data: [], message: "Network or server error" };
+  }
 };
 
-export const addCategoryToDB = async (categoryData: TCategoryUploadData) => {
+/* ============================================
+  Add category
+============================================ */
+export const addCategoryToDB = async (
+  categoryData: TCategoryUploadData
+): Promise<TServerResponse> => {
   let newCategory = {};
 
   if (categoryData?.subCategoryOf) {
@@ -53,21 +84,71 @@ export const addCategoryToDB = async (categoryData: TCategoryUploadData) => {
     );
 
     // if (!res.ok) {
-    //   throw new Error(`Failed to add category. Status: ${res.status}`);
+    //   return { success: false, data: null, message: "Failed to add category" };
     // }
 
     const data = await res.json();
-
     revalidateTag(tagLists.CATEGORY);
 
-    return data;
+    return {
+      success: data?.success,
+      data: data?.data || null,
+      message: data?.message,
+    };
   } catch (error) {
     console.error("Error adding category:", error);
-    throw error;
+    return { success: false, data: null, message: "Network or server error" };
   }
 };
 
-export const deleteCategoryFromDB = async (categoryId: string) => {
+/* ============================================
+  Update Category
+============================================ */
+export const updateCategoryInDB = async (
+  categoryId: string,
+  updatedData: Record<string, any>
+): Promise<TServerResponse> => {
+  try {
+    const res = await fetchWithAuth(
+      `${process.env.NEXT_PUBLIC_BACKED_URL}/categories/${categoryId}`,
+      {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(updatedData),
+        cache: "no-store",
+      }
+    );
+
+    if (!res.ok) {
+      return {
+        success: false,
+        data: null,
+        message: "Failed to update category",
+      };
+    }
+
+    const data = await res.json();
+    revalidateTag(tagLists.CATEGORY);
+
+    return {
+      success: data?.success,
+      data: data?.data || null,
+      message: data?.message,
+    };
+  } catch (error: any) {
+    console.error("Error updating category:", error);
+    return { success: false, data: null, message: "Network or server error" };
+  }
+};
+
+/* ============================================
+  Delete Category
+============================================ */
+export const deleteCategoryFromDB = async (
+  categoryId: string
+): Promise<TServerResponse> => {
   try {
     const res = await fetchWithAuth(
       `${process.env.NEXT_PUBLIC_BACKED_URL}/categories/${categoryId}`,
@@ -77,52 +158,24 @@ export const deleteCategoryFromDB = async (categoryId: string) => {
       }
     );
 
-    // if (!res.ok) {
-    //   throw new Error(`Failed to delete category. Status: ${res.status}`);
-    // }
+    if (!res.ok) {
+      return {
+        success: false,
+        data: null,
+        message: "Failed to delete category",
+      };
+    }
 
     const data = await res.json();
-
-    // Revalidate cache for categories after deletion
     revalidateTag(tagLists.CATEGORY);
 
-    return data;
+    return {
+      success: data?.success,
+      data: data?.data || null,
+      message: data?.message,
+    };
   } catch (error: any) {
-    throw new Error(
-      error.message || "Something went wrong while deleting the category."
-    );
-  }
-};
-
-export const updateCategoryInDB = async (
-  categoryId: string,
-  categoryData: Record<string, any>
-) => {
-  try {
-    const res = await fetchWithAuth(
-      `${process.env.NEXT_PUBLIC_BACKED_URL}/categories/${categoryId}`,
-      {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(categoryData),
-        cache: "no-store",
-      }
-    );
-
-    // if (!res.ok) {
-    //   throw new Error(`Failed to update category. Status: ${res.status}`);
-    // }
-
-    const data = await res.json();
-
-    revalidateTag(tagLists.CATEGORY);
-
-    return data;
-  } catch (error: any) {
-    throw new Error(
-      error.message || "Something went wrong while updating category."
-    );
+    console.error("Error deleting category:", error);
+    return { success: false, data: null, message: "Network or server error" };
   }
 };

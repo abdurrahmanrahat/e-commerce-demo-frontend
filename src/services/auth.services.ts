@@ -11,7 +11,6 @@ import {
   setAccessTokenExpiryTimeToLocalStorage,
   setToLocalStorage,
 } from "@/utils/local-storage";
-import { JwtPayload } from "jwt-decode";
 
 // store user info into local storage
 export const storeUserInfo = ({ accessToken }: { accessToken: string }) => {
@@ -33,7 +32,7 @@ export const getUserInfo = () => {
   const authToken = getFromLocalStorage(accessAuthKey);
 
   if (authToken) {
-    const decodedData: JwtPayload = decodedToken(authToken);
+    const decodedData = decodedToken(authToken);
     return decodedData;
   }
 };
