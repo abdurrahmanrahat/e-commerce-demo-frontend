@@ -13,6 +13,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { Menu } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
+import NoDataFoundBySearchFilter from "../Data/NoDataFoundBySearchFilter";
 import CategoryItem from "./CategoryItem";
 import ThemeToggle from "./ThemeToggle";
 import { navItems } from "./navbar.utils";
@@ -127,15 +128,22 @@ export default function MobileNavSheet({
                   transition={{ duration: 0.2, ease: "easeInOut" }}
                   className="px-4 py-0 mt-0"
                 >
-                  <div className="divide-y divide-gray-200 dark:divide-gray-800">
-                    {categories.map((category) => (
-                      <CategoryItem
-                        key={category._id}
-                        category={category}
-                        onClose={() => setOpen(false)}
-                      />
-                    ))}
-                  </div>
+                  {categories?.length === 0 ? (
+                    <NoDataFoundBySearchFilter
+                      title="Categories not found!"
+                      description="We couldn’t find any product categories right now. Please check back later for new arrivals."
+                    />
+                  ) : (
+                    <div className="divide-y divide-gray-200 dark:divide-gray-800">
+                      {categories.map((category) => (
+                        <CategoryItem
+                          key={category._id}
+                          category={category}
+                          onClose={() => setOpen(false)}
+                        />
+                      ))}
+                    </div>
+                  )}
                 </motion.div>
               )}
             </AnimatePresence>

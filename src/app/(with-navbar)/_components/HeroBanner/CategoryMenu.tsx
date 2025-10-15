@@ -1,5 +1,6 @@
 "use client";
 
+import NoDataFound from "@/components/shared/Ui/Data/NoDataFound";
 import { AnimatePresence, motion } from "framer-motion";
 import { ChevronRight } from "lucide-react";
 import { useState } from "react";
@@ -24,6 +25,15 @@ interface CategoryMenuProps {
 
 const CategoryMenu = ({ categories }: CategoryMenuProps) => {
   const [hoveredCategory, setHoveredCategory] = useState<string | null>(null);
+
+  if (!categories || categories.length === 0) {
+    return (
+      <NoDataFound
+        title="Categories not found!"
+        description="We couldn’t find any product categories right now. Please check back later for new arrivals."
+      />
+    );
+  }
 
   return (
     <div className="bg-card border-r border-border h-full">

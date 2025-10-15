@@ -53,7 +53,7 @@ const UpdateParentCategoryForm = ({
       if (res?.success) {
         toast.success("Category updated successfully!");
       } else {
-        toast.error(res?.errorSources[0]?.message || "Something went wrong!");
+        toast.error(res?.message || "Something went wrong!");
       }
     } catch (error: any) {
       toast.error(error?.message || "Something went wrong!");
@@ -93,7 +93,7 @@ const UpdateParentCategoryForm = ({
       }
     } catch (error: any) {
       console.log("error full", error);
-      toast.error(error?.errorSources[0].message || "Image upload failed.");
+      toast.error(error?.message || "Image upload failed.");
     } finally {
       setIsImageUploading(false);
     }

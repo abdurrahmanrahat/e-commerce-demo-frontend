@@ -13,7 +13,7 @@ import ThemeToggle from "./ThemeToggle";
 import UserMenu from "./UserMenu";
 
 export default async function Navbar() {
-  const categories = await getAllCategoriesFromDB();
+  const categoriesResponse = await getAllCategoriesFromDB();
 
   const token = await getUserFromCookies();
 
@@ -36,7 +36,7 @@ export default async function Navbar() {
             <div className="block lg:hidden">
               <MobileNavSheet
                 user={user as TResponseUser | null}
-                categories={categories?.data}
+                categories={categoriesResponse?.data}
               />
             </div>
 

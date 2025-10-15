@@ -28,7 +28,7 @@ export default function DeleteCategory({ categoryId }: { categoryId: string }) {
       if (res?.success) {
         toast.success("Category deleted successfully!");
       } else {
-        toast.error(res?.errorSources[0]?.message || "Something went wrong!");
+        toast.error(res?.message || "Something went wrong!");
       }
     } catch (error: any) {
       toast.error(error?.message || "Something went wrong!");

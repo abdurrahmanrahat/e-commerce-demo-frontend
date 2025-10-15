@@ -14,12 +14,14 @@ import ParentCategoryForm from "./ParentCategoryForm";
 import SubCategoryForm from "./SubCategoryForm";
 
 export default async function AddCategory() {
-  const categories = await getAllCategoriesFromDB();
+  const categoriesResponse = await getAllCategoriesFromDB();
 
-  const parentCategories = categories?.data.map((category: TCategory) => ({
-    value: category._id,
-    label: category.name,
-  }));
+  const parentCategories = categoriesResponse?.data.map(
+    (category: TCategory) => ({
+      value: category._id,
+      label: category.name,
+    })
+  );
 
   return (
     <Dialog>

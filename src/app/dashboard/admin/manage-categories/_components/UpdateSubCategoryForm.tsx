@@ -37,7 +37,7 @@ const UpdateSubCategoryForm = ({ category }: { category: TUpdateCategory }) => {
       if (res?.success) {
         toast.success("Category updated successfully!");
       } else {
-        toast.error(res?.errorSources[0]?.message || "Something went wrong!");
+        toast.error(res?.message || "Something went wrong!");
       }
     } catch (error: any) {
       toast.error(error?.message || "Something went wrong!");
