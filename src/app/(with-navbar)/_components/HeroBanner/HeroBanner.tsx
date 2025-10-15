@@ -7,8 +7,8 @@ const HeroBanner = async () => {
   const categoriesResponse = await getAllCategoriesFromDB();
 
   return (
-    <Container className="">
-      <div className="h-[400px] flex gap-4 ">
+    <Container className="py-14 md:py-16">
+      <div className="flex  gap-4">
         <div className="hidden lg:block w-[280px] flex-shrink-0">
           <CategoryMenu categories={categoriesResponse?.data} />
         </div>

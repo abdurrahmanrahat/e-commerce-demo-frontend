@@ -37,3 +37,14 @@ textarea::-moz-selection {
   background-color: #DD3333;
   color: #ffffff;
 }
+
+/* scroll-hidden */
+.scroll-hidden::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+}
+
+.scroll-hidden {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
