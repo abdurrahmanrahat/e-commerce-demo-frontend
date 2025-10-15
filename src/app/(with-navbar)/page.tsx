@@ -4,6 +4,7 @@ export default function HomePage() {
   return (
     <div>
       <HeroBanner />
+      <div>heello</div>
     </div>
   );
 }

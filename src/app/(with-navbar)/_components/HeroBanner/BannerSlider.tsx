@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { AnimatePresence, motion } from "framer-motion";
 import { ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 import { useEffect, useState } from "react";
 
 interface Slide {
@@ -18,44 +19,36 @@ interface Slide {
 const slides: Slide[] = [
   {
     id: 1,
-    title: "iPhone 14 Series",
-    subtitle: "Up to 10%",
-    description: "off Voucher",
+    title: "Apple iPhone 14 Series",
+    subtitle: "Up to 10% Off",
+    description: "Exclusive voucher on latest iPhones",
     image:
-      "https://images.unsplash.com/photo-1632661674596-df8be070a5c5?w=600&h=400&fit=crop",
+      "https://images.unsplash.com/photo-1632661674596-df8be070a5c5?w=900&h=600&fit=crop",
     buttonText: "Shop Now",
   },
   {
     id: 2,
     title: "Latest Smartphones",
-    subtitle: "Up to 15%",
-    description: "off Sale",
+    subtitle: "Up to 15% Off",
+    description: "Hot deals on flagship models",
     image:
-      "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=600&h=400&fit=crop",
+      "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=900&h=600&fit=crop",
     buttonText: "Shop Now",
   },
   {
     id: 3,
     title: "Premium Audio",
-    subtitle: "Up to 20%",
-    description: "off Discount",
+    subtitle: "Up to 20% Off",
+    description: "Discounts on top-notch headphones",
     image:
-      "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=600&h=400&fit=crop",
+      "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=900&h=600&fit=crop",
     buttonText: "Shop Now",
   },
 ];
 
-const BannerSlider = () => {
+export default function BannerSlider() {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [direction, setDirection] = useState(0);
-
-  useEffect(() => {
-    const timer = setInterval(() => {
-      nextSlide();
-    }, 5000);
-
-    return () => clearInterval(timer);
-  }, [currentSlide]);
 
   const nextSlide = () => {
     setDirection(1);
@@ -72,25 +65,38 @@ const BannerSlider = () => {
     setCurrentSlide(index);
   };
 
+  useEffect(() => {
+    const timer = setInterval(nextSlide, 5000);
+    return () => clearInterval(timer);
+  }, [currentSlide]);
+
   const slideVariants = {
     enter: (direction: number) => ({
-      x: direction > 0 ? 1000 : -1000,
+      x: direction > 0 ? 150 : -150,
       opacity: 0,
+      scale: 0.98,
     }),
     center: {
       zIndex: 1,
       x: 0,
       opacity: 1,
+      scale: 1,
+      transition: {
+        duration: 0.6,
+        ease: [0.25, 0.1, 0.25, 1] as [number, number, number, number],
+      },
     },
     exit: (direction: number) => ({
       zIndex: 0,
-      x: direction < 0 ? 1000 : -1000,
+      x: direction < 0 ? 150 : -150,
       opacity: 0,
+      scale: 0.98,
+      transition: { duration: 0.4 },
     }),
   };
 
   return (
-    <div className="relative h-full bg-[hsl(var(--banner-bg))] rounded-lg overflow-hidden group">
+    <div className="relative w-full h-[360px] md:h-[420px] lg:h-full rounded-lg overflow-hidden group bg-gradient-to-br from-gray-900 to-gray-800">
       <AnimatePresence initial={false} custom={direction}>
         <motion.div
           key={currentSlide}
@@ -99,97 +105,96 @@ const BannerSlider = () => {
           initial="enter"
           animate="center"
           exit="exit"
-          transition={{
-            x: { type: "spring", stiffness: 300, damping: 30 },
-            opacity: { duration: 0.2 },
-          }}
-          className="absolute inset-0 flex items-center"
+          className="absolute inset-0 flex flex-col md:flex-row items-center justify-center md:justify-between md:gap-4 px-5 md:px-8 lg:px-12 py-12 z-0"
         >
-          <div className="w-full h-full flex items-center justify-between px-12">
-            <div className="flex-1 z-10">
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.2, duration: 0.5 }}
+          {/* Text Section */}
+          <div className="relative z-20 flex-1 text-center md:text-left space-y-3 sm:space-y-4 pointer-events-auto">
+            <motion.div
+              initial={{ opacity: 0, y: 15 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3, duration: 0.6 }}
+            >
+              <p className="text-sm sm:text-base text-gray-300">
+                {slides[currentSlide].title}
+              </p>
+
+              <h2 className="text-3xl md:text-3xl lg:text-4xl font-bold text-white">
+                {slides[currentSlide].subtitle}
+              </h2>
+
+              <p className="text-base sm:text-lg text-gray-300">
+                {slides[currentSlide].description}
+              </p>
+
+              <Link
+                href="/products"
+                className="inline-block relative z-30 pointer-events-auto"
               >
-                <p className=" text-sm mb-2 flex items-center gap-2">
-                  <Image
-                    src="https://upload.wikimedia.org/wikipedia/commons/f/fa/Apple_logo_black.svg"
-                    alt="Apple"
-                    width={800}
-                    height={400}
-                    className="w-5 h-5 invert"
-                  />
-                  <span>{slides[currentSlide].title}</span>
-                </p>
-                <h2 className="text-white text-5xl font-semibold mb-2 leading-tight">
-                  {slides[currentSlide].subtitle}
-                </h2>
-                <h3 className="text-white text-5xl font-semibold mb-6">
-                  {slides[currentSlide].description}
-                </h3>
                 <Button
-                  variant="ghost"
-                  className="text-white hover:bg-white/10 border-b border-white/50 rounded-none px-0 pb-1"
+                  variant="outline"
+                  className="mt-4 text-white border-primary hover:bg-primary hover:text-white transition-all duration-300 cursor-pointer font-medium tracking-wide px-6 py-2 rounded-md"
                 >
                   {slides[currentSlide].buttonText}
                   <ArrowRight className="ml-2 w-4 h-4" />
                 </Button>
-              </motion.div>
-            </div>
+              </Link>
+            </motion.div>
+          </div>
 
-            <motion.div
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: 0.3, duration: 0.5 }}
-              className="flex-1 flex items-center justify-center"
-            >
+          {/* Image Section */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 0.4, duration: 0.6 }}
+            className="flex-1 flex justify-center items-center mt-6 md:mt-0 z-10 pointer-events-none"
+          >
+            <div className="relative w-[240px] md:w-[320px] lg:w-[400px] h-[160px] md:h-[240px] lg:h-[280px] rounded-lg">
               <Image
                 src={slides[currentSlide].image}
                 alt={slides[currentSlide].title}
-                width={600}
-                height={400}
-                className="max-w-md max-h-80 object-contain drop-shadow-2xl"
+                fill
+                className="object-cover drop-shadow-2xl rounded-lg"
+                priority
               />
-            </motion.div>
-          </div>
+            </div>
+          </motion.div>
         </motion.div>
       </AnimatePresence>
 
       {/* Navigation Arrows */}
-      <button
-        onClick={prevSlide}
-        className="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 backdrop-blur-sm flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity z-10"
-        aria-label="Previous slide"
-      >
-        <ChevronLeft className="w-5 h-5 text-white" />
-      </button>
+      <div className="absolute inset-y-0 left-0 right-0 flex items-center justify-between px-2 md:px-4 z-30 pointer-events-auto">
+        <button
+          onClick={prevSlide}
+          className="text-primary transition cursor-pointer"
+          aria-label="Previous slide"
+        >
+          <ChevronLeft className="w-5 h-5" />
+        </button>
 
-      <button
-        onClick={nextSlide}
-        className="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 backdrop-blur-sm flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity z-10"
-        aria-label="Next slide"
-      >
-        <ChevronRight className="w-5 h-5 text-white" />
-      </button>
+        <button
+          onClick={nextSlide}
+          className="text-primary transition cursor-pointer"
+          aria-label="Next slide"
+        >
+          <ChevronRight className="w-5 h-5" />
+        </button>
+      </div>
 
       {/* Dots Indicator */}
-      <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2 z-10">
+      <div className="absolute bottom-2 md:bottom-3 lg:bottom-4 left-1/2 -translate-x-1/2 flex gap-2 z-30">
         {slides.map((_, index) => (
           <button
             key={index}
             onClick={() => goToSlide(index)}
-            className={`w-3 h-3 rounded-full transition-all ${
-              index === currentSlide
-                ? "bg-red-500 w-8"
-                : "bg-white/50 hover:bg-white/70"
-            }`}
             aria-label={`Go to slide ${index + 1}`}
+            className={`h-2 rounded-full transition-all ${
+              index === currentSlide
+                ? "bg-primary w-6"
+                : "bg-primary/40 w-2 hover:bg-primary/60 cursor-pointer"
+            }`}
           />
         ))}
       </div>
     </div>
   );
-};
-
-export default BannerSlider;
+}
