@@ -7,16 +7,16 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
-interface Slide {
+type TSlide = {
   id: number;
   title: string;
   subtitle: string;
   description: string;
   image: string;
   buttonText: string;
-}
+};
 
-const slides: Slide[] = [
+const slides: TSlide[] = [
   {
     id: 1,
     title: "Apple iPhone 14 Series",
