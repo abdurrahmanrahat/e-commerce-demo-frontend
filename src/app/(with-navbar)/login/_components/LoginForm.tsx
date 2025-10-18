@@ -3,7 +3,7 @@
 import { loginUser } from "@/app/actions/loginUser";
 import MYForm from "@/components/shared/Forms/MYForm";
 import MYInput from "@/components/shared/Forms/MYInput";
-import { LoaderSpinner } from "@/components/shared/Ui/LoaderSpinner";
+import { LoaderSpinner } from "@/components/shared/Ui/Loader/LoaderSpinner";
 import { Button } from "@/components/ui/button";
 import { useAppDispatch } from "@/redux/hooks";
 import { setUser } from "@/redux/reducers/authSlice";

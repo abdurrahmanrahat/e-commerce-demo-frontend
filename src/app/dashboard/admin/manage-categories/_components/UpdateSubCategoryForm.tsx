@@ -3,7 +3,7 @@
 import { updateCategoryInDB } from "@/app/actions/categories";
 import MYForm from "@/components/shared/Forms/MYForm";
 import MYInput from "@/components/shared/Forms/MYInput";
-import { LoaderSpinner } from "@/components/shared/Ui/LoaderSpinner";
+import { LoaderSpinner } from "@/components/shared/Ui/Loader/LoaderSpinner";
 import { Button } from "@/components/ui/button";
 import { DialogClose } from "@/components/ui/dialog";
 import { TUpdateCategory } from "@/types";

@@ -1,7 +1,7 @@
 "use client";
 
 import { deleteCategoryFromDB } from "@/app/actions/categories";
-import { LoaderSpinner } from "@/components/shared/Ui/LoaderSpinner";
+import { LoaderSpinner } from "@/components/shared/Ui/Loader/LoaderSpinner";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,

@@ -1,4 +1,4 @@
-import { MyLoader } from "@/components/shared/Ui/MyLoader";
+import { MyLoader } from "@/components/shared/Ui/Loader/MyLoader";
 
 const LoadingPage = () => {
   return (

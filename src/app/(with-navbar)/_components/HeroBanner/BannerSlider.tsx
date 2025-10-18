@@ -70,27 +70,46 @@ export default function BannerSlider() {
     return () => clearInterval(timer);
   }, [currentSlide]);
 
+  // const slideVariants = {
+  //   enter: (direction: number) => ({
+  //     x: direction > 0 ? 150 : -150,
+  //     opacity: 0,
+  //     scale: 0.98,
+  //   }),
+  //   center: {
+  //     zIndex: 1,
+  //     x: 0,
+  //     opacity: 1,
+  //     scale: 1,
+  //     transition: {
+  //       duration: 0.6,
+  //       ease: [0.25, 0.1, 0.25, 1] as [number, number, number, number],
+  //     },
+  //   },
+  //   exit: (direction: number) => ({
+  //     zIndex: 0,
+  //     x: direction < 0 ? 150 : -150,
+  //     opacity: 0,
+  //     scale: 0.98,
+  //     transition: { duration: 0.4 },
+  //   }),
+  // };
   const slideVariants = {
     enter: (direction: number) => ({
+      zIndex: 0, // fade-out slide below
       x: direction > 0 ? 150 : -150,
       opacity: 0,
-      scale: 0.98,
     }),
     center: {
-      zIndex: 1,
+      zIndex: 10, // active slide above
       x: 0,
       opacity: 1,
-      scale: 1,
-      transition: {
-        duration: 0.6,
-        ease: [0.25, 0.1, 0.25, 1] as [number, number, number, number],
-      },
+      transition: { duration: 0.6 },
     },
     exit: (direction: number) => ({
       zIndex: 0,
       x: direction < 0 ? 150 : -150,
       opacity: 0,
-      scale: 0.98,
       transition: { duration: 0.4 },
     }),
   };
@@ -108,11 +127,11 @@ export default function BannerSlider() {
           className="absolute inset-0 flex flex-col md:flex-row items-center justify-center md:justify-between md:gap-4 px-5 md:px-8 lg:px-12 py-12 z-0"
         >
           {/* Text Section */}
-          <div className="relative z-20 flex-1 text-center md:text-left space-y-3 sm:space-y-4 pointer-events-auto">
+          <div className="relative z-20 flex-1 text-center md:text-left space-y-3 sm:space-y-4">
             <motion.div
-              initial={{ opacity: 0, y: 15 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.3, duration: 0.6 }}
+            // initial={{ opacity: 0, y: 15 }}
+            // animate={{ opacity: 1, y: 0 }}
+            // transition={{ delay: 0.3, duration: 0.6 }}
             >
               <p className="text-sm sm:text-base text-gray-300">
                 {slides[currentSlide].title}
@@ -126,10 +145,7 @@ export default function BannerSlider() {
                 {slides[currentSlide].description}
               </p>
 
-              <Link
-                href="/products"
-                className="inline-block relative z-30 pointer-events-auto"
-              >
+              <Link href="/products" className="inline-block relative z-30">
                 <Button
                   variant="outline"
                   className="mt-4 text-white border-primary hover:bg-primary hover:text-white transition-all duration-300 cursor-pointer font-medium tracking-wide px-6 py-2 rounded-md"
@@ -143,10 +159,10 @@ export default function BannerSlider() {
 
           {/* Image Section */}
           <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 0.4, duration: 0.6 }}
-            className="flex-1 flex justify-center items-center mt-6 md:mt-0 z-10 pointer-events-none"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.3, duration: 0.6 }}
+            className="flex-1 flex justify-center items-center mt-6 md:mt-0 z-10"
           >
             <div className="relative w-[240px] md:w-[320px] lg:w-[400px] h-[160px] md:h-[240px] lg:h-[280px] rounded-lg">
               <Image
@@ -162,10 +178,10 @@ export default function BannerSlider() {
       </AnimatePresence>
 
       {/* Navigation Arrows */}
-      <div className="absolute inset-y-0 left-0 right-0 flex items-center justify-between px-2 md:px-4 z-30 pointer-events-auto">
+      <div className="absolute top-1/2 left-0 right-0 flex items-center justify-between px-2 md:px-4 z-30">
         <button
           onClick={prevSlide}
-          className="text-primary transition cursor-pointer"
+          className="text-primary transition cursor-pointer "
           aria-label="Previous slide"
         >
           <ChevronLeft className="w-5 h-5" />
