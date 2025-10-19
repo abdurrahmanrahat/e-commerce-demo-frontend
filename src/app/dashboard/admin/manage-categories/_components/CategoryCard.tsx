@@ -15,7 +15,7 @@ const CategoryCard = ({ category }: { category: TCategory }) => {
     category.subCategories && category.subCategories.length > 0;
 
   return (
-    <Card className="group transition-all duration-300 hover:shadow-lg border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 py-3">
+    <Card className="group transition-all duration-300 hover:shadow-lg border border-gray-200 dark:border-gray-800 bg-white dark:bg-deep-dark py-3">
       <CardContent className="px-4 ">
         {/* Category Header */}
         <div className="flex items-center justify-between gap-4">

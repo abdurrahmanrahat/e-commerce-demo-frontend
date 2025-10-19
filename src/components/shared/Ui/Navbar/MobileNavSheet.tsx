@@ -40,7 +40,7 @@ export default function MobileNavSheet({
 
       <SheetContent
         side="left"
-        className="w-[80%] sm:w-[70%] border-r border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 p-0 overflow-hidden"
+        className="w-[80%] sm:w-[70%] border-r border-gray-200 dark:border-gray-800 bg-white dark:bg-deep-dark text-gray-900 dark:text-gray-100 p-0 overflow-hidden"
       >
         <SheetHeader className="p-4">
           <SheetTitle className="text-lg font-semibold text-gray-900 dark:text-gray-100">

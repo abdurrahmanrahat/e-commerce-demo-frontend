@@ -115,7 +115,7 @@ export default function BannerSlider() {
   };
 
   return (
-    <div className="relative w-full h-[360px] md:h-[420px] lg:h-full rounded-lg overflow-hidden group bg-gradient-to-br from-gray-900 to-gray-800">
+    <div className="relative w-full h-[360px] md:h-[420px] lg:h-full rounded-lg overflow-hidden group bg-gradient-to-br from-deep-dark to-deep-dark/95">
       <AnimatePresence initial={false} custom={direction}>
         <motion.div
           key={currentSlide}

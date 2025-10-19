@@ -8,14 +8,46 @@
   --color-primary: #DD3333;
   --color-light-gray: #F1F1F1;
   --color-secondary: #c72e2e;
+  --color-deep-dark: #0f151d;
 
   --shadow-cardLightShadow: rgba(100, 100, 111, 0.1) 0px 7px 29px 0px;
   --shadow-cardDarkShadow: rgba(0, 0, 0, 0.6) 0px 7px 29px 0px;
   --shadow-topUpShadow: 0 5px 20px rgba(0, 0, 0, .2)
 }
 
+
 .section-space-for-shadow {
   @apply py-4 px-[6px] md:px-3
+}
+
+/* for text editor */
+.html-content h1 {
+  @apply text-3xl font-semibold;
+}
+
+.html-content h2 {
+  @apply text-2xl font-semibold;
+}
+
+.html-content h3 {
+  @apply text-xl font-semibold;
+}
+
+.html-content h4 {
+  @apply text-lg font-medium;
+}
+
+.html-content h5 {
+  @apply text-base font-medium;
+}
+
+.html-content h6 {
+  @apply text-sm font-medium;
+}
+
+p:empty {
+  min-height: 1rem;
+  display: block;
 }
 
 /* Light and dark mode text selection for input fields */
@@ -31,7 +63,7 @@ input::-moz-selection {
   color: #ffffff;
 }
 
-/* Optional: textareas too */
+/* Optional: textarea too */
 textarea::selection {
   background-color: #DD3333;
   color: #ffffff;
@@ -41,6 +73,28 @@ textarea::-moz-selection {
   background-color: #DD3333;
   color: #ffffff;
 }
+
+/* scrollbar design */
+/* For WebKit browsers (Chrome, Safari, newer versions of Opera) */
+::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #c2c1d0;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #c2c1d0;
+}
+
 
 /* scroll-hidden */
 .scroll-hidden::-webkit-scrollbar {

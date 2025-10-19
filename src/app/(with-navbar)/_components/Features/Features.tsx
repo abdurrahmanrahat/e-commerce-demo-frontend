@@ -52,7 +52,7 @@ const Features = () => {
           return (
             <Card
               key={item.id}
-              className="group relative overflow-hidden border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 transition-all duration-500 ease-out hover:-translate-y-1 "
+              className="group relative overflow-hidden border-gray-200 dark:border-gray-800 bg-white dark:bg-deep-dark transition-all duration-500 ease-out hover:-translate-y-1 "
             >
               <CardContent className="relative pt-8 pb-6 px-6">
                 {/* Icon container with gradient */}

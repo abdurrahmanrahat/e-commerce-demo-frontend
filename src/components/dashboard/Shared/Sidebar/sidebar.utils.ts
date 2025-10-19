@@ -3,6 +3,7 @@ import {
   MessageCircle,
   MessageSquarePlus,
   Settings,
+  ShoppingBag,
   ShoppingCart,
   Users,
 } from "lucide-react";
@@ -25,14 +26,14 @@ export const adminSidebarItems = [
     icon: Settings,
   },
   {
-    text: "Add Product",
+    text: "Upload Product",
     href: "/dashboard/admin/add-product",
     icon: MessageSquarePlus,
   },
   {
     text: "Manage Products",
     href: "/dashboard/admin/manage-products",
-    icon: Settings,
+    icon: ShoppingBag,
   },
   { text: "Manage Users", href: "/dashboard/admin/manage-users", icon: Users },
 ];

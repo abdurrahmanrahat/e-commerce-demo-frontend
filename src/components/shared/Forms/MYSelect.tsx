@@ -43,7 +43,7 @@ const MYSelect = ({ name, options, placeholder }: TMYSelectProps) => {
                 "text-foreground placeholder:text-muted-foreground text-gray-800 dark:text-gray-200",
                 "border focus:outline-none focus:ring-0",
                 "hover:border-primary focus:border-primary",
-                "dark:bg-gray-800 dark:text-gray-100 dark:placeholder:text-gray-400",
+                "dark:bg-deep-dark dark:text-gray-100 dark:placeholder:text-gray-500",
                 // Dynamic error border
                 error
                   ? "border-red-500 dark:border-red-400 focus:border-red-500"

@@ -6,7 +6,7 @@ export default function SignUp() {
   return (
     <div className="min-h-screen w-full flex justify-center items-center bg-white dark:bg-gray-950 text-gray-900 dark:text-gray-100">
       <Container className="max-w-md">
-        <div className="flex flex-col justify-center space-y-6 shadow-cardLightShadow dark:shadow-cardDarkShadow rounded-md p-6 md:p-8 bg-white dark:bg-gray-900">
+        <div className="flex flex-col justify-center space-y-6 shadow-cardLightShadow dark:shadow-cardDarkShadow rounded-md p-6 md:p-8 bg-white dark:bg-deep-dark">
           {/* Title & Subtitle */}
           <div className="space-y-2 text-center mb-8">
             <h1 className="text-2xl font-bold tracking-tight md:text-3xl">

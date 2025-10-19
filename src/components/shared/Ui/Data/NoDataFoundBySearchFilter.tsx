@@ -10,7 +10,7 @@ export default function NoDataFoundBySearchFilter({
   return (
     <div className="flex flex-col items-center justify-center py-16 text-center">
       {/* Icon */}
-      <div className="p-4 rounded-full bg-gray-100 dark:bg-gray-800 mb-4">
+      <div className="p-4 rounded-full bg-gray-100 dark:bg-deep-dark mb-4">
         <PackageSearch className="w-10 h-10 text-gray-500 dark:text-gray-400" />
       </div>
 

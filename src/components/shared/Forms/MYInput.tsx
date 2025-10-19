@@ -33,7 +33,7 @@ const MYInput = ({ name, type = "text", placeholder }: TMTInputProps) => {
                 text-gray-800 dark:text-gray-200 
                 placeholder-gray-400 dark:placeholder-gray-500
                 focus:outline-none hover:border-primary focus:border-primary
-                transition-all duration-200 ease-in-out bg-light-gray dark:bg-gray-800 
+                transition-all duration-200 ease-in-out bg-light-gray dark:bg-deep-dark 
                 
               `}
           />

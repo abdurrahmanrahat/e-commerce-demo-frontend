@@ -27,7 +27,7 @@ export default async function Navbar() {
   // const isUser = user?.role === "user";
 
   return (
-    <nav className="sticky top-0 z-40 w-full border-b border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900">
+    <nav className="sticky top-0 z-40 w-full border-b border-gray-200 dark:border-gray-700 bg-white dark:bg-deep-dark">
       <Container className="">
         <div className="flex h-12 md:h-16 items-center justify-between">
           {/* Left: Logo + Mobile Menu */}

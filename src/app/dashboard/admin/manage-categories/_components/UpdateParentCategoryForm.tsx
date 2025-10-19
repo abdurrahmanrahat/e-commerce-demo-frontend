@@ -132,7 +132,7 @@ const UpdateParentCategoryForm = ({
               />
 
               {!image ? (
-                <div className="py-[22px] px-4 rounded-md border border-gray-200 dark:border-gray-700 text-gray-800 dark:text-gray-200 transition-all duration-200 ease-in-out bg-light-gray dark:bg-gray-800 hover:border-primary cursor-pointer">
+                <div className="py-[22px] px-4 rounded-md border border-gray-200 dark:border-gray-700 text-gray-800 dark:text-gray-200 transition-all duration-200 ease-in-out bg-light-gray dark:bg-deep-dark hover:border-primary cursor-pointer">
                   <label
                     htmlFor="photo"
                     className="block text-center cursor-pointer"

@@ -7,7 +7,7 @@ export default function LoginPage() {
   return (
     <div className="min-h-screen w-full flex justify-center items-center bg-background text-foreground">
       <Container className="max-w-md">
-        <div className="flex flex-col justify-center space-y-6 shadow-cardLightShadow dark:shadow-cardDarkShadow rounded-md p-6 md:p-8 bg-white dark:bg-gray-900">
+        <div className="flex flex-col justify-center space-y-6 shadow-cardLightShadow dark:shadow-cardDarkShadow rounded-md p-6 md:p-8 bg-white dark:bg-deep-dark">
           {/* Title & Subtitle */}
           <div className="space-y-2 text-center mb-8">
             <h2 className="text-2xl font-bold tracking-tight md:text-3xl">

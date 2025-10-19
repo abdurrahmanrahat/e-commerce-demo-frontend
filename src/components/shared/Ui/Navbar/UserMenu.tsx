@@ -42,7 +42,7 @@ export default function UserMenu({ user }: { user: any }) {
 
       <DropdownMenuContent
         align="end"
-        className="w-48 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 shadow-md rounded-md"
+        className="w-48 bg-white dark:bg-deep-dark border border-gray-200 dark:border-gray-800 shadow-md rounded-md"
       >
         <DropdownMenuLabel className="text-gray-700 dark:text-gray-300">
           {user?.name || "My Account"}

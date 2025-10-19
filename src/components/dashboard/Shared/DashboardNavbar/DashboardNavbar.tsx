@@ -72,7 +72,7 @@ export default function DashboardNavbar({
         {/* Mobile menu */}
         <div
           id="navbar"
-          className={`fixed lg:hidden top-0 left-0 bg-white dark:bg-gray-900 w-[70%] border-r border-gray-300 dark:border-gray-700 h-screen ease-in-out duration-700 z-[999] p-[20px] ${
+          className={`fixed lg:hidden top-0 left-0 bg-white dark:bg-deep-dark w-[70%] border-r border-gray-300 dark:border-gray-700 h-screen ease-in-out duration-700 z-[999] p-[20px] ${
             isOpenMenu ? "translate-x-0" : "-translate-x-full"
           }`}
         >
