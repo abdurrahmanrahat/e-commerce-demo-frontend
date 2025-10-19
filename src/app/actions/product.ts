@@ -1,15 +1,14 @@
 "use server";
 
 import { tagLists } from "@/constants/tag";
-import { TCategoryUploadData } from "@/types";
 import { TServerResponse } from "@/types/action.type";
 import { revalidateTag } from "next/cache";
 import { fetchWithAuth } from "./fetchWithAuth";
 
 /* ============================================
-   Get All categories : use here normal fetch, do not need auth token 
+   Get All Products : use here normal fetch, no auth required
 ============================================ */
-export const getAllCategoriesFromDB = async (
+export const getAllProductsFromDB = async (
   params?: Record<string, any>
 ): Promise<TServerResponse> => {
   try {
@@ -18,19 +17,15 @@ export const getAllCategoriesFromDB = async (
       : "";
 
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_BACKED_URL}/categories${queryParams}`,
+      `${process.env.NEXT_PUBLIC_BACKED_URL}/products${queryParams}`,
       {
         cache: "force-cache",
-        next: { tags: [tagLists.CATEGORY] },
+        next: { tags: [tagLists.PRODUCT] },
       }
     );
 
     if (!res.ok) {
-      return {
-        success: false,
-        data: [],
-        message: "Failed to fetch categories",
-      };
+      return { success: false, data: [], message: "Failed to fetch products" };
     }
 
     const data = await res.json();
@@ -45,58 +40,74 @@ export const getAllCategoriesFromDB = async (
       return {
         success: data?.success ?? false,
         data: data?.data || null,
-        message: data?.errorSources[0]?.message || data?.message,
+        message: data?.errorSources?.[0]?.message || data?.message,
       };
     }
   } catch (error: any) {
-    console.error("Error fetching categories:", error);
+    console.error("Error fetching products:", error);
     return { success: false, data: [], message: "Network or server error" };
   }
 };
 
 /* ============================================
-  Add category
+   Get Single Product
 ============================================ */
-export const addCategoryToDB = async (
-  categoryData: TCategoryUploadData
+export const getSingleProductFromDB = async (
+  productSlug: string
 ): Promise<TServerResponse> => {
-  let newCategory = {};
+  try {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_BACKED_URL}/products/${productSlug}`,
+      {
+        cache: "force-cache",
+        next: { tags: [tagLists.PRODUCT] },
+      }
+    );
 
-  if (categoryData?.subCategoryOf) {
-    newCategory = {
-      name: categoryData.name,
-      slug: categoryData.slug,
-      subCategoryOf: categoryData.subCategoryOf,
-    };
+    if (!res.ok) {
+      return { success: false, data: null, message: "Failed to fetch product" };
+    }
+
+    const data = await res.json();
+
+    if (data?.success) {
+      return {
+        success: data?.success ?? true,
+        data: data?.data || {},
+        message: data?.message,
+      };
+    } else {
+      return {
+        success: data?.success ?? false,
+        data: data?.data || null,
+        message: data?.errorSources?.[0]?.message || data?.message,
+      };
+    }
+  } catch (error: any) {
+    console.error("Error fetching single product:", error);
+    return { success: false, data: null, message: "Network or server error" };
   }
+};
 
-  if (categoryData?.image) {
-    newCategory = {
-      name: categoryData.name,
-      slug: categoryData.slug,
-      image: categoryData.image,
-    };
-  }
-
+/* ============================================
+   Add Product
+============================================ */
+export const addProductToDB = async (
+  productData: Record<string, any>
+): Promise<TServerResponse> => {
   try {
     const res = await fetchWithAuth(
-      `${process.env.NEXT_PUBLIC_BACKED_URL}/categories/create-category`,
+      `${process.env.NEXT_PUBLIC_BACKED_URL}/products/create-product`,
       {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(newCategory),
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(productData),
         cache: "no-store",
       }
     );
 
-    // if (!res.ok) {
-    //   return { success: false, data: null, message: "Failed to add category" };
-    // }
-
     const data = await res.json();
-    revalidateTag(tagLists.CATEGORY);
+    revalidateTag(tagLists.PRODUCT);
 
     if (data?.success) {
       return {
@@ -108,30 +119,28 @@ export const addCategoryToDB = async (
       return {
         success: data?.success ?? false,
         data: data?.data || null,
-        message: data?.errorSources[0]?.message || data?.message,
+        message: data?.errorSources?.[0]?.message || data?.message,
       };
     }
   } catch (error) {
-    console.error("Error adding category:", error);
+    console.error("Error adding product:", error);
     return { success: false, data: null, message: "Network or server error" };
   }
 };
 
 /* ============================================
-  Update Category
+   Update Product
 ============================================ */
-export const updateCategoryInDB = async (
-  categoryId: string,
+export const updateProductInDB = async (
+  productId: string,
   updatedData: Record<string, any>
 ): Promise<TServerResponse> => {
   try {
     const res = await fetchWithAuth(
-      `${process.env.NEXT_PUBLIC_BACKED_URL}/categories/${categoryId}`,
+      `${process.env.NEXT_PUBLIC_BACKED_URL}/products/${productId}`,
       {
         method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(updatedData),
         cache: "no-store",
       }
@@ -141,12 +150,12 @@ export const updateCategoryInDB = async (
       return {
         success: false,
         data: null,
-        message: "Failed to update category",
+        message: "Failed to update product",
       };
     }
 
     const data = await res.json();
-    revalidateTag(tagLists.CATEGORY);
+    revalidateTag(tagLists.PRODUCT);
 
     if (data?.success) {
       return {
@@ -158,24 +167,24 @@ export const updateCategoryInDB = async (
       return {
         success: data?.success ?? false,
         data: data?.data || null,
-        message: data?.errorSources[0]?.message || data?.message,
+        message: data?.errorSources?.[0]?.message || data?.message,
       };
     }
   } catch (error: any) {
-    console.error("Error updating category:", error);
+    console.error("Error updating product:", error);
     return { success: false, data: null, message: "Network or server error" };
   }
 };
 
 /* ============================================
-  Delete Category
+   Delete Product
 ============================================ */
-export const deleteCategoryFromDB = async (
-  categoryId: string
+export const deleteProductFromDB = async (
+  productId: string
 ): Promise<TServerResponse> => {
   try {
     const res = await fetchWithAuth(
-      `${process.env.NEXT_PUBLIC_BACKED_URL}/categories/${categoryId}`,
+      `${process.env.NEXT_PUBLIC_BACKED_URL}/products/${productId}`,
       {
         method: "DELETE",
         cache: "no-store",
@@ -186,12 +195,12 @@ export const deleteCategoryFromDB = async (
       return {
         success: false,
         data: null,
-        message: "Failed to delete category",
+        message: "Failed to delete product",
       };
     }
 
     const data = await res.json();
-    revalidateTag(tagLists.CATEGORY);
+    revalidateTag(tagLists.PRODUCT);
 
     if (data?.success) {
       return {
@@ -203,11 +212,11 @@ export const deleteCategoryFromDB = async (
       return {
         success: data?.success ?? false,
         data: data?.data || null,
-        message: data?.errorSources[0]?.message || data?.message,
+        message: data?.errorSources?.[0]?.message || data?.message,
       };
     }
   } catch (error: any) {
-    console.error("Error deleting category:", error);
+    console.error("Error deleting product:", error);
     return { success: false, data: null, message: "Network or server error" };
   }
 };
