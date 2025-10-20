@@ -30,18 +30,38 @@ const ManageProductsSearch = () => {
     }
 
     const newUrl = params.toString()
-      ? `/dashboard/admin/manage-products?${params.toString()}`
-      : "/dashboard/admin/manage-products";
+      ? `?${params.toString()}`
+      : window.location.pathname;
+    // const newUrl = params.toString() ?
+    //    `/dashboard/admin/manage-products?${params.toString()}`
+    //   : "/dashboard/admin/manage-products";
 
     router.replace(newUrl, { scroll: false });
   }, [debouncedSearchTerm, router, searchParams]);
+
+  // Optional: Handle Enter press for instant search
+  const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") {
+      const params = new URLSearchParams();
+
+      if (searchTerm.trim()) {
+        params.set("searchTerm", searchTerm.trim());
+      }
+
+      router.replace(`?${params.toString()}`, {
+        scroll: false,
+      });
+    }
+  };
 
   return (
     <div className="relative flex-1">
       <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
       <Input
+        type="search"
         placeholder="Search products..."
         value={searchTerm}
+        onKeyDown={handleKeyPress}
         onChange={(e) => setSearchTerm(e.target.value)}
         className="pl-10 bg-card"
       />

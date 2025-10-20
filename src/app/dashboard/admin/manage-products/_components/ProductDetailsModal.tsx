@@ -104,7 +104,7 @@ const ProductDetailsModal = ({ product }: { product: TProduct }) => {
                   <Star className="h-4 w-4 fill-yellow-500 text-yellow-500" />
                   <span className="text-sm">Rating</span>
                 </div>
-                <div className="flex items-center gap-2">
+                <div className="lg:flex items-center gap-2">
                   <div className="flex items-center">
                     {[...Array(5)].map((_, i) => (
                       <Star

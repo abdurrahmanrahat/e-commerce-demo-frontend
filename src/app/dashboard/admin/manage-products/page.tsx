@@ -3,6 +3,7 @@ import { getAllProductsFromDB } from "@/app/actions/product";
 import NoDataFound from "@/components/shared/Ui/Data/NoDataFound";
 import NoDataFoundBySearchFilter from "@/components/shared/Ui/Data/NoDataFoundBySearchFilter";
 import MyImage from "@/components/shared/Ui/Image/MyImage";
+import MYPagination from "@/components/shared/Ui/Pagination/MYPagination";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
@@ -26,8 +27,10 @@ import ProductDetailsModal from "./_components/ProductDetailsModal";
 
 type TManageProductsPageParams = {
   searchTerm?: string;
+  category?: string;
   page?: string;
   limit?: string;
+  sort?: string;
 };
 
 const MANAGE_PRODUCTS_DATA_LIMIT = "10";
@@ -38,8 +41,10 @@ const ManageProductsPage = async (props: {
   const searchParams = await props?.searchParams;
   const {
     searchTerm,
+    category,
     page = "1",
     limit = MANAGE_PRODUCTS_DATA_LIMIT,
+    sort,
   } = searchParams || {};
 
   const params: Record<string, string> = {};
@@ -47,11 +52,17 @@ const ManageProductsPage = async (props: {
   if (searchTerm) {
     params.searchTerm = searchTerm;
   }
+  if (category) {
+    params.category = category;
+  }
   if (page) {
     params.page = page;
   }
   if (limit) {
     params.limit = limit;
+  }
+  if (sort) {
+    params.sort = sort;
   }
 
   const categoriesResponse = await getAllCategoriesFromDB();
@@ -71,6 +82,8 @@ const ManageProductsPage = async (props: {
 
     return [parentOption, ...subOptions];
   });
+
+  const totalData = productsResponse?.data?.totalCount || 0;
 
   return (
     <div className="min-h-screen w-full">
@@ -162,8 +175,10 @@ const ManageProductsPage = async (props: {
                                 </p>
                               </div>
                             </TableCell>
-                            <TableCell className="text-sm text-foreground">
-                              {slugToTitle(product.category)}
+                            <TableCell className="text-sm text-foreground whitespace-normal">
+                              <span className="max-w-[80px] leading-snug break-words line-clamp-2">
+                                {slugToTitle(product.category)}
+                              </span>
                             </TableCell>
                             <TableCell>
                               <div className="flex items-center gap-2">
@@ -203,6 +218,17 @@ const ManageProductsPage = async (props: {
                   </Table>
                 )}
               </div>
+
+              {productsResponse?.data?.data?.length !== 0 ||
+                (MANAGE_PRODUCTS_DATA_LIMIT <=
+                  productsResponse?.data?.data?.length && (
+                  <div className="mt-6">
+                    <MYPagination
+                      totalData={totalData}
+                      dataLimit={Number(MANAGE_PRODUCTS_DATA_LIMIT)}
+                    />
+                  </div>
+                ))}
             </CardContent>
           )}
         </Card>
