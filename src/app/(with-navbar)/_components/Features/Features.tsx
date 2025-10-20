@@ -10,8 +10,6 @@ const features = [
     description: "Browse thousands of products with easy filtering and search.",
     icon: ShoppingBag,
     gradient: "bg-gradient-to-br from-blue-500 to-blue-600",
-    shadow: "shadow-blue-500/25",
-    hoverShadow: "hover:shadow-blue-500/40",
   },
   {
     id: 2,
@@ -19,8 +17,6 @@ const features = [
     description: "Quick and reliable delivery to your doorstep.",
     icon: Package,
     gradient: "bg-gradient-to-br from-green-500 to-green-600",
-    shadow: "shadow-green-500/25",
-    hoverShadow: "hover:shadow-green-500/40",
   },
   {
     id: 3,
@@ -28,8 +24,6 @@ const features = [
     description: "Get help whenever you need it from our support team.",
     icon: Phone,
     gradient: "bg-gradient-to-br from-purple-500 to-purple-600",
-    shadow: "shadow-purple-500/25",
-    hoverShadow: "hover:shadow-purple-500/40",
   },
   {
     id: 4,
@@ -37,8 +31,6 @@ const features = [
     description: "We ensure 100% authentic and verified products only.",
     icon: ShieldCheck,
     gradient: "bg-gradient-to-br from-orange-500 to-orange-600",
-    shadow: "shadow-orange-500/25",
-    hoverShadow: "hover:shadow-orange-500/40",
   },
 ];
 
@@ -63,22 +55,10 @@ const Features = () => {
                       "transition-all duration-500 ease-out ",
                       "group-hover:scale-110 group-hover:rotate-3",
                       item.gradient
-                      //   item.shadow,
-                      //   item.hoverShadow
                     )}
                   >
                     <Icon className="w-8 h-8 text-white" strokeWidth={2.5} />
                   </div>
-
-                  {/* Glow effect on hover */}
-                  {/* <div
-                    className={cn(
-                      "absolute inset-0 rounded-2xl blur-xl opacity-0",
-                      "transition-opacity duration-500",
-                      "group-hover:opacity-30",
-                      item.gradient
-                    )}
-                  /> */}
                 </div>
 
                 {/* Content */}
@@ -90,15 +70,6 @@ const Features = () => {
                     {item.description}
                   </p>
                 </div>
-
-                {/* Subtle background gradient on hover */}
-                <div
-                  className={cn(
-                    "absolute inset-0 opacity-0 transition-opacity duration-500",
-                    "group-hover:opacity-5 -z-10",
-                    item.gradient
-                  )}
-                />
               </CardContent>
             </Card>
           );

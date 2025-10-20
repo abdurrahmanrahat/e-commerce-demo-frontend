@@ -11,6 +11,7 @@ import { LoaderSpinner } from "@/components/shared/Ui/Loader/LoaderSpinner";
 import { Button } from "@/components/ui/button";
 import { createSlug } from "@/utils/createSlug";
 import { ImageUp } from "lucide-react";
+import { useRouter } from "next/navigation";
 import { ChangeEvent, useState } from "react";
 import { toast } from "sonner";
 import z from "zod";
@@ -45,6 +46,8 @@ const AddProductForm = ({
   const [isImageUploading, setIsImageUploading] = useState(false);
   const [images, setImages] = useState<string[]>([]);
 
+  const router = useRouter();
+
   //  Handle Submit
   const handleAddProduct = async (values: ProductFormValues) => {
     if (images.length === 0) {
@@ -73,6 +76,8 @@ const AddProductForm = ({
 
       if (res?.success) {
         toast.success("Product added successfully!");
+
+        router.push("/dashboard/admin/manage-products");
       } else {
         toast.error(res?.message || "Something went wrong!");
       }
