@@ -65,6 +65,8 @@ const ManageProductsPage = async (props: {
     params.sort = sort;
   }
 
+  console.log("category name =>", category);
+
   const categoriesResponse = await getAllCategoriesFromDB();
   const productsResponse = await getAllProductsFromDB(params);
 

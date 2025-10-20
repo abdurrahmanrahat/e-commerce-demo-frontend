@@ -36,7 +36,7 @@ const ManageProductsSearch = () => {
     //    `/dashboard/admin/manage-products?${params.toString()}`
     //   : "/dashboard/admin/manage-products";
 
-    router.replace(newUrl, { scroll: false });
+    router.push(newUrl, { scroll: false });
   }, [debouncedSearchTerm, router, searchParams]);
 
   // Optional: Handle Enter press for instant search
@@ -48,7 +48,7 @@ const ManageProductsSearch = () => {
         params.set("searchTerm", searchTerm.trim());
       }
 
-      router.replace(`?${params.toString()}`, {
+      router.push(`?${params.toString()}`, {
         scroll: false,
       });
     }

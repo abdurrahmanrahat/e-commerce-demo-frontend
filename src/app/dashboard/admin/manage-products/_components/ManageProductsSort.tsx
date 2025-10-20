@@ -50,7 +50,7 @@ const ManageProductsSort = () => {
     //    `/dashboard/admin/manage-products?${params.toString()}`
     //   : "/dashboard/admin/manage-products";
 
-    router.replace(newUrl, { scroll: false });
+    router.push(newUrl, { scroll: false });
   }, [sort, router, searchParams]);
 
   const handleSortChange = (value: string) => {
