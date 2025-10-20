@@ -9,7 +9,12 @@ import {
 } from "@/components/ui/select";
 import { useState } from "react";
 
-const ManageProductsCategoryFilter = () => {
+type TManageProductsCategoryFilterProps = {
+  categories: { value: string; label: string }[];
+};
+const ManageProductsCategoryFilter = ({
+  categories,
+}: TManageProductsCategoryFilterProps) => {
   const [selectedCategory, setSelectedCategory] = useState("");
   return (
     <Select value={selectedCategory} onValueChange={setSelectedCategory}>
@@ -18,10 +23,12 @@ const ManageProductsCategoryFilter = () => {
       </SelectTrigger>
       <SelectContent>
         <SelectItem value="all">All Categories</SelectItem>
-        <SelectItem value="keyboards-and-mice">Keyboards & Mice</SelectItem>
-        <SelectItem value="laptops-and-computers">
-          Laptops & Computers
-        </SelectItem>
+
+        {categories.map((category) => (
+          <SelectItem key={category?.value} value={category?.value}>
+            {category?.label}
+          </SelectItem>
+        ))}
       </SelectContent>
     </Select>
   );
