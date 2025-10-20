@@ -2,7 +2,7 @@ export type TProduct = {
   _id: string;
   name: string;
   slug: string;
-  description: string;
+  description: string; // html string
   images: string[];
   category: string;
   price: number;

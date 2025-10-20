@@ -3,6 +3,7 @@ export type TCategory = {
   name: string;
   slug: string;
   image: string;
+  productsCount?: number;
   subCategories: TSubCategory[];
 };
 
@@ -10,6 +11,7 @@ export type TSubCategory = {
   _id: string;
   name: string;
   slug: string;
+  productsCount?: number;
 };
 
 export type TCategoryUploadData = {
