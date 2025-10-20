@@ -23,6 +23,7 @@ export const getAllProductsFromDB = async (
         next: { tags: [tagLists.PRODUCT] },
       }
     );
+    console.log("res", res);
 
     if (!res.ok) {
       return { success: false, data: [], message: "Failed to fetch products" };

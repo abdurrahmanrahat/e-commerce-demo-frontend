@@ -24,9 +24,38 @@ import ManageProductsSearch from "./_components/ManageProductsSearch";
 import ManageProductsSort from "./_components/ManageProductsSort";
 import ProductDetailsModal from "./_components/ProductDetailsModal";
 
-const ManageProductsPage = async () => {
+type TManageProductsPageParams = {
+  searchTerm?: string;
+  page?: string;
+  limit?: string;
+};
+
+const MANAGE_PRODUCTS_DATA_LIMIT = "10";
+
+const ManageProductsPage = async (props: {
+  searchParams: Promise<TManageProductsPageParams>;
+}) => {
+  const searchParams = await props?.searchParams;
+  const {
+    searchTerm,
+    page = "1",
+    limit = MANAGE_PRODUCTS_DATA_LIMIT,
+  } = searchParams || {};
+
+  const params: Record<string, string> = {};
+
+  if (searchTerm) {
+    params.searchTerm = searchTerm;
+  }
+  if (page) {
+    params.page = page;
+  }
+  if (limit) {
+    params.limit = limit;
+  }
+
   const categoriesResponse = await getAllCategoriesFromDB();
-  const productsResponse = await getAllProductsFromDB();
+  const productsResponse = await getAllProductsFromDB(params);
 
   const categories = categoriesResponse?.data.flatMap((category: TCategory) => {
     const parentOption = {
@@ -153,7 +182,7 @@ const ManageProductsPage = async () => {
                               <div className="flex items-center justify-center gap-1 md:gap-2">
                                 <ProductDetailsModal product={product} />
                                 <Link
-                                  href={`/dashboard/admin/manage-products/${product._id}`}
+                                  href={`/dashboard/admin/manage-products/${product.slug}`}
                                 >
                                   <Button
                                     variant="ghost"
