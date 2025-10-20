@@ -16,7 +16,9 @@ import {
 import { TCategory } from "@/types";
 import { TProduct } from "@/types/product.type";
 import { slugToTitle } from "@/utils/createSlug";
-import { Pencil, Star, Trash2 } from "lucide-react";
+import { Pencil, Star } from "lucide-react";
+import Link from "next/link";
+import DeleteProductModal from "./_components/DeleteProductModal";
 import ManageProductsCategoryFilter from "./_components/ManageProductsCategoryFilter";
 import ManageProductsSearch from "./_components/ManageProductsSearch";
 import ManageProductsSort from "./_components/ManageProductsSort";
@@ -50,9 +52,11 @@ const ManageProductsPage = async () => {
               <CardTitle className="text-xl md:text-2xl font-semibold">
                 All Product List
               </CardTitle>
-              <Button variant="default" className="">
-                Add Product
-              </Button>
+              <Link href="/dashboard/admin/add-product">
+                <Button variant="default" className="">
+                  Add Product
+                </Button>
+              </Link>
             </div>
           </CardHeader>
 
@@ -146,22 +150,21 @@ const ManageProductsPage = async () => {
                               </div>
                             </TableCell>
                             <TableCell>
-                              <div className="flex items-center justify-center gap-2">
+                              <div className="flex items-center justify-center gap-1 md:gap-2">
                                 <ProductDetailsModal product={product} />
-                                <Button
-                                  variant="ghost"
-                                  size="icon"
-                                  className="h-8 w-8 hover:bg-muted"
+                                <Link
+                                  href={`/dashboard/admin/manage-products/${product._id}`}
                                 >
-                                  <Pencil className="h-4 w-4 text-muted-foreground" />
-                                </Button>
-                                <Button
-                                  variant="ghost"
-                                  size="icon"
-                                  className="h-8 w-8 hover:bg-destructive/10"
-                                >
-                                  <Trash2 className="h-4 w-4 text-destructive" />
-                                </Button>
+                                  <Button
+                                    variant="ghost"
+                                    size="icon"
+                                    className="h-8 w-8 hover:bg-muted"
+                                  >
+                                    <Pencil className="h-4 w-4 text-muted-foreground" />
+                                  </Button>
+                                </Link>
+
+                                <DeleteProductModal productId={product?._id} />
                               </div>
                             </TableCell>
                           </tr>
