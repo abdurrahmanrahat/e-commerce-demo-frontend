@@ -22,19 +22,19 @@
 
 /* for text editor */
 .html-content h1 {
-  @apply text-3xl font-semibold;
-}
-
-.html-content h2 {
   @apply text-2xl font-semibold;
 }
 
-.html-content h3 {
+.html-content h2 {
   @apply text-xl font-semibold;
 }
 
+.html-content h3 {
+  @apply text-lg font-semibold;
+}
+
 .html-content h4 {
-  @apply text-lg font-medium;
+  @apply text-[17px] font-medium;
 }
 
 .html-content h5 {
@@ -43,6 +43,10 @@
 
 .html-content h6 {
   @apply text-sm font-medium;
+}
+
+.html-content p {
+  @apply text-[15px];
 }
 
 p:empty {

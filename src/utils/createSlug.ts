@@ -10,3 +10,14 @@ export function createSlug(title: string) {
     .replace(/-+/g, "-") // Merge multiple hyphens
     .replace(/^-+|-+$/g, ""); // Trim leading/trailing hyphens
 }
+
+export function slugToTitle(slug: string) {
+  if (!slug) return "";
+
+  return slug
+    .replace(/-/g, " ") // Replace hyphens with spaces
+    .replace(/\s+/g, " ") // Normalize multiple spaces
+    .trim()
+    .replace(/\band\b/gi, "&") // Optional: reverse the earlier "&" replacement
+    .replace(/\b\w/g, (char) => char.toUpperCase()); // Capitalize each word
+}

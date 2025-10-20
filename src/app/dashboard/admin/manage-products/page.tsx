@@ -15,6 +15,7 @@ import {
 } from "@/components/ui/table";
 import { TCategory } from "@/types";
 import { TProduct } from "@/types/product.type";
+import { slugToTitle } from "@/utils/createSlug";
 import { Pencil, Star, Trash2 } from "lucide-react";
 import ManageProductsCategoryFilter from "./_components/ManageProductsCategoryFilter";
 import ManageProductsSearch from "./_components/ManageProductsSearch";
@@ -129,7 +130,7 @@ const ManageProductsPage = async () => {
                               </div>
                             </TableCell>
                             <TableCell className="text-sm text-foreground">
-                              {product.category}
+                              {slugToTitle(product.category)}
                             </TableCell>
                             <TableCell>
                               <div className="flex items-center gap-2">

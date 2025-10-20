@@ -1,22 +1,15 @@
-import MyImage from "@/components/shared/Ui/Image/MyImage";
+import ProductGallery from "@/components/common/Product/ProductGallery";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
-} from "@/components/ui/carousel";
-import {
   Dialog,
+  DialogClose,
   DialogContent,
-  DialogHeader,
-  DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Separator } from "@/components/ui/separator";
 import { TProduct } from "@/types/product.type";
+import { slugToTitle } from "@/utils/createSlug";
 import {
   Calendar,
   Eye,
@@ -26,6 +19,7 @@ import {
   Tag,
   TrendingUp,
 } from "lucide-react";
+import Link from "next/link";
 
 const formatDate = (dateString: string) => {
   return new Date(dateString).toLocaleDateString("en-US", {
@@ -45,69 +39,39 @@ const ProductDetailsModal = ({ product }: { product: TProduct }) => {
         </Button>
       </DialogTrigger>
 
-      <DialogContent className="!max-w-4xl max-h-[90vh] overflow-y-auto scroll-hidden">
-        <DialogHeader>
-          <DialogTitle className="text-2xl font-semibold pr-8">
-            {product.name}
-          </DialogTitle>
-        </DialogHeader>
+      <DialogContent
+        className="!max-w-4xl max-h-[90vh] overflow-y-auto scroll-hidden"
+        showCloseButton={false}
+        aria-describedby={undefined}
+      >
+        {/* <DialogHeader>
+          <DialogTitle></DialogTitle>
+        </DialogHeader> */}
 
-        <div className="grid gap-6 md:grid-cols-2">
+        <div className="grid gap-6 md:grid-cols-2 place-items-center">
           {/* Image Gallery */}
-          <div className="space-y-4">
-            <Carousel className="w-full">
-              <CarouselContent>
-                {product.images.map((image, index) => (
-                  <CarouselItem key={index}>
-                    <div className="relative aspect-square overflow-hidden rounded-lg border border-border bg-muted">
-                      <MyImage
-                        src={image}
-                        alt={`${product.name} - Image ${index + 1}`}
-                        className="h-full w-full object-cover"
-                        fill
-                      />
-                    </div>
-                  </CarouselItem>
-                ))}
-              </CarouselContent>
-              <CarouselPrevious className="left-2" />
-              <CarouselNext className="right-2" />
-            </Carousel>
-
-            {/* Thumbnail Preview */}
-            <div className="flex gap-2 overflow-x-auto pb-2">
-              {product.images.map((image, index) => (
-                <div
-                  key={index}
-                  className="relative h-16 w-16 flex-shrink-0 cursor-pointer overflow-hidden rounded-md border-2 border-border hover:border-primary transition-colors"
-                >
-                  <MyImage
-                    src={image}
-                    alt={`Thumbnail ${index + 1}`}
-                    className="h-full w-full object-cover"
-                    fill
-                  />
-                </div>
-              ))}
-            </div>
-          </div>
+          <ProductGallery images={product?.images} />
 
           {/* Product Details */}
-          <div className="space-y-4">
+          <div className="space-y-2 lg:space-y-3">
+            <h2 className="text-base md:text-lg font-semibold">
+              {product.name}
+            </h2>
+
             {/* Price Section */}
-            <div className="space-y-2">
-              <div className="flex items-baseline gap-3">
-                <span className="text-3xl font-bold text-primary">
+            <div className="space-y-1">
+              <div className="flex items-baseline gap-2">
+                <span className="text-xl md:text-2xl font-semibold text-primary">
                   ${product.sellingPrice}
                 </span>
                 {product.price !== product.sellingPrice && (
-                  <span className="text-xl text-muted-foreground line-through">
+                  <span className="text-lg md:text-xl text-gray-600 dark:text-gray-400 line-through">
                     ${product.price}
                   </span>
                 )}
               </div>
               {product.price !== product.sellingPrice && (
-                <Badge variant="destructive" className="bg-destructive">
+                <Badge variant="destructive" className="bg-primary">
                   Save ${product.price - product.sellingPrice}
                 </Badge>
               )}
@@ -137,7 +101,7 @@ const ProductDetailsModal = ({ product }: { product: TProduct }) => {
 
               <div className="space-y-1">
                 <div className="flex items-center gap-2 text-muted-foreground">
-                  <Star className="h-4 w-4" />
+                  <Star className="h-4 w-4 fill-yellow-500 text-yellow-500" />
                   <span className="text-sm">Rating</span>
                 </div>
                 <div className="flex items-center gap-2">
@@ -167,9 +131,7 @@ const ProductDetailsModal = ({ product }: { product: TProduct }) => {
                   <Tag className="h-4 w-4" />
                   <span className="text-sm">Category</span>
                 </div>
-                <Badge variant="secondary" className="bg-secondary">
-                  {product.category}
-                </Badge>
+                <p className="text-sm">{slugToTitle(product.category)}</p>
               </div>
             </div>
 
@@ -194,15 +156,9 @@ const ProductDetailsModal = ({ product }: { product: TProduct }) => {
             <Separator />
 
             {/* Metadata */}
-            <div className="space-y-2 text-sm">
-              <div className="flex items-center gap-2 text-muted-foreground">
-                <Calendar className="h-4 w-4" />
-                <span>Created: {formatDate(product.createdAt)}</span>
-              </div>
-              <div className="flex items-center gap-2 text-muted-foreground">
-                <Calendar className="h-4 w-4" />
-                <span>Updated: {formatDate(product.updatedAt)}</span>
-              </div>
+            <div className="flex items-center gap-2 text-sm">
+              <Calendar className="h-4 w-4" />
+              <span>Created: {formatDate(product.createdAt)}</span>
             </div>
           </div>
         </div>
@@ -211,7 +167,7 @@ const ProductDetailsModal = ({ product }: { product: TProduct }) => {
         <div className="space-y-3 mt-4">
           <h3 className="text-lg font-semibold">Product Description</h3>
           <div
-            className="prose prose-sm max-w-none text-foreground prose-headings:text-foreground prose-p:text-muted-foreground prose-strong:text-foreground"
+            className="prose prose-sm max-w-none text-foreground prose-headings:text-foreground prose-p:text-muted-foreground prose-strong:text-foreground html-content"
             dangerouslySetInnerHTML={{
               __html: product.description,
             }}
@@ -219,14 +175,22 @@ const ProductDetailsModal = ({ product }: { product: TProduct }) => {
         </div>
 
         {/* Action Buttons */}
-        <div className="flex gap-3 pt-4 border-t border-border">
-          <Button className="flex-1 bg-primary hover:bg-primary/90">
-            <Pencil className="mr-2 h-4 w-4" />
-            Edit Product
-          </Button>
-          <Button variant="outline" className="flex-1">
-            Close
-          </Button>
+        <div className="flex gap-3 mt-6 border-t border-gray-200 dark:border-gray-700">
+          <Link
+            href={`/dashboard/admin/manage-products/${product._id}`}
+            className="flex-1 w-full"
+          >
+            <Button className="bg-primary w-full hover:bg-primary/90">
+              <Pencil className="mr-1 md:mr-2 h-4 w-4" />
+              Edit Product
+            </Button>
+          </Link>
+
+          <DialogClose asChild>
+            <Button variant="outline" className="flex-1 w-full">
+              Close
+            </Button>
+          </DialogClose>
         </div>
       </DialogContent>
     </Dialog>
