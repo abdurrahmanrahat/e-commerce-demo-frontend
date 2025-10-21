@@ -3,14 +3,6 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
-  Pagination,
-  PaginationContent,
-  PaginationItem,
-  PaginationLink,
-  PaginationNext,
-  PaginationPrevious,
-} from "@/components/ui/pagination";
-import {
   Select,
   SelectContent,
   SelectItem,
@@ -178,7 +170,6 @@ export default function Shop() {
     return filtered;
   }, [searchQuery, priceRange, sortBy]);
 
-  const totalPages = Math.ceil(filteredProducts.length / itemsPerPage);
   const paginatedProducts = filteredProducts.slice(
     (currentPage - 1) * itemsPerPage,
     currentPage * itemsPerPage
@@ -189,53 +180,7 @@ export default function Shop() {
       <div className="container mx-auto px-4 py-6">
         <Banner breadcrumbs={[{ label: "Shop", href: "/shop" }]} />
 
-        {/* Search and Sort Bar */}
-        <div className="flex flex-col md:flex-row gap-4 mb-6">
-          <div className="relative flex-1">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-            <Input
-              placeholder="Search products..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="pl-10"
-            />
-          </div>
-
-          <Select value={sortBy} onValueChange={setSortBy}>
-            <SelectTrigger className="w-full md:w-[200px]">
-              <SelectValue placeholder="Sort by" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="relevance">Relevance</SelectItem>
-              <SelectItem value="newest">Newest</SelectItem>
-              <SelectItem value="price-low">Price: Low → High</SelectItem>
-              <SelectItem value="price-high">Price: High → Low</SelectItem>
-              <SelectItem value="rating">Rating: High → Low</SelectItem>
-            </SelectContent>
-          </Select>
-
-          {/* Mobile Filter Toggle */}
-          <Sheet>
-            <SheetTrigger asChild>
-              <Button variant="outline" className="md:hidden">
-                <SlidersHorizontal className="w-4 h-4 mr-2" />
-                Filters
-              </Button>
-            </SheetTrigger>
-            <SheetContent side="left" className="w-80">
-              <FilterSidebar
-                categories={mockCategories}
-                selectedCategories={selectedCategories}
-                onCategoryChange={setSelectedCategories}
-                priceRange={priceRange}
-                onPriceChange={setPriceRange}
-                maxPrice={maxPrice}
-              />
-            </SheetContent>
-          </Sheet>
-        </div>
-
-        <div className="flex flex-col lg:flex-row gap-6">
+        <div className="flex flex-col lg:flex-row gap-6 mt-6">
           {/* Desktop Sidebar */}
           <aside className="hidden lg:block w-64 shrink-0">
             <div className="sticky top-6">
@@ -251,7 +196,53 @@ export default function Shop() {
           </aside>
 
           {/* Products Grid */}
-          <main className="flex-1">
+          <main className="flex-1 ">
+            {/* Search and Sort Bar */}
+            <div className="flex flex-col md:flex-row gap-4 mb-6">
+              <div className="relative flex-1">
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+                <Input
+                  placeholder="Search products..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="pl-10"
+                />
+              </div>
+
+              <Select value={sortBy} onValueChange={setSortBy}>
+                <SelectTrigger className="w-full md:w-[200px]">
+                  <SelectValue placeholder="Sort by" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="relevance">Relevance</SelectItem>
+                  <SelectItem value="newest">Newest</SelectItem>
+                  <SelectItem value="price-low">Price: Low → High</SelectItem>
+                  <SelectItem value="price-high">Price: High → Low</SelectItem>
+                  <SelectItem value="rating">Rating: High → Low</SelectItem>
+                </SelectContent>
+              </Select>
+
+              {/* Mobile Filter Toggle */}
+              <Sheet>
+                <SheetTrigger asChild>
+                  <Button variant="outline" className="md:hidden">
+                    <SlidersHorizontal className="w-4 h-4 mr-2" />
+                    Filters
+                  </Button>
+                </SheetTrigger>
+                <SheetContent side="left" className="w-80">
+                  <FilterSidebar
+                    categories={mockCategories}
+                    selectedCategories={selectedCategories}
+                    onCategoryChange={setSelectedCategories}
+                    priceRange={priceRange}
+                    onPriceChange={setPriceRange}
+                    maxPrice={maxPrice}
+                  />
+                </SheetContent>
+              </Sheet>
+            </div>
+
             <div className="mb-4 text-sm text-muted-foreground">
               Showing {paginatedProducts.length} of {filteredProducts.length}{" "}
               products
@@ -262,51 +253,6 @@ export default function Shop() {
                 <ProductCard key={product._id} product={product} />
               ))}
             </div>
-
-            {/* Pagination */}
-            {totalPages > 1 && (
-              <Pagination>
-                <PaginationContent>
-                  <PaginationItem>
-                    <PaginationPrevious
-                      onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
-                      className={
-                        currentPage === 1
-                          ? "pointer-events-none opacity-50"
-                          : "cursor-pointer"
-                      }
-                    />
-                  </PaginationItem>
-
-                  {Array.from({ length: totalPages }, (_, i) => i + 1).map(
-                    (page) => (
-                      <PaginationItem key={page}>
-                        <PaginationLink
-                          onClick={() => setCurrentPage(page)}
-                          isActive={currentPage === page}
-                          className="cursor-pointer"
-                        >
-                          {page}
-                        </PaginationLink>
-                      </PaginationItem>
-                    )
-                  )}
-
-                  <PaginationItem>
-                    <PaginationNext
-                      onClick={() =>
-                        setCurrentPage((p) => Math.min(totalPages, p + 1))
-                      }
-                      className={
-                        currentPage === totalPages
-                          ? "pointer-events-none opacity-50"
-                          : "cursor-pointer"
-                      }
-                    />
-                  </PaginationItem>
-                </PaginationContent>
-              </Pagination>
-            )}
           </main>
         </div>
       </div>
