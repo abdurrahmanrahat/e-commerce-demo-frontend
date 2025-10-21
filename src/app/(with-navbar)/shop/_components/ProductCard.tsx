@@ -5,7 +5,7 @@ import { TProduct } from "@/types/product.type";
 import { Heart, ShoppingCart } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
-import { Rating } from "./Rating";
+import { Rating } from "../../../../components/common/Product/Rating";
 
 interface ProductCardProps {
   product: TProduct;

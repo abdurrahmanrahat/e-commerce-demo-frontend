@@ -22,7 +22,7 @@ import { TCategory } from "@/types";
 import { TProduct } from "@/types/product.type";
 import { Search, SlidersHorizontal } from "lucide-react";
 import { useMemo, useState } from "react";
-import { Banner } from "./_components/Banner";
+import Banner from "./_components/Banner";
 import { FilterSidebar } from "./_components/FilterSidebar";
 import { ProductCard } from "./_components/ProductCard";
 
@@ -187,10 +187,7 @@ export default function Shop() {
   return (
     <div className="min-h-screen">
       <div className="container mx-auto px-4 py-6">
-        <Banner
-          title="Shop"
-          breadcrumbs={[{ label: "Home", href: "/" }, { label: "Shop" }]}
-        />
+        <Banner breadcrumbs={[{ label: "Shop", href: "/shop" }]} />
 
         {/* Search and Sort Bar */}
         <div className="flex flex-col md:flex-row gap-4 mb-6">

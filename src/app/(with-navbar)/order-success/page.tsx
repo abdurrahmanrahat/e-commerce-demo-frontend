@@ -3,7 +3,14 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
-import { Calendar, MapPin, Package, Truck } from "lucide-react";
+import {
+  Calendar,
+  CheckCircle2,
+  Mail,
+  MapPin,
+  Package,
+  Truck,
+} from "lucide-react";
 import Link from "next/link";
 import { CheckoutSteps } from "../cart/_components/CheckoutSteps";
 import { cart } from "../cart/page";
@@ -13,6 +20,7 @@ export default function OrderSuccess() {
 
   const orderNumber = "122";
   const total = 50;
+  const shipping = 50;
 
   const formData = {
     fullName: "John Doe",
@@ -23,9 +31,19 @@ export default function OrderSuccess() {
 
   return (
     <div className="min-h-screen">
-      <div className="container mx-auto px-4 py-6">
+      <div className="max-w-4xl mx-auto px-4 py-6">
         <CheckoutSteps currentStep={3} />
 
+        <div className="text-center mb-8">
+          <CheckCircle2 className="h-16 w-16 text-green-500 mx-auto mb-4" />
+          <h1 className="text-3xl font-bold mb-2">
+            Order Placed Successfully!
+          </h1>
+          <p className="text-muted-foreground">
+            Thank you for your order. We'll send you a confirmation email
+            shortly.
+          </p>
+        </div>
         <div className="grid lg:grid-cols-3 gap-6 mt-6">
           {/* Order Details */}
           <div className="lg:col-span-2 space-y-6">
@@ -130,8 +148,8 @@ export default function OrderSuccess() {
           </div>
 
           {/* Order Summary */}
-          <div className="lg:col-span-1">
-            <Card className="sticky top-6">
+          <div className="space-y-6">
+            <Card>
               <CardHeader>
                 <CardTitle>Order Summary</CardTitle>
               </CardHeader>
@@ -140,35 +158,37 @@ export default function OrderSuccess() {
                   <span className="text-muted-foreground">Subtotal:</span>
                   <span className="font-medium">৳ {subtotal.toFixed(2)}</span>
                 </div>
-
                 <div className="flex justify-between text-sm">
                   <span className="text-muted-foreground">Shipping:</span>
-                  <span className="font-medium">৳ {total.toFixed(2)}</span>
+                  <span className="font-medium">৳ {shipping.toFixed(2)}</span>
                 </div>
-
                 <Separator />
-
-                <div className="flex justify-between text-base font-bold">
+                <div className="flex justify-between text-lg font-semibold">
                   <span>Total:</span>
-                  <span className="text-primary">৳ {total.toFixed(2)}</span>
+                  <span>৳ {total.toFixed(2)}</span>
                 </div>
+              </CardContent>
+            </Card>
 
-                <Link href="/shop">
-                  <Button className="w-full" size="lg">
-                    Continue Shopping →
-                  </Button>
-                </Link>
+            <Link href="/shop">
+              <Button size="lg" className="w-full">
+                Continue Shopping
+              </Button>
+            </Link>
 
-                <div className="pt-6">
-                  <h4 className="font-medium mb-2">Need Help?</h4>
-                  <p className="text-sm text-muted-foreground mb-4">
-                    Contact our customer support team for any questions about
-                    your order.
-                  </p>
-                  <Button variant="outline" className="w-full">
-                    Contact Support
-                  </Button>
-                </div>
+            <Card>
+              <CardHeader>
+                <CardTitle className="text-base">Need Help?</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-3">
+                <p className="text-sm text-muted-foreground">
+                  Contact our customer support team for any questions about your
+                  order.
+                </p>
+                <Button variant="outline" className="w-full">
+                  <Mail className="h-4 w-4 mr-2" />
+                  Contact Support
+                </Button>
               </CardContent>
             </Card>
           </div>

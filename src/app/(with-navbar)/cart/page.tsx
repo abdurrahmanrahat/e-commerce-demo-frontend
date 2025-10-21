@@ -1,5 +1,6 @@
 "use client";
 
+import { QuantityStepper } from "@/components/common/Product/QuantityStepper";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
@@ -8,7 +9,6 @@ import { Separator } from "@/components/ui/separator";
 import { ShoppingBag, Trash2 } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
-import { QuantityStepper } from "../shop/[productSlug]/_components/QuantityStepper";
 import { CheckoutSteps } from "./_components/CheckoutSteps";
 
 export const cart = [
@@ -135,61 +135,46 @@ export default function Cart() {
           {/* Cart Items */}
           <div className="lg:col-span-2 space-y-4">
             {cart.map((item) => (
-              <Card key={item.product._id}>
-                <CardContent className="p-4">
-                  <div className="flex gap-4">
-                    {/* Product Image */}
-                    <Link
-                      href={`/product/${item.product.slug}`}
-                      className="shrink-0 w-24 h-24 rounded-lg overflow-hidden bg-muted"
-                    >
-                      <img
-                        src={item.product.images[0]}
-                        alt={item.product.name}
-                        className="w-full h-full object-cover"
-                      />
-                    </Link>
-
-                    {/* Product Details */}
-                    <div className="flex-1 min-w-0">
-                      <Link
-                        href={`/product/${item.product.slug}`}
-                        className="font-medium hover:text-primary line-clamp-2 mb-2"
-                      >
+              <Card key={item.product._id} className="p-4">
+                <div className="flex gap-4">
+                  <Link href={`/product/${item.product.slug}`}>
+                    <img
+                      src={item.product.images[0]}
+                      alt={item.product.name}
+                      className="w-24 h-24 object-cover rounded-lg"
+                    />
+                  </Link>
+                  <div className="flex-1 space-y-2">
+                    <Link href={`/product/${item.product.slug}`}>
+                      <h3 className="font-medium hover:text-primary transition-colors">
                         {item.product.name}
-                      </Link>
-
-                      <div className="flex flex-wrap items-center gap-4">
-                        <QuantityStepper
-                          value={item.quantity}
-                          //   onChange={(qty) =>
-                          //     updateCartQuantity(item.product._id, qty)
-                          //   }
-                          onChange={() => {}}
-                          max={item.product.stock}
-                          size="sm"
-                        />
-
-                        <span className="text-lg font-bold">
-                          ৳{" "}
-                          {(item.product.sellingPrice * item.quantity).toFixed(
-                            2
-                          )}
-                        </span>
-                      </div>
+                      </h3>
+                    </Link>
+                    <p className="text-lg font-bold">
+                      ৳{item.product.sellingPrice}
+                    </p>
+                    <div className="flex items-center gap-4">
+                      <QuantityStepper
+                        value={item.quantity}
+                        onChange={() => {}}
+                        max={item.product.stock}
+                      />
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        // onClick={() => removeFromCart(item.product._id)}
+                        className="text-destructive hover:text-destructive hover:bg-destructive/10"
+                      >
+                        <Trash2 className="h-4 w-4" />
+                      </Button>
                     </div>
-
-                    {/* Remove Button */}
-                    <Button
-                      variant="ghost"
-                      size="icon"
-                      //   onClick={() => handleRemoveItem(item.product._id)}
-                      className="shrink-0 text-destructive hover:text-destructive"
-                    >
-                      <Trash2 className="w-4 h-4" />
-                    </Button>
                   </div>
-                </CardContent>
+                  <div className="text-right">
+                    <p className="font-bold text-lg">
+                      ৳{(item.product.sellingPrice * item.quantity).toFixed(2)}
+                    </p>
+                  </div>
+                </div>
               </Card>
             ))}
           </div>

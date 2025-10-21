@@ -332,8 +332,8 @@ export default function Checkout() {
                 {/* Payment Method */}
                 <Card className="border-2">
                   <CardContent className="p-4">
-                    <div className="flex items-start gap-3">
-                      <RadioGroup>
+                    <RadioGroup>
+                      <div className="flex items-start gap-3">
                         <RadioGroupItem value="cod" id="cod" checked />
                         <div className="flex-1">
                           <Label
@@ -346,8 +346,8 @@ export default function Checkout() {
                             Pay with cash upon delivery.
                           </p>
                         </div>
-                      </RadioGroup>
-                    </div>
+                      </div>
+                    </RadioGroup>
                   </CardContent>
                 </Card>
 
