@@ -20,6 +20,22 @@
   @apply py-4 px-[6px] md:px-3
 }
 
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px)
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 1s ease-out forwards;
+}
+
 /* for text editor */
 .html-content h1 {
   @apply text-2xl font-semibold;

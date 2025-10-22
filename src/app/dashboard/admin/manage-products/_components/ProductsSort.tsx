@@ -21,7 +21,7 @@ const sortOptions = [
   { label: "Descending (Z–A)", value: "descending" },
 ];
 
-const ManageProductsSort = () => {
+const ProductsSort = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [sort, setSort] = useState("");
@@ -77,4 +77,4 @@ const ManageProductsSort = () => {
   );
 };
 
-export default ManageProductsSort;
+export default ProductsSort;

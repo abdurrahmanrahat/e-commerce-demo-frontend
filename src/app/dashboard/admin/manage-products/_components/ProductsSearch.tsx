@@ -6,7 +6,7 @@ import { Search } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
-const ManageProductsSearch = () => {
+const ProductsSearch = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const debouncedSearchTerm = useDebounced(searchTerm, 600);
 
@@ -69,4 +69,4 @@ const ManageProductsSearch = () => {
   );
 };
 
-export default ManageProductsSearch;
+export default ProductsSearch;

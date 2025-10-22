@@ -21,9 +21,9 @@ import { Pencil, Star } from "lucide-react";
 import Link from "next/link";
 import DeleteProductModal from "./_components/DeleteProductModal";
 import ManageProductsCategoryFilter from "./_components/ManageProductsCategoryFilter";
-import ManageProductsSearch from "./_components/ManageProductsSearch";
-import ManageProductsSort from "./_components/ManageProductsSort";
 import ProductDetailsModal from "./_components/ProductDetailsModal";
+import ProductsSearch from "./_components/ProductsSearch";
+import ProductsSort from "./_components/ProductsSort";
 
 type TManageProductsPageParams = {
   searchTerm?: string;
@@ -64,8 +64,6 @@ const ManageProductsPage = async (props: {
   if (sort) {
     params.sort = sort;
   }
-
-  console.log("category name =>", category);
 
   const categoriesResponse = await getAllCategoriesFromDB();
   const productsResponse = await getAllProductsFromDB(params);
@@ -113,11 +111,11 @@ const ManageProductsPage = async (props: {
             <CardContent className="px-3 md:px-6">
               {/* Filters Section */}
               <div className="mb-6 flex flex-col gap-2 md:gap-4 sm:flex-row sm:items-center">
-                <ManageProductsSearch />
+                <ProductsSearch />
 
                 <ManageProductsCategoryFilter categories={categories} />
 
-                <ManageProductsSort />
+                <ProductsSort />
               </div>
 
               {/* Table */}
