@@ -139,7 +139,7 @@ export default function OrderSuccess() {
                       </p>
                     </div>
                     <span className="font-medium">
-                      ৳ {(item.product.sellingPrice * item.quantity).toFixed(2)}
+                      $ {(item.product.sellingPrice * item.quantity).toFixed(2)}
                     </span>
                   </div>
                 ))}
@@ -156,16 +156,16 @@ export default function OrderSuccess() {
               <CardContent className="space-y-4">
                 <div className="flex justify-between text-sm">
                   <span className="text-muted-foreground">Subtotal:</span>
-                  <span className="font-medium">৳ {subtotal.toFixed(2)}</span>
+                  <span className="font-medium">$ {subtotal.toFixed(2)}</span>
                 </div>
                 <div className="flex justify-between text-sm">
                   <span className="text-muted-foreground">Shipping:</span>
-                  <span className="font-medium">৳ {shipping.toFixed(2)}</span>
+                  <span className="font-medium">$ {shipping.toFixed(2)}</span>
                 </div>
                 <Separator />
                 <div className="flex justify-between text-lg font-semibold">
                   <span>Total:</span>
-                  <span>৳ {total.toFixed(2)}</span>
+                  <span>$ {total.toFixed(2)}</span>
                 </div>
               </CardContent>
             </Card>

@@ -27,7 +27,7 @@ export const Rating = ({
 
   return (
     <div className="flex items-center gap-1">
-      <div className="flex items-center">
+      <div className="flex items-center gap-[1px]">
         {[1, 2, 3, 4, 5].map((star) => {
           const filled = rating >= star;
           const partial = rating > star - 1 && rating < star;
@@ -56,9 +56,7 @@ export const Rating = ({
       </div>
 
       {showCount && totalReviews > 0 && (
-        <span className={`${textSizes[size]} text-muted-foreground`}>
-          ({totalReviews})
-        </span>
+        <span className={`${textSizes[size]}`}>({totalReviews})</span>
       )}
     </div>
   );

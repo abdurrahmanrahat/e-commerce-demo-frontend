@@ -271,7 +271,7 @@ export default function Checkout() {
                         </p>
                       </div>
                       <span className="text-sm font-medium">
-                        ৳{" "}
+                        ${" "}
                         {(item.product.sellingPrice * item.quantity).toFixed(2)}
                       </span>
                     </div>
@@ -283,7 +283,7 @@ export default function Checkout() {
                 {/* Subtotal */}
                 <div className="flex justify-between text-sm">
                   <span>Subtotal:</span>
-                  <span className="font-medium">৳ {subtotal.toFixed(2)}</span>
+                  <span className="font-medium">$ {subtotal.toFixed(2)}</span>
                 </div>
 
                 {/* Shipping */}
@@ -314,7 +314,7 @@ export default function Checkout() {
                           </Label>
                         </div>
                         <span className="text-sm font-medium">
-                          ৳ {option.price}
+                          $ {option.price}
                         </span>
                       </div>
                     ))}
@@ -326,7 +326,7 @@ export default function Checkout() {
                 {/* Total */}
                 <div className="flex justify-between text-base font-bold">
                   <span>Total</span>
-                  <span className="text-primary">৳ {total.toFixed(2)}</span>
+                  <span className="text-primary">$ {total.toFixed(2)}</span>
                 </div>
 
                 {/* Payment Method */}

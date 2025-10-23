@@ -123,11 +123,11 @@ export default function ProductDetail() {
 
             <div className="flex items-baseline gap-3">
               <span className="text-4xl font-bold">
-                ৳{product.sellingPrice}
+                ${product.sellingPrice}
               </span>
               {product.price > product.sellingPrice && (
                 <span className="text-xl text-muted-foreground line-through">
-                  ৳{product.price}
+                  ${product.price}
                 </span>
               )}
             </div>

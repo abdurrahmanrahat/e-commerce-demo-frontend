@@ -9,6 +9,7 @@
   --color-light-gray: #F1F1F1;
   --color-secondary: #c72e2e;
   --color-deep-dark: #0f151d;
+  --color-destructive: #EF4343;
 
   --shadow-cardLightShadow: rgba(100, 100, 111, 0.1) 0px 7px 29px 0px;
   --shadow-cardDarkShadow: rgba(0, 0, 0, 0.6) 0px 7px 29px 0px;

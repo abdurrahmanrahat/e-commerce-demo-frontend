@@ -99,7 +99,7 @@ const ShopPage = async (props: { searchParams: Promise<TShopPageParams> }) => {
                     description="Try searching for something else or clear all filters to explore available collections."
                   />
                 ) : (
-                  <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6 mb-8">
+                  <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 gap-2 md:gap-3">
                     {productsResponse?.data?.data.map((product: TProduct) => (
                       <ProductCard key={product._id} product={product} />
                     ))}

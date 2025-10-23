@@ -151,7 +151,7 @@ export default function Cart() {
                       </h3>
                     </Link>
                     <p className="text-lg font-bold">
-                      ৳{item.product.sellingPrice}
+                      ${item.product.sellingPrice}
                     </p>
                     <div className="flex items-center gap-4">
                       <QuantityStepper
@@ -171,7 +171,7 @@ export default function Cart() {
                   </div>
                   <div className="text-right">
                     <p className="font-bold text-lg">
-                      ৳{(item.product.sellingPrice * item.quantity).toFixed(2)}
+                      ${(item.product.sellingPrice * item.quantity).toFixed(2)}
                     </p>
                   </div>
                 </div>
@@ -185,7 +185,7 @@ export default function Cart() {
               <CardContent className="p-6 space-y-4">
                 <div className="flex justify-between text-sm">
                   <span className="text-muted-foreground">Subtotal:</span>
-                  <span className="font-medium">৳ {subtotal.toFixed(2)}</span>
+                  <span className="font-medium">$ {subtotal.toFixed(2)}</span>
                 </div>
 
                 <div>
@@ -215,7 +215,7 @@ export default function Cart() {
                           </Label>
                         </div>
                         <span className="text-sm font-medium">
-                          ৳ {option.price}
+                          $ {option.price}
                         </span>
                       </div>
                     ))}
@@ -229,7 +229,7 @@ export default function Cart() {
 
                 <div className="flex justify-between text-base font-bold">
                   <span>Total</span>
-                  <span className="text-primary">৳ {total.toFixed(2)}</span>
+                  <span className="text-primary">$ {total.toFixed(2)}</span>
                 </div>
 
                 <Button
