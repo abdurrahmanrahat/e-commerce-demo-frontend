@@ -1,18 +1,18 @@
 import { Star } from "lucide-react";
 
-interface RatingProps {
+type TRatingProps = {
   rating: number;
   totalReviews?: number;
   size?: "sm" | "md" | "lg";
   showCount?: boolean;
-}
+};
 
 export const Rating = ({
   rating,
   totalReviews = 0,
   size = "md",
   showCount = true,
-}: RatingProps) => {
+}: TRatingProps) => {
   const sizeClasses = {
     sm: "w-3 h-3",
     md: "w-4 h-4",
@@ -27,29 +27,32 @@ export const Rating = ({
 
   return (
     <div className="flex items-center gap-1">
-      <div className="flex items-center gap-[1px]">
+      <div className="flex items-center gap-[2px]">
         {[1, 2, 3, 4, 5].map((star) => {
           const filled = rating >= star;
           const partial = rating > star - 1 && rating < star;
+          const fillPercentage = (rating - (star - 1)) * 100;
 
           return (
             <div key={star} className="relative">
+              {/* Base star outline (always visible border) */}
               <Star
-                className={`${sizeClasses[size]} ${
-                  filled || partial
-                    ? "fill-yellow-400 text-yellow-400"
-                    : "text-muted"
-                }`}
-                style={
-                  partial
-                    ? {
-                        clipPath: `inset(0 ${
-                          100 - (rating - (star - 1)) * 100
-                        }% 0 0)`,
-                      }
-                    : undefined
-                }
+                className={`${sizeClasses[size]} text-yellow-500`}
+                strokeWidth={1.5}
               />
+
+              {/* Filled portion overlay */}
+              {(filled || partial) && (
+                <Star
+                  className={`${sizeClasses[size]} text-yellow-500 fill-yellow-500 absolute top-0 left-0`}
+                  style={
+                    partial
+                      ? { clipPath: `inset(0 ${100 - fillPercentage}% 0 0)` }
+                      : undefined
+                  }
+                  strokeWidth={1.5}
+                />
+              )}
             </div>
           );
         })}

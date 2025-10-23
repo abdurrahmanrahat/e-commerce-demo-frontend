@@ -1,19 +1,19 @@
 import { Button } from "@/components/ui/button";
 import { Minus, Plus } from "lucide-react";
 
-interface QuantityStepperProps {
+type TQuantityStepperProps = {
   value: number;
   onChange: (value: number) => void;
   min?: number;
   max?: number;
-}
+};
 
 export const QuantityStepper = ({
   value,
   onChange,
   min = 1,
-  max = 99,
-}: QuantityStepperProps) => {
+  max = 20,
+}: TQuantityStepperProps) => {
   const handleDecrement = () => {
     if (value > min) onChange(value - 1);
   };
@@ -23,11 +23,11 @@ export const QuantityStepper = ({
   };
 
   return (
-    <div className="flex items-center gap-2 border rounded-md">
+    <div className="flex items-center gap-2 border border-gray-200 dark:border-gray-700 rounded-md">
       <Button
         variant="ghost"
         size="icon"
-        className="h-8 w-8"
+        className="h-8 w-8 hover:bg-primary hover:text-white transition-all duration-300"
         onClick={handleDecrement}
         disabled={value <= min}
       >
@@ -37,7 +37,7 @@ export const QuantityStepper = ({
       <Button
         variant="ghost"
         size="icon"
-        className="h-8 w-8"
+        className="h-8 w-8 hover:bg-primary hover:text-white transition-all duration-300"
         onClick={handleIncrement}
         disabled={value >= max}
       >

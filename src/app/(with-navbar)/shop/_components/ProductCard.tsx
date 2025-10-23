@@ -70,7 +70,7 @@ export const ProductCard = ({ product }: { product: TProduct }) => {
                 ${product.sellingPrice.toFixed(2)}
               </span>
               {product.price > product.sellingPrice && (
-                <span className="text-xs md:text-sm text-muted-foreground line-through">
+                <span className="text-xs md:text-sm text-gray-600 dark:text-gray-400 line-through">
                   ${product.price.toFixed(2)}
                 </span>
               )}

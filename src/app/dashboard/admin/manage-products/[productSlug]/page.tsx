@@ -14,7 +14,6 @@ const ManageProductEditPage = async (props: {
   const productSlug = params?.productSlug;
 
   const singleProductResponse = await getSingleProductFromDB(productSlug);
-  console.log("singleProductResponse", singleProductResponse);
 
   const categoriesResponse = await getAllCategoriesFromDB();
 
