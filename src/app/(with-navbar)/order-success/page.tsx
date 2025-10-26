@@ -12,7 +12,7 @@ import {
   Truck,
 } from "lucide-react";
 import Link from "next/link";
-import { CheckoutSteps } from "../cart/_components/CheckoutSteps";
+import { CheckoutSteps } from "../../../components/common/Cart/CheckoutSteps";
 import { cart } from "../cart/page";
 
 export default function OrderSuccess() {

@@ -1,129 +1,60 @@
 "use client";
 
-import { QuantityStepper } from "@/components/common/Product/QuantityStepper";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Separator } from "@/components/ui/separator";
-import { ShoppingBag, Trash2 } from "lucide-react";
+import {
+  insideDhakaShippingCost,
+  outsideDhakaShippingCost,
+} from "@/constants/shippingKey";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import { updateShippingOption } from "@/redux/reducers/cartSlice";
+import { shippingOptions } from "@/utils/shippingOptions";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { CheckoutSteps } from "./_components/CheckoutSteps";
-
-export const cart = [
-  {
-    product: {
-      _id: "68f4e96529e421708d9131bc",
-      name: "Logitech MX Keys S Wireless Keyboard & MX Master 3S Mouse Combo",
-      slug: "logitech-mx-keys-s-wireless-keyboard-and-mx-master-3s-mouse-combo",
-      images: [
-        "https://i.ibb.co/fVkmd3fH/keyboards-and-mice1.jpg",
-        "https://i.ibb.co/SX8ChhG3/keyboards-and-mice2.jpg",
-      ],
-      sellingPrice: 160,
-      price: 190,
-      stock: 40,
-    },
-    quantity: 1,
-  },
-  {
-    product: {
-      _id: "68f4e96529e421708d9131bd",
-      name: "Apple AirPods Pro (2nd Generation, 2024 Edition)",
-      slug: "apple-airpods-pro-2nd-generation-2024",
-      images: [
-        "https://i.ibb.co/N2WnYv8/airpods-pro1.jpg",
-        "https://i.ibb.co/kB2cgqx/airpods-pro2.jpg",
-      ],
-      sellingPrice: 290,
-      price: 329,
-      stock: 60,
-    },
-    quantity: 2,
-  },
-  {
-    product: {
-      _id: "68f4e96529e421708d9131be",
-      name: "Anker PowerCore 20000mAh PD Power Bank",
-      slug: "anker-powercore-20000mah-pd-power-bank",
-      images: [
-        "https://i.ibb.co/m8jPtv6/power-bank1.jpg",
-        "https://i.ibb.co/YX5LZrS/power-bank2.jpg",
-      ],
-      sellingPrice: 75,
-      price: 95,
-      stock: 100,
-    },
-    quantity: 1,
-  },
-];
-
-export type ShippingOption = {
-  id: string;
-  name: string;
-  price: number;
-  estimatedDays: string;
-};
-
-const shippingOptions: ShippingOption[] = [
-  {
-    id: "dhaka",
-    name: "Inside Dhaka city (2-3 Days)",
-    price: 70,
-    estimatedDays: "2-3 days",
-  },
-  {
-    id: "outside",
-    name: "Outside Dhaka City (3-5 Days)",
-    price: 120,
-    estimatedDays: "3-5 days",
-  },
-];
+import { toast } from "sonner";
+import { CheckoutSteps } from "../../../components/common/Cart/CheckoutSteps";
+import CartCard from "./CartCard";
+import NotFoundCartItems from "./NotFoundCartItems";
 
 export default function Cart() {
-  const [selectedShipping, setSelectedShipping] = useState<ShippingOption>(
-    shippingOptions[1]
+  const [shippingOption, setShippingOption] = useState("dhaka");
+
+  const router = useRouter();
+
+  const dispatch = useAppDispatch();
+  const cartItems = useAppSelector((state) => state.cart.items);
+
+  const subtotal = cartItems.reduce(
+    (sum, item) => sum + item.product.sellingPrice * item.quantity,
+    0
   );
-  const subtotal = 400;
-  const total = 400;
 
-  //   const subtotal = getCartTotal();
-  //   const total = subtotal + selectedShipping.price;
+  const shippingCost =
+    shippingOption === "dhaka"
+      ? insideDhakaShippingCost
+      : outsideDhakaShippingCost;
 
-  //   const handleRemoveItem = (productId: string) => {
-  //     removeFromCart(productId);
-  //     toast.success("Item removed from cart");
-  //   };
+  const total = subtotal + Number(shippingCost);
 
-  //   const handleProceedToCheckout = () => {
-  //     if (cart.length === 0) {
-  //       toast.error("Your cart is empty");
-  //       return;
-  //     }
-  //     navigate("/checkout");
-  //   };
+  // handle checkout
+  const handleCheckout = () => {
+    if (cartItems.length === 0) {
+      toast.error("Your cart is empty");
+      return;
+    }
+
+    dispatch(updateShippingOption(shippingOption));
+
+    router.push("/checkout");
+  };
 
   // cart.length === 0
-  if (false) {
-    return (
-      <div className="min-h-screen">
-        <div className="container mx-auto px-4 py-6">
-          <CheckoutSteps currentStep={1} />
-
-          <div className="flex flex-col items-center justify-center py-20">
-            <ShoppingBag className="w-24 h-24 text-muted-foreground mb-4" />
-            <h2 className="text-2xl font-bold mb-2">Your cart is empty</h2>
-            <p className="text-muted-foreground mb-6">
-              Add some products to get started
-            </p>
-            <Link href="/shop">
-              <Button size="lg">Continue Shopping</Button>
-            </Link>
-          </div>
-        </div>
-      </div>
-    );
+  if (cartItems.length === 0) {
+    return <NotFoundCartItems />;
   }
 
   return (
@@ -134,71 +65,26 @@ export default function Cart() {
         <div className="grid lg:grid-cols-3 gap-6 mt-6">
           {/* Cart Items */}
           <div className="lg:col-span-2 space-y-4">
-            {cart.map((item) => (
-              <Card key={item.product._id} className="p-4">
-                <div className="flex gap-4">
-                  <Link href={`/product/${item.product.slug}`}>
-                    <img
-                      src={item.product.images[0]}
-                      alt={item.product.name}
-                      className="w-24 h-24 object-cover rounded-lg"
-                    />
-                  </Link>
-                  <div className="flex-1 space-y-2">
-                    <Link href={`/product/${item.product.slug}`}>
-                      <h3 className="font-medium hover:text-primary transition-colors">
-                        {item.product.name}
-                      </h3>
-                    </Link>
-                    <p className="text-lg font-bold">
-                      ${item.product.sellingPrice}
-                    </p>
-                    <div className="flex items-center gap-4">
-                      <QuantityStepper
-                        value={item.quantity}
-                        onChange={() => {}}
-                        max={item.product.stock}
-                      />
-                      <Button
-                        variant="ghost"
-                        size="icon"
-                        // onClick={() => removeFromCart(item.product._id)}
-                        className="text-destructive hover:text-destructive hover:bg-destructive/10"
-                      >
-                        <Trash2 className="h-4 w-4" />
-                      </Button>
-                    </div>
-                  </div>
-                  <div className="text-right">
-                    <p className="font-bold text-lg">
-                      ${(item.product.sellingPrice * item.quantity).toFixed(2)}
-                    </p>
-                  </div>
-                </div>
-              </Card>
+            {cartItems.map((item) => (
+              <CartCard key={item.product._id} item={item} />
             ))}
           </div>
 
           {/* Order Summary */}
           <div className="lg:col-span-1">
-            <Card className="sticky top-6">
+            <Card className="sticky top-6 py-0">
               <CardContent className="p-6 space-y-4">
-                <div className="flex justify-between text-sm">
+                <div className="flex justify-between text-sm md:text-base">
                   <span className="text-muted-foreground">Subtotal:</span>
-                  <span className="font-medium">$ {subtotal.toFixed(2)}</span>
+                  <span className="font-medium">${subtotal.toFixed(2)}</span>
                 </div>
 
                 <div>
                   <h3 className="font-medium mb-3">Shipping</h3>
                   <RadioGroup
-                    value={selectedShipping.id}
-                    onValueChange={(value) => {
-                      const option = shippingOptions.find(
-                        (opt) => opt.id === value
-                      );
-                      if (option) setSelectedShipping(option);
-                    }}
-                    className="space-y-3"
+                    value={shippingOption}
+                    onValueChange={setShippingOption}
+                    className="space-y-0"
                   >
                     {shippingOptions.map((option) => (
                       <div
@@ -214,12 +100,14 @@ export default function Cart() {
                             {option.name}
                           </Label>
                         </div>
+
                         <span className="text-sm font-medium">
-                          $ {option.price}
+                          ${option.price}
                         </span>
                       </div>
                     ))}
                   </RadioGroup>
+
                   <p className="text-xs text-muted-foreground mt-2">
                     Shipping options will be updated during checkout.
                   </p>
@@ -229,19 +117,19 @@ export default function Cart() {
 
                 <div className="flex justify-between text-base font-bold">
                   <span>Total</span>
-                  <span className="text-primary">$ {total.toFixed(2)}</span>
+                  <span className="text-primary">${total.toFixed(2)}</span>
                 </div>
 
-                <Button
-                  className="w-full"
-                  size="lg"
-                  //   onClick={handleProceedToCheckout}
-                >
+                <Button className="w-full" size="lg" onClick={handleCheckout}>
                   Proceed to checkout
                 </Button>
 
                 <Link href="/shop">
-                  <Button variant="outline" className="w-full">
+                  <Button
+                    variant="outline"
+                    className="w-full border border-gray-200 dark:border-gray-700 hover:bg-primary hover:text-white transition-all duration-300"
+                    size="lg"
+                  >
                     Continue Shopping
                   </Button>
                 </Link>

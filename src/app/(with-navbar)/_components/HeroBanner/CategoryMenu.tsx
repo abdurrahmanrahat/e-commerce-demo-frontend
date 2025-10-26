@@ -20,7 +20,7 @@ const CategoryMenu = ({ categories }: TCategoryMenuProps) => {
 
   return (
     <div className="h-[440px] overflow-auto scroll-hidden shadow-cardLightShadow dark:shadow-cardDarkShadow section-space-for-shadow rounded-xl">
-      <div className="py-2">
+      <div className="py-1">
         {categories.map((category) => (
           <BannerCategoryItem key={category._id} category={category} />
         ))}

@@ -3,7 +3,7 @@ import { Minus, Plus } from "lucide-react";
 
 type TQuantityStepperProps = {
   value: number;
-  onChange: (value: number) => void;
+  onChange: (newQuantity: number) => void;
   min?: number;
   max?: number;
 };
@@ -27,21 +27,23 @@ export const QuantityStepper = ({
       <Button
         variant="ghost"
         size="icon"
-        className="h-8 w-8 hover:bg-primary hover:text-white transition-all duration-300"
+        className="w-6 h-6 md:h-8 md:w-8 hover:bg-primary hover:text-white transition-all duration-300"
         onClick={handleDecrement}
         disabled={value <= min}
       >
-        <Minus className="h-4 w-4" />
+        <Minus className="h-3 w-3 md:h-4 md:w-4" />
       </Button>
-      <span className="min-w-[2rem] text-center font-medium">{value}</span>
+      <span className="min-w-[1rem] md:min-w-[2rem] text-center font-medium">
+        {value}
+      </span>
       <Button
         variant="ghost"
         size="icon"
-        className="h-8 w-8 hover:bg-primary hover:text-white transition-all duration-300"
+        className="w-6 h-6 md:h-8 md:w-8 hover:bg-primary hover:text-white transition-all duration-300"
         onClick={handleIncrement}
         disabled={value >= max}
       >
-        <Plus className="h-4 w-4" />
+        <Plus className="h-3 w-3 md:h-4 md:w-4" />
       </Button>
     </div>
   );

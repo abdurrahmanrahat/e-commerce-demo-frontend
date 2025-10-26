@@ -1,10 +1,5 @@
-import { TProduct } from "@/types";
+import { TCartItem } from "@/types";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-
-type TCartItem = {
-  product: TProduct;
-  quantity: number;
-};
 
 type TCartState = {
   items: TCartItem[];
