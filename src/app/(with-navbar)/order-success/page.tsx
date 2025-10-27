@@ -13,7 +13,6 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { CheckoutSteps } from "../../../components/common/Cart/CheckoutSteps";
-import { cart } from "../cart/page";
 
 export default function OrderSuccess() {
   const subtotal = 400;
@@ -124,7 +123,7 @@ export default function OrderSuccess() {
               <CardHeader>
                 <CardTitle>Order Items</CardTitle>
               </CardHeader>
-              <CardContent className="space-y-4">
+              {/* <CardContent className="space-y-4">
                 {cart.map((item: any) => (
                   <div key={item.product._id} className="flex gap-4">
                     <img
@@ -143,7 +142,7 @@ export default function OrderSuccess() {
                     </span>
                   </div>
                 ))}
-              </CardContent>
+              </CardContent> */}
             </Card>
           </div>
 

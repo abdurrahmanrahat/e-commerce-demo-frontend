@@ -55,7 +55,7 @@ export default function Cart() {
 
   // cart.length === 0
   if (cartItems.length === 0) {
-    return <NotFoundCartItems />;
+    return <NotFoundCartItems step={1} />;
   }
 
   return (

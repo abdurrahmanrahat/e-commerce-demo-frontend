@@ -69,10 +69,8 @@ const AddProductForm = ({
         stock: values.stock,
         tags: values.tags,
       };
-      console.log("newProduct", newProduct);
 
       const res = await addProductToDB(newProduct);
-      console.log("res", res);
 
       if (res?.success) {
         toast.success("Product added successfully!");

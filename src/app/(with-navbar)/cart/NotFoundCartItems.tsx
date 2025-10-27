@@ -3,11 +3,11 @@ import { Button } from "@/components/ui/button";
 import { ShoppingBag } from "lucide-react";
 import Link from "next/link";
 
-const NotFoundCartItems = () => {
+const NotFoundCartItems = ({ step }: { step: 1 | 2 | 3 }) => {
   return (
     <div className="min-h-screen">
       <div className="container mx-auto px-4 py-6">
-        <CheckoutSteps currentStep={1} />
+        <CheckoutSteps currentStep={step} />
 
         <div className="flex flex-col items-center justify-center py-20">
           <ShoppingBag className="w-20 h-20 md:w-24 md:h-24 text-muted-foreground mb-4" />

@@ -1,5 +1,6 @@
 "use client";
 
+import { createOrderInDB } from "@/app/actions/order";
 import MYForm from "@/components/shared/Forms/MYForm";
 import MYInput from "@/components/shared/Forms/MYInput";
 import MYTextArea from "@/components/shared/Forms/MYTextArea";
@@ -17,7 +18,7 @@ import {
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { clearCart } from "@/redux/reducers/cartSlice";
 import { shippingOptions } from "@/utils/shippingOptions";
-import { Lock } from "lucide-react";
+import { Lock, ShoppingBag } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -91,28 +92,23 @@ export default function Checkout() {
 
     // send to db
     try {
-      // const res = await addOrder(orderData).unwrap();
+      const res = await createOrderInDB(orderData);
+      console.log("res", res);
 
-      // if (res.success) {
-      //   toast.success(res.message);
-      // }
+      if (res?.success) {
+        toast.success("Order place successfully!");
 
-      dispatch(clearCart());
-
-      // router.push(`/checkout/confirmation?orderId=${res.data._id}`);
-      setIsLoading(false);
+        router.push(`/order-success?orderId=${res.data._id}`);
+        dispatch(clearCart());
+      } else {
+        toast.error(res?.message || "Something went wrong!");
+      }
     } catch (error: any) {
-      toast.error(
-        error?.data?.errorSources[0].message || "Something went wrong!"
-      );
+      toast.error(error?.message || "Something went wrong!");
+    } finally {
       setIsLoading(false);
     }
   };
-
-  if (cartItems.length === 0) {
-    router.push("/cart");
-    return null;
-  }
 
   return (
     <div className="min-h-screen">
@@ -247,31 +243,50 @@ export default function Checkout() {
                 <CardContent className="space-y-4">
                   {/* Cart Items */}
                   <div className="space-y-2">
-                    {cartItems.map((item) => (
-                      <div key={item.product._id} className="flex gap-3">
-                        <MyImage
-                          src={item.product.images[0]}
-                          alt={item.product.name}
-                          width={64}
-                          height={64}
-                          className="w-16 h-16 rounded object-cover"
-                        />
-                        <div className="flex-1 min-w-0">
-                          <p className="text-sm line-clamp-2">
-                            {item.product.name}
-                          </p>
-                          <p className="text-xs text-muted-foreground">
-                            × {item.quantity}
+                    {cartItems.length === 0 ? (
+                      <div className="flex flex-col items-center justify-center gap-1 py-6">
+                        <div className="flex flex-col items-center justify-center gap-1">
+                          <ShoppingBag className="w-12 h-12" />
+                          <h4 className="text-lg lg:text-xl font-medium">
+                            Your cart is empty!
+                          </h4>
+                          <p className="text-sm text-gray-600 dark:text-gray-300 mb-6">
+                            Add some products to get started
                           </p>
                         </div>
-                        <span className="text-sm font-medium">
-                          ${" "}
-                          {(item.product.sellingPrice * item.quantity).toFixed(
-                            2
-                          )}
-                        </span>
+                        <Button asChild>
+                          <Link href="/products">Continue Shopping</Link>
+                        </Button>
                       </div>
-                    ))}
+                    ) : (
+                      <>
+                        {cartItems.map((item) => (
+                          <div key={item.product._id} className="flex gap-3">
+                            <MyImage
+                              src={item.product.images[0]}
+                              alt={item.product.name}
+                              width={64}
+                              height={64}
+                              className="w-16 h-16 rounded object-cover"
+                            />
+                            <div className="flex-1 min-w-0">
+                              <p className="text-sm line-clamp-2">
+                                {item.product.name}
+                              </p>
+                              <p className="text-xs text-muted-foreground">
+                                × {item.quantity}
+                              </p>
+                            </div>
+                            <span className="text-sm font-medium">
+                              ${" "}
+                              {(
+                                item.product.sellingPrice * item.quantity
+                              ).toFixed(2)}
+                            </span>
+                          </div>
+                        ))}
+                      </>
+                    )}
                   </div>
 
                   <Separator />
@@ -359,10 +374,14 @@ export default function Checkout() {
                     .
                   </p>
 
-                  <Button className="w-full" size="lg" disabled={isLoading}>
+                  <Button
+                    className="w-full"
+                    size="lg"
+                    disabled={isLoading || cartItems.length === 0}
+                  >
                     {isLoading ? (
                       <span className="flex gap-2">
-                        <LoaderSpinner /> <span>Signing...</span>
+                        <LoaderSpinner /> <span>Processing...</span>
                       </span>
                     ) : (
                       <>
