@@ -2,13 +2,14 @@ import { getAllCategoriesFromDB } from "@/app/actions/categories";
 import { TResponseUser } from "@/types";
 import { getUserFromCookies } from "@/utils/getUserFromCookies";
 import { decodedToken } from "@/utils/jwt";
-import { Heart, ShoppingCart } from "lucide-react";
 import Link from "next/link";
 import ActiveLink from "../ActiveLink";
 import Container from "../Container";
 import MobileNavSheet from "./MobileNavSheet";
 import { navItems } from "./navbar.utils";
 import SearchInput from "./SearchInput";
+import CartSheet from "./Sheets/CartSheet";
+import WishlistSheet from "./Sheets/WishlistSheet";
 import ThemeToggle from "./ThemeToggle";
 import UserMenu from "./UserMenu";
 
@@ -86,8 +87,10 @@ export default async function Navbar() {
             </div>
 
             <div className="flex items-center gap-3">
-              <Heart className="w-5 h-5" />
-              <ShoppingCart className="w-5 h-5" />
+              {/* <Heart className="w-5 h-5" />
+              <ShoppingCart className="w-5 h-5" /> */}
+              <WishlistSheet />
+              <CartSheet />
             </div>
 
             {user ? (

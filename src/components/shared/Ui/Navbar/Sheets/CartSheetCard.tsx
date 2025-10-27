@@ -9,7 +9,7 @@ import { Trash2 } from "lucide-react";
 import Link from "next/link";
 import { toast } from "sonner";
 
-const CartCard = ({ item }: { item: TCartItem }) => {
+const CartSheetCard = ({ item }: { item: TCartItem }) => {
   const handleUpdateQuantity = (newQuantity: number) => {
     if (newQuantity < 1) {
       toast.error("You have to put at least 1 quantity!");
@@ -30,8 +30,8 @@ const CartCard = ({ item }: { item: TCartItem }) => {
   };
 
   return (
-    <Card className="p-2 md:p-4">
-      <div className="flex gap-2 md:gap-4">
+    <Card className="p-2">
+      <div className="flex gap-2">
         <Link href={`/product/${item.product.slug}`}>
           <MyImage
             src={item.product.images[0]}
@@ -43,20 +43,14 @@ const CartCard = ({ item }: { item: TCartItem }) => {
         </Link>
         <div className="flex-1 space-y-2">
           <Link href={`/product/${item.product.slug}`}>
-            <h3 className="hidden md:block text-sm md:text-base font-medium hover:text-primary transition-colors">
-              {item.product.name}
-            </h3>
-
-            <h3 className="md:hidden text-sm md:text-base font-medium hover:text-primary transition-colors">
+            <h3 className="text-sm font-medium hover:text-primary transition-colors">
               {item.product.name.length > 35
                 ? `${item.product.name.slice(0, 35)}...`
                 : item.product.name}
             </h3>
           </Link>
-          <p className="font-semibold text-sm md:text-base">
-            ${item.product.sellingPrice}
-          </p>
-          <div className="flex items-center gap-3 md:gap-4">
+          <p className="font-semibold text-sm">${item.product.sellingPrice}</p>
+          <div className="flex items-center gap-3">
             <QuantityStepper
               value={item.quantity}
               onChange={handleUpdateQuantity}
@@ -73,7 +67,7 @@ const CartCard = ({ item }: { item: TCartItem }) => {
           </div>
         </div>
         <div className="text-right">
-          <p className="font-semibold md:text-lg">
+          <p className="font-semibold">
             ${(item.product.sellingPrice * item.quantity).toFixed(2)}
           </p>
         </div>
@@ -82,4 +76,4 @@ const CartCard = ({ item }: { item: TCartItem }) => {
   );
 };
 
-export default CartCard;
+export default CartSheetCard;
