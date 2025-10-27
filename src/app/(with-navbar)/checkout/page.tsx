@@ -71,7 +71,7 @@ export default function Checkout() {
   }));
 
   const shippingCost =
-    shippingOption === "inside"
+    shippingOption === "dhaka"
       ? insideDhakaShippingCost
       : outsideDhakaShippingCost;
   const total = subtotal + shippingCost;
@@ -81,9 +81,10 @@ export default function Checkout() {
 
     const orderData = {
       ...values,
-      insideDhaka: shippingOption === "inside" ? true : false,
+      shippingOption,
       orderItems,
-      totalPrice: total,
+      subtotal,
+      total,
       paymentMethod: "CASH-ON-DELIVERY", // will be dynamic
     };
     console.log("orderData", orderData);
@@ -286,7 +287,9 @@ export default function Checkout() {
                     <h4 className="font-medium mb-3">Shipping</h4>
                     <RadioGroup
                       value={shippingOption}
-                      onValueChange={setShippingOption}
+                      onValueChange={(value) =>
+                        setShippingOption(value as "dhaka" | "outside")
+                      }
                       className="space-y-0"
                     >
                       {shippingOptions.map((option) => (

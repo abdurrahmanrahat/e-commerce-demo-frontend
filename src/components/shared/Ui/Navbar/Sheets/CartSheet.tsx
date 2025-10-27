@@ -32,7 +32,9 @@ import { CheckoutStepsForSheet } from "./CheckoutStepsForSheet";
 export default function CartSheet() {
   const [isOpen, setIsOpen] = useState(false);
 
-  const [shippingOption, setShippingOption] = useState("dhaka");
+  const shipOption = useAppSelector((state) => state.cart.shippingOption);
+
+  const [shippingOption, setShippingOption] = useState(shipOption || "dhaka");
 
   const router = useRouter();
 
@@ -149,7 +151,9 @@ export default function CartSheet() {
                       <h3 className="font-medium mb-3">Shipping</h3>
                       <RadioGroup
                         value={shippingOption}
-                        onValueChange={setShippingOption}
+                        onValueChange={(value) =>
+                          setShippingOption(value as "dhaka" | "outside")
+                        }
                         className="space-y-0"
                       >
                         {shippingOptions.map((option) => (

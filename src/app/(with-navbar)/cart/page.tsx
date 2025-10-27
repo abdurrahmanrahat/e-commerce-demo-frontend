@@ -21,7 +21,8 @@ import CartCard from "./CartCard";
 import NotFoundCartItems from "./NotFoundCartItems";
 
 export default function Cart() {
-  const [shippingOption, setShippingOption] = useState("dhaka");
+  const shipOption = useAppSelector((state) => state.cart.shippingOption);
+  const [shippingOption, setShippingOption] = useState(shipOption || "dhaka");
 
   const router = useRouter();
 
@@ -83,7 +84,9 @@ export default function Cart() {
                   <h3 className="font-medium mb-3">Shipping</h3>
                   <RadioGroup
                     value={shippingOption}
-                    onValueChange={setShippingOption}
+                    onValueChange={(value) =>
+                      setShippingOption(value as "dhaka" | "outside")
+                    }
                     className="space-y-0"
                   >
                     {shippingOptions.map((option) => (
