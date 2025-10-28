@@ -5,7 +5,7 @@ import Container from "@/components/shared/Ui/Container";
 import NoDataFound from "@/components/shared/Ui/Data/NoDataFound";
 import NoDataFoundBySearchFilter from "@/components/shared/Ui/Data/NoDataFoundBySearchFilter";
 import { TProduct } from "@/types";
-import Banner from "./_components/Banner";
+import Banner from "../../../components/common/Banner";
 import DesktopSidebar from "./_components/DesktopSidebar";
 import MobileFilterToggle from "./_components/MobileFilterToggle";
 import { ProductCard } from "./_components/ProductCard";
@@ -63,9 +63,14 @@ const ShopPage = async (props: { searchParams: Promise<TShopPageParams> }) => {
   return (
     <div className="min-h-screen">
       <Container className="py-8">
-        <Banner breadcrumbs={[{ label: "Shop", href: "/shop" }]} />
+        <Banner
+          bgImage="/images/banners/shop-page-banner.jpg"
+          title="Shop"
+          description="Discover quality, comfort, and innovation — explore our curated collection of modern essentials."
+          breadcrumbs={[{ label: "Shop", href: "/shop" }]}
+        />
 
-        <div className="flex flex-col lg:flex-row gap-6 mt-6">
+        <div className="flex flex-col lg:flex-row gap-6 my-8 mb-12">
           {/* Desktop Sidebar */}
           <DesktopSidebar />
 

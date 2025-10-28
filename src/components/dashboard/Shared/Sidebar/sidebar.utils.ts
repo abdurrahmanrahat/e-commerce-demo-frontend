@@ -2,6 +2,7 @@ import {
   LayoutDashboard,
   MessageCircle,
   MessageSquarePlus,
+  Package,
   Settings,
   ShoppingBag,
   ShoppingCart,
@@ -34,6 +35,11 @@ export const adminSidebarItems = [
     text: "Manage Products",
     href: "/dashboard/admin/manage-products",
     icon: ShoppingBag,
+  },
+  {
+    text: "Manage Orders",
+    href: "/dashboard/admin/manage-orders",
+    icon: Package,
   },
   { text: "Manage Users", href: "/dashboard/admin/manage-users", icon: Users },
 ];

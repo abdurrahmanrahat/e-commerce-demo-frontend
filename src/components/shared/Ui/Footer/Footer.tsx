@@ -43,7 +43,7 @@ const socialLinks = [
 
 const Footer = () => {
   return (
-    <footer className="border-t border-gray-200 dark:border-gray-800 pt-12 md:pt-16 mt-4 md:mt-8">
+    <footer className="border-t border-gray-200 dark:border-gray-800 pt-12 md:pt-16">
       <Container>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12 pb-10">
           {/* Company Info */}

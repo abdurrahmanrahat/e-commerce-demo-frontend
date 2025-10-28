@@ -9,14 +9,21 @@ type BreadcrumbItem = {
 type TBreadcrumbProps = {
   items: BreadcrumbItem[];
   isStart?: boolean;
+  isBanner?: boolean;
 };
 
-export const Breadcrumb = ({ items, isStart = false }: TBreadcrumbProps) => {
+export const Breadcrumb = ({
+  items,
+  isStart = false,
+  isBanner = false,
+}: TBreadcrumbProps) => {
   return (
     <nav
       className={`flex items-center ${
         isStart ? "justify-start" : "justify-center"
-      } gap-2 text-sm text-gray-800 dark:text-gray-300`}
+      } gap-2 text-sm ${
+        isBanner ? "text-gray-300" : "text-gray-800 dark:text-gray-300"
+      }`}
     >
       <Link
         href="/"
