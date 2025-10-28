@@ -39,6 +39,7 @@ const ManageProductsPage = async (props: {
   searchParams: Promise<TManageProductsPageParams>;
 }) => {
   const searchParams = await props?.searchParams;
+
   const {
     searchTerm,
     category,

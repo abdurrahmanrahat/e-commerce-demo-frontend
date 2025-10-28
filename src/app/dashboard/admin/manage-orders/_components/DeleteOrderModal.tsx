@@ -1,6 +1,6 @@
 "use client";
 
-import { deleteCategoryFromDB } from "@/app/actions/categories";
+import { deleteOrderFromDB } from "@/app/actions/order";
 import { LoaderSpinner } from "@/components/shared/Ui/Loader/LoaderSpinner";
 import { Button } from "@/components/ui/button";
 import {
@@ -16,17 +16,17 @@ import { Trash2 } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
 
-export default function DeleteCategory({ categoryId }: { categoryId: string }) {
+export default function DeleteOrderModal({ orderId }: { orderId: string }) {
   const [isLoading, setIsLoading] = useState(false);
 
-  const handleDeleteCategory = async () => {
+  const handleDeleteOrder = async () => {
     setIsLoading(true);
 
     try {
-      const res = await deleteCategoryFromDB(categoryId);
+      const res = await deleteOrderFromDB(orderId);
 
       if (res?.success) {
-        toast.success("Category deleted successfully!");
+        toast.success("Order deleted successfully!");
       } else {
         toast.error(res?.message || "Something went wrong!");
       }
@@ -36,9 +36,9 @@ export default function DeleteCategory({ categoryId }: { categoryId: string }) {
       setIsLoading(false);
     }
   };
+
   return (
     <Dialog>
-      {/* Trigger button (trash icon) */}
       <DialogTrigger asChild>
         <Button
           variant="ghost"
@@ -53,10 +53,10 @@ export default function DeleteCategory({ categoryId }: { categoryId: string }) {
       <DialogContent className="max-w-[420px]! border border-gray-200 dark:border-gray-800 shadow-lg">
         <DialogHeader>
           <DialogTitle className="text-lg font-semibold text-red-600 dark:text-red-400 flex items-center gap-2">
-            <Trash2 className="h-5 w-5 text-red-500" /> Delete Category
+            <Trash2 className="h-5 w-5 text-red-500" /> Delete Order
           </DialogTitle>
           <DialogDescription className="text-sm text-muted-foreground">
-            Are you sure you want to delete this category? This action cannot be
+            Are you sure you want to delete this order? This action cannot be
             undone.
           </DialogDescription>
         </DialogHeader>
@@ -72,7 +72,7 @@ export default function DeleteCategory({ categoryId }: { categoryId: string }) {
           <DialogClose asChild>
             <Button
               className="bg-red-600 text-white hover:bg-red-700 dark:bg-red-500 dark:hover:bg-red-600"
-              onClick={handleDeleteCategory}
+              onClick={handleDeleteOrder}
               disabled={isLoading}
             >
               {isLoading ? (

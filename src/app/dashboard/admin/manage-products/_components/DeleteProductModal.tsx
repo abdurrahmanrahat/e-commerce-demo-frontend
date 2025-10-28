@@ -68,10 +68,7 @@ export default function DeleteProductModal({
         {/* Action buttons */}
         <div className="flex justify-end gap-3 mt-6">
           <DialogClose asChild>
-            <Button
-              variant="outline"
-              className="border-gray-300 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800"
-            >
+            <Button variant="outline" className="w-auto">
               Cancel
             </Button>
           </DialogClose>
