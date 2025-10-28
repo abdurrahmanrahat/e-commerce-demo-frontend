@@ -43,7 +43,7 @@ export default async function Navbar() {
 
             <Link
               href="/"
-              className="text-xl font-semibold text-gray-900 dark:text-gray-100"
+              className="text-xl font-semibold uppercase text-gray-900 dark:text-gray-100"
             >
               Gadgetoria
             </Link>

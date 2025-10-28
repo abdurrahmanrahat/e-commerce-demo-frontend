@@ -82,9 +82,8 @@ export default function CartSheet() {
         </span>
       </SheetTrigger>
       <SheetContent
-        // side="top"
         showCloseButton={true}
-        className="w-full sm:max-w-[400px] border-none flex flex-col justify-start overflow-y-auto"
+        className="w-full sm:max-w-[400px] border-none overflow-y-auto"
       >
         <SheetHeader className="-mb-4">
           <SheetTitle className="flex items-center gap-2">

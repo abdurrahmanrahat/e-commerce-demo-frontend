@@ -4,6 +4,7 @@ import MyImage from "@/components/shared/Ui/Image/MyImage";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
+import { formatDateFromIOS } from "@/utils/date";
 import {
   Calendar,
   CheckCircle2,
@@ -73,7 +74,8 @@ const OrderSuccessPage = async (props: {
                         Order Date
                       </p>
                       <p className="font-semibold">
-                        {new Date(order.createdAt).toLocaleDateString("en-GB")}
+                        {formatDateFromIOS(order.createdAt)}
+                        {/* {new Date(order.createdAt).toLocaleDateString("en-GB")} */}
                       </p>
                     </div>
                     <div>
@@ -135,8 +137,8 @@ const OrderSuccessPage = async (props: {
                       </p>
                       <p className="text-sm">
                         {order.shippingOption === "dhaka"
-                          ? "2–3 Days (Inside Dhaka)"
-                          : "3–5 Days (Outside Dhaka)"}
+                          ? "1–2 Days (Inside Dhaka)"
+                          : "2–4 Days (Outside Dhaka)"}
                       </p>
                     </div>
                   </div>
@@ -182,7 +184,7 @@ const OrderSuccessPage = async (props: {
                 <CardHeader>
                   <CardTitle>Order Summary</CardTitle>
                 </CardHeader>
-                <CardContent className="space-y-4">
+                <CardContent className="space-y-2 -mt-2">
                   <div className="flex justify-between text-sm">
                     <span className="text-muted-foreground">Subtotal:</span>
                     <span className="font-medium">
