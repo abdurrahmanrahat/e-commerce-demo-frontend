@@ -1,5 +1,6 @@
 "use client";
 
+import Container from "@/components/shared/Ui/Container";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
@@ -17,8 +18,8 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { toast } from "sonner";
 import { CheckoutSteps } from "../../../components/common/Cart/CheckoutSteps";
-import CartCard from "./CartCard";
-import NotFoundCartItems from "./NotFoundCartItems";
+import CartCard from "./_components/CartCard";
+import NotFoundCartItems from "./_components/NotFoundCartItems";
 
 export default function Cart() {
   const shipOption = useAppSelector((state) => state.cart.shippingOption);
@@ -60,7 +61,7 @@ export default function Cart() {
 
   return (
     <div className="min-h-screen">
-      <div className="container mx-auto px-4 py-6">
+      <Container className="py-6">
         <CheckoutSteps currentStep={1} />
 
         <div className="grid lg:grid-cols-3 gap-6 mt-6">
@@ -128,11 +129,7 @@ export default function Cart() {
                 </Button>
 
                 <Link href="/shop">
-                  <Button
-                    variant="outline"
-                    className="w-full border border-gray-200 dark:border-gray-700 hover:bg-primary hover:text-white transition-all duration-300"
-                    size="lg"
-                  >
+                  <Button variant="outline" size="lg">
                     Continue Shopping
                   </Button>
                 </Link>
@@ -140,7 +137,7 @@ export default function Cart() {
             </Card>
           </div>
         </div>
-      </div>
+      </Container>
     </div>
   );
 }

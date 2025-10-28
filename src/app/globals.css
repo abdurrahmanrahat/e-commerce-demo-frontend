@@ -16,10 +16,33 @@
   --shadow-topUpShadow: 0 5px 20px rgba(0, 0, 0, .2)
 }
 
+@layer utilities {
 
-.section-space-for-shadow {
-  @apply py-4 px-[6px] md:px-3
+  /* Text Colors */
+  .text-foreground {
+    @apply text-gray-900 dark:text-gray-100;
+  }
+
+  .text-muted-foreground {
+    @apply text-gray-500 dark:text-gray-400;
+  }
+
+  /* Backgrounds */
+  .bg-muted {
+    @apply bg-gray-100 dark:bg-gray-800;
+  }
+
+  /* Borders */
+  .border-muted {
+    @apply border-gray-200 dark:border-gray-700;
+  }
+
+  .section-space-for-shadow {
+    @apply py-4 px-[6px] md:px-3
+  }
 }
+
+
 
 @keyframes fadeIn {
   from {

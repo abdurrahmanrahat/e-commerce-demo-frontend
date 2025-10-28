@@ -45,7 +45,7 @@ export default async function Navbar() {
               href="/"
               className="text-xl font-semibold text-gray-900 dark:text-gray-100"
             >
-              Brand Name
+              Gadgetoria
             </Link>
           </div>
 

@@ -4,6 +4,7 @@ import { createOrderInDB } from "@/app/actions/order";
 import MYForm from "@/components/shared/Forms/MYForm";
 import MYInput from "@/components/shared/Forms/MYInput";
 import MYTextArea from "@/components/shared/Forms/MYTextArea";
+import Container from "@/components/shared/Ui/Container";
 import MyImage from "@/components/shared/Ui/Image/MyImage";
 import { LoaderSpinner } from "@/components/shared/Ui/Loader/LoaderSpinner";
 import { Button } from "@/components/ui/button";
@@ -112,7 +113,7 @@ export default function Checkout() {
 
   return (
     <div className="min-h-screen">
-      <div className="container mx-auto px-4 py-6">
+      <Container className="py-6">
         <CheckoutSteps currentStep={2} />
 
         <MYForm
@@ -395,7 +396,7 @@ export default function Checkout() {
             </div>
           </div>
         </MYForm>
-      </div>
+      </Container>
     </div>
   );
 }

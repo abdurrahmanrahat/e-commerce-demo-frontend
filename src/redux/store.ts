@@ -13,7 +13,7 @@ import {
   REGISTER,
   REHYDRATE,
 } from "redux-persist";
-import { baseApi } from "./api/baseApi";
+// import { baseApi } from "./api/baseApi";
 import { createExpireStorage } from "./createExpireStorage";
 
 const persistConfig = {
@@ -23,11 +23,11 @@ const persistConfig = {
 
 const cartPersistConfig = {
   key: "moTeCart",
-  storage: createExpireStorage(1 * 24 * 60 * 60 * 1000), // use custom storage with iteration of custom time expiry. (here -> 1 days)
+  storage: createExpireStorage(1 * 24 * 60 * 60 * 1000), // (here -> 1 days)
 };
 const wishlistPersistConfig = {
   key: "moTeWishlist",
-  storage: createExpireStorage(2 * 24 * 60 * 60 * 1000), // use custom storage with iteration of custom time expiry. (here -> 2 days)
+  storage: createExpireStorage(2 * 24 * 60 * 60 * 1000), // (here -> 2 days)
 };
 
 const persistedAuthReducer = persistReducer(persistConfig, authReducer);
@@ -39,7 +39,7 @@ const persistedWishlistReducer = persistReducer(
 
 export const store = configureStore({
   reducer: {
-    [baseApi.reducerPath]: baseApi.reducer,
+    // [baseApi.reducerPath]: baseApi.reducer,
     auth: persistedAuthReducer,
     cart: persistedCartReducer,
     wishlist: persistedWishlistReducer,
@@ -49,7 +49,7 @@ export const store = configureStore({
       serializableCheck: {
         ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
       },
-    }).concat(baseApi.middleware),
+    }),
 });
 
 // Infer the `RootState` and `AppDispatch` types from the store itself
