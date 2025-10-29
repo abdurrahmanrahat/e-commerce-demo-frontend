@@ -3,9 +3,16 @@ import { getSingleProductFromDB } from "@/app/actions/product";
 import NoDataFound from "@/components/shared/Ui/Data/NoDataFound";
 import { Button } from "@/components/ui/button";
 import { TCategory } from "@/types";
+import { Metadata } from "next";
 import Link from "next/link";
 import { MdKeyboardBackspace } from "react-icons/md";
 import EditProductForm from "./_component/EditProductForm";
+
+export const metadata: Metadata = {
+  title: "Edit Product > Dashboard | Gadgetoria",
+  description:
+    "Discover genuine electronic parts and accessories for every device",
+};
 
 const ManageProductEditPage = async (props: {
   params: Promise<{ productSlug: string }>;

@@ -1,8 +1,15 @@
 import Banner from "@/components/common/Banner";
 import Container from "@/components/shared/Ui/Container";
+import { Metadata } from "next";
 import CompanyStory from "./_components/CompanyStory";
 import CTA from "./_components/CTA";
 import ValuesGrid from "./_components/ValuesGrid";
+
+export const metadata: Metadata = {
+  title: "About | Gadgetoria",
+  description:
+    "Discover genuine electronic parts and accessories for every device",
+};
 
 const About = () => {
   return (

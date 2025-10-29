@@ -1,6 +1,13 @@
 import Container from "@/components/shared/Ui/Container";
+import { Metadata } from "next";
 import Link from "next/link";
 import SignupForm from "./_components/SignupForm";
+
+export const metadata: Metadata = {
+  title: "Signup | Gadgetoria",
+  description:
+    "Discover genuine electronic parts and accessories for every device",
+};
 
 export default function SignUp() {
   return (

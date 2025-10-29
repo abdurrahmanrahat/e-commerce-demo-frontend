@@ -1,7 +1,14 @@
 import Banner from "@/components/common/Banner";
 import Container from "@/components/shared/Ui/Container";
 import { Card, CardContent } from "@/components/ui/card";
+import { Metadata } from "next";
 import PrivacyPolicyLists from "./_components/PrivacyPolicyLists";
+
+export const metadata: Metadata = {
+  title: "Privacy Policy | Gadgetoria",
+  description:
+    "Discover genuine electronic parts and accessories for every device",
+};
 
 const PrivacyPolicyPage = () => {
   return (

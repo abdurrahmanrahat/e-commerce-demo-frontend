@@ -1,7 +1,14 @@
 import GoogleAuthWrapper from "@/app/(with-navbar)/login/_components/GoogleAuthWrapper";
 import Container from "@/components/shared/Ui/Container";
+import { Metadata } from "next";
 import Link from "next/link";
 import LoginForm from "./_components/LoginForm";
+
+export const metadata: Metadata = {
+  title: "Login | Gadgetoria",
+  description:
+    "Discover genuine electronic parts and accessories for every device",
+};
 
 export default function LoginPage() {
   return (

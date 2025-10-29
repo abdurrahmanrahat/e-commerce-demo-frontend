@@ -13,10 +13,17 @@ import {
   PhoneCall,
   Truck,
 } from "lucide-react";
+import { Metadata } from "next";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { CheckoutSteps } from "../../../components/common/Cart/CheckoutSteps";
 import { InvoiceDownloadButton } from "./_components/InvoiceDownloadButton";
+
+export const metadata: Metadata = {
+  title: "Order Success | Gadgetoria",
+  description:
+    "Discover genuine electronic parts and accessories for every device",
+};
 
 const OrderSuccessPage = async (props: {
   searchParams: Promise<{ orderId: string }>;

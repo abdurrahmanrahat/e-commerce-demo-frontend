@@ -1,5 +1,12 @@
+import { Metadata } from "next";
 import AddCategory from "./_components/AddCategory";
 import CategoriesLists from "./_components/CategoriesLists";
+
+export const metadata: Metadata = {
+  title: "Manage Categories > Dashboard | Gadgetoria",
+  description:
+    "Discover genuine electronic parts and accessories for every device",
+};
 
 const ManageCategoriesPage = () => {
   return (

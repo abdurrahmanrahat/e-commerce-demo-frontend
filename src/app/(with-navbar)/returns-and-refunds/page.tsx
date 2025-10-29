@@ -1,10 +1,17 @@
 import Banner from "@/components/common/Banner";
 import Container from "@/components/shared/Ui/Container";
 import { Card, CardContent } from "@/components/ui/card";
+import { Metadata } from "next";
 import ContactSection from "./_components/ContactSection";
 import RefundPolicy from "./_components/RefundPolicy";
 import ReturnPolicy from "./_components/ReturnPolicy";
 import ReturnProcess from "./_components/ReturnProcess";
+
+export const metadata: Metadata = {
+  title: "Returns & Refunds | Gadgetoria",
+  description:
+    "Discover genuine electronic parts and accessories for every device",
+};
 
 const ReturnsAndRefundsPage = () => {
   return (

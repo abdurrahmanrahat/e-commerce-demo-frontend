@@ -18,12 +18,19 @@ import { TCategory } from "@/types";
 import { TProduct } from "@/types/product.type";
 import { slugToTitle } from "@/utils/createSlug";
 import { Pencil, Star } from "lucide-react";
+import { Metadata } from "next";
 import Link from "next/link";
 import DeleteProductModal from "./_components/DeleteProductModal";
 import ManageProductsCategoryFilter from "./_components/ManageProductsCategoryFilter";
 import ProductDetailsModal from "./_components/ProductDetailsModal";
 import ProductsSearch from "./_components/ProductsSearch";
 import ProductsSort from "./_components/ProductsSort";
+
+export const metadata: Metadata = {
+  title: "Manage Products > Dashboard | Gadgetoria",
+  description:
+    "Discover genuine electronic parts and accessories for every device",
+};
 
 type TManageProductsPageParams = {
   searchTerm?: string;

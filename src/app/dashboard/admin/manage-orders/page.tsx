@@ -14,11 +14,18 @@ import {
 import { cn } from "@/lib/utils";
 import { TOrder } from "@/types/order.type";
 import { getOrderStatusColor } from "@/utils/getOrderStatusColor";
+import { Metadata } from "next";
 import DeleteOrderModal from "./_components/DeleteOrderModal";
 import OrderDetailsModal from "./_components/OrderDetailsModal";
 import OrdersSearch from "./_components/OrdersSearch";
 import OrdersStatus from "./_components/OrdersStatus";
 import OrderStatusUpdateModal from "./_components/OrderStatusUpdateModal";
+
+export const metadata: Metadata = {
+  title: "Manage Orders > Dashboard | Gadgetoria",
+  description:
+    "Discover genuine electronic parts and accessories for every device",
+};
 
 type TManageOrdersPageParams = {
   searchTerm?: string;

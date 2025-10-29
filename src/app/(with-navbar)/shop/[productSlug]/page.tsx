@@ -1,4 +1,7 @@
-import { getSingleProductFromDB } from "@/app/actions/product";
+import {
+  getAllProductsFromDB,
+  getSingleProductFromDB,
+} from "@/app/actions/product";
 import { Breadcrumb } from "@/components/common/Breadcrumb";
 import ProductGallery from "@/components/common/Product/ProductGallery";
 import { Rating } from "@/components/common/Product/Rating";
@@ -8,10 +11,49 @@ import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { TProduct } from "@/types";
+import { stripHtml, truncateText } from "@/utils/conversion";
 import { slugToTitle } from "@/utils/createSlug";
 import { RotateCcw, Shield, Tag, Truck } from "lucide-react";
 import ProductActions from "./_components/ProductActions";
 import RelatedProducts from "./_components/RelatedProducts";
+
+export async function generateMetadata(props: {
+  params: Promise<{ productSlug: string }>;
+}) {
+  const params = await props.params;
+  const productSlug = params?.productSlug;
+
+  const singleProductResponse = await getSingleProductFromDB(productSlug);
+
+  if (!singleProductResponse?.success) {
+    return {
+      title: "Product not found!",
+      description: "This product does not exist in this shop.",
+    };
+  }
+
+  const plainDescription = truncateText(
+    stripHtml(singleProductResponse?.data?.description),
+    40
+  );
+
+  return {
+    title: `${singleProductResponse?.data?.name} | Gadgetoria`,
+    description: plainDescription,
+    openGraph: {
+      title: singleProductResponse?.data?.name,
+      description: plainDescription,
+      images: [
+        {
+          url: singleProductResponse?.data?.images[0],
+          width: 600,
+          height: 600,
+          alt: singleProductResponse?.data?.name,
+        },
+      ],
+    },
+  };
+}
 
 const ProductDetailPage = async (props: {
   params: Promise<{ productSlug: string }>;
@@ -185,3 +227,17 @@ const ProductDetailPage = async (props: {
 };
 
 export default ProductDetailPage;
+
+export async function generateStaticParams() {
+  try {
+    const productsResponse = await getAllProductsFromDB();
+
+    return (
+      productsResponse?.data?.data?.map((product: TProduct) => ({
+        productSlug: product.slug,
+      })) ?? []
+    );
+  } catch {
+    return [];
+  }
+}

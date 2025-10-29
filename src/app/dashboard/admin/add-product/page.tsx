@@ -1,9 +1,16 @@
 import { getAllCategoriesFromDB } from "@/app/actions/categories";
 import { Button } from "@/components/ui/button";
 import { TCategory } from "@/types";
+import { Metadata } from "next";
 import Link from "next/link";
 import { MdKeyboardBackspace } from "react-icons/md";
 import AddProductForm from "./_components/AddProductForm";
+
+export const metadata: Metadata = {
+  title: "Add Product > Dashboard | Gadgetoria",
+  description:
+    "Discover genuine electronic parts and accessories for every device",
+};
 
 const AddProductPage = async () => {
   const categoriesResponse = await getAllCategoriesFromDB();

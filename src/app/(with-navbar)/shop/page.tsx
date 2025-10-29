@@ -5,10 +5,17 @@ import Container from "@/components/shared/Ui/Container";
 import NoDataFound from "@/components/shared/Ui/Data/NoDataFound";
 import NoDataFoundBySearchFilter from "@/components/shared/Ui/Data/NoDataFoundBySearchFilter";
 import { TProduct } from "@/types";
+import { Metadata } from "next";
 import Banner from "../../../components/common/Banner";
 import DesktopSidebar from "./_components/DesktopSidebar";
 import MobileFilterToggle from "./_components/MobileFilterToggle";
 import { ProductCard } from "./_components/ProductCard";
+
+export const metadata: Metadata = {
+  title: "Shop | Gadgetoria",
+  description:
+    "Discover genuine electronic parts and accessories for every device",
+};
 
 type TShopPageParams = {
   searchTerm?: string;

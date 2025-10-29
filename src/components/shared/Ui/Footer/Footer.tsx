@@ -55,8 +55,8 @@ const Footer = () => {
             </Link>
 
             <p className="text-muted-foreground leading-relaxed">
-              Your trusted source for quality Xiaomi replacement parts and
-              accessories.
+              Your trusted source for discover genuine electronic parts and
+              accessories for every device.
             </p>
             <div className="flex space-x-3 pt-2">
               {socialLinks.map(({ icon: Icon, href }, i) => (

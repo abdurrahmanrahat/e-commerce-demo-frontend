@@ -1,7 +1,14 @@
 import Banner from "@/components/common/Banner";
 import Container from "@/components/shared/Ui/Container";
 import { Card, CardContent } from "@/components/ui/card";
+import { Metadata } from "next";
 import TermsAndConditionsLists from "./_components/TermsAndConditionsLists";
+
+export const metadata: Metadata = {
+  title: "Terms & Conditions | Gadgetoria",
+  description:
+    "Discover genuine electronic parts and accessories for every device",
+};
 
 const TermsAndConditionsPage = () => {
   return (

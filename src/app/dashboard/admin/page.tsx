@@ -1,7 +1,14 @@
+import { Metadata } from "next";
 import DashboardCharts from "./_components/DashboardCharts";
 import DashboardHeaderBanner from "./_components/DashboardHeaderBanner";
 import DashboardStats from "./_components/DashboardStats";
 import PendingOrdersTable from "./_components/PendingOrdersTable";
+
+export const metadata: Metadata = {
+  title: "Dashboard | Gadgetoria",
+  description:
+    "Discover genuine electronic parts and accessories for every device",
+};
 
 const AdminDashboardHomePage = () => {
   return (
