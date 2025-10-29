@@ -41,11 +41,10 @@ export default async function Navbar() {
               />
             </div>
 
-            <Link
-              href="/"
-              className="text-xl font-semibold uppercase text-gray-900 dark:text-gray-100"
-            >
-              Gadgetoria
+            <Link href="/">
+              <span className="font-bold text-xl bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent uppercase">
+                Gadgetoria
+              </span>
             </Link>
           </div>
 

@@ -1,5 +1,26 @@
+import DashboardCharts from "./_components/DashboardCharts";
+import DashboardHeaderBanner from "./_components/DashboardHeaderBanner";
+import DashboardStats from "./_components/DashboardStats";
+import PendingOrdersTable from "./_components/PendingOrdersTable";
+
 const AdminDashboardHomePage = () => {
-  return <div>Admin Dashboard</div>;
+  return (
+    <div className="min-h-screen w-full">
+      {/* Header Banner */}
+      <DashboardHeaderBanner />
+
+      <main className="py-6 md:py-8">
+        {/* Stats Grid */}
+        <DashboardStats />
+
+        {/* Charts Section */}
+        <DashboardCharts />
+
+        {/* Pending Orders Table */}
+        <PendingOrdersTable />
+      </main>
+    </div>
+  );
 };
 
 export default AdminDashboardHomePage;

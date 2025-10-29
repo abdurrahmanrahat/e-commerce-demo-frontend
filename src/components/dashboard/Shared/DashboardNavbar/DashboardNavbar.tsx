@@ -54,9 +54,9 @@ export default function DashboardNavbar({
             <div>
               <Link href="/">
                 {/* <Image src={IMAGES.shared.Logo} alt="Logo" /> */}
-                <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100">
-                  Brand Logo
-                </h2>
+                <span className="font-bold text-xl bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent uppercase">
+                  Gadgetoria
+                </span>
               </Link>
             </div>
 
@@ -80,9 +80,10 @@ export default function DashboardNavbar({
           <div className="my-[12px] flex justify-center items-center">
             <Link href="/">
               {/* <Image src={IMAGES.shared.Logo} alt="Logo" /> */}
-              <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100">
-                Brand Logo
-              </h2>
+
+              <span className="font-bold text-xl bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent uppercase">
+                Gadgetoria
+              </span>
             </Link>
           </div>
 

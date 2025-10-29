@@ -48,9 +48,12 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12 pb-10">
           {/* Company Info */}
           <div className="space-y-4">
-            <h3 className="font-bold text-xl bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent uppercase">
-              Gadgetoria
-            </h3>
+            <Link href="/">
+              <span className="font-bold text-xl bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent uppercase">
+                Gadgetoria
+              </span>
+            </Link>
+
             <p className="text-muted-foreground leading-relaxed">
               Your trusted source for quality Xiaomi replacement parts and
               accessories.

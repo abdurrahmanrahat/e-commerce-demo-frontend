@@ -10,8 +10,8 @@ const NotFoundPage = () => {
         {/* Illustration */}
         <div className="relative w-full max-w-md h-64 sm:h-80">
           <Image
-            src="https://i.ibb.co.com/4R4wSXzp/not-found-page.png"
-            alt="Lost in the wilderness"
+            src="/images/others/not-found-image.jpg"
+            alt="not-found-image"
             fill
             className="object-contain"
             priority

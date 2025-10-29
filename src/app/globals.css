@@ -37,6 +37,10 @@
     @apply border-gray-200 dark:border-gray-700;
   }
 
+  .border-border {
+    @apply border-gray-300 dark:border-gray-700;
+  }
+
   .section-space-for-shadow {
     @apply py-4 px-[6px] md:px-3
   }
