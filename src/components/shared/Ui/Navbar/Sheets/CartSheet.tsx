@@ -24,7 +24,6 @@ import {
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { updateShippingOption } from "@/redux/reducers/cartSlice";
 import { shippingOptions } from "@/utils/shippingOptions";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 import CartSheetCard from "./CartSheetCard";
 import { CheckoutStepsForSheet } from "./CheckoutStepsForSheet";
@@ -62,9 +61,15 @@ export default function CartSheet() {
   // handle checkout
   const handleCheckout = () => {
     setIsOpen(false);
+
     dispatch(updateShippingOption(shippingOption));
 
     router.push("/checkout");
+  };
+
+  const handleContinueShopping = () => {
+    setIsOpen((prev) => !prev);
+    router.push("/shop");
   };
 
   return (
@@ -116,8 +121,8 @@ export default function CartSheet() {
                           Add some products to get started
                         </p>
                       </div>
-                      <Button asChild>
-                        <Link href="/shop">Continue Shopping</Link>
+                      <Button onClick={handleContinueShopping}>
+                        Continue Shopping
                       </Button>
                     </div>
                   ) : (
@@ -208,6 +213,9 @@ export default function CartSheet() {
                       size="lg"
                       onClick={() => {
                         setIsOpen(false);
+
+                        dispatch(updateShippingOption(shippingOption));
+
                         // Navigate to cart page
                         router.push("/cart");
                       }}

@@ -14,13 +14,20 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { useAppSelector } from "@/redux/hooks";
-import Link from "next/link";
+import { useRouter } from "next/navigation";
 import WishlistCard from "./WishListCard";
 
 export default function WishlistSheet() {
   const [isOpen, setIsOpen] = useState(false);
 
+  const router = useRouter();
+
   const wishlists = useAppSelector((state) => state.wishlist.items);
+
+  const handleContinueShopping = () => {
+    setIsOpen((prev) => !prev);
+    router.push("/shop");
+  };
 
   return (
     <Sheet open={isOpen} onOpenChange={setIsOpen}>
@@ -67,8 +74,8 @@ export default function WishlistSheet() {
                           Add some products to get started
                         </p>
                       </div>
-                      <Button asChild>
-                        <Link href="/shop">Continue Shopping</Link>
+                      <Button onClick={handleContinueShopping}>
+                        Continue Shopping
                       </Button>
                     </div>
                   ) : (

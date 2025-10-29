@@ -87,7 +87,7 @@ const WishlistCard = ({ product, onSheetClose }: TWishlistCardProps) => {
             <Trash2 className="h-4 w-4" />
           </Button>
         </div>
-        <div className="w-[112px]">
+        <div className="w-[82px] md:w-[112px]">
           <QuantityStepper
             value={quantity}
             onChange={setQuantity}

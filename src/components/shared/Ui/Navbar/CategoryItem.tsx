@@ -25,7 +25,7 @@ const CategoryItem = ({ category, onClose }: TCategoryItemProps) => {
         {/* Header Row */}
         <div className="flex items-center justify-between">
           <Link
-            href={`/category/${category.slug}`}
+            href={`/shop/${category.slug}`}
             className="flex-1 py-4 text-[15px] font-medium text-gray-800 dark:text-gray-200 hover:text-primary dark:hover:text-primary transition-colors"
             onClick={onClose}
           >
@@ -58,7 +58,7 @@ const CategoryItem = ({ category, onClose }: TCategoryItemProps) => {
                 {category.subCategories.map((sub) => (
                   <Link
                     key={sub._id}
-                    href={`/category/${sub.slug}`}
+                    href={`/shop/${sub.slug}`}
                     className="block py-2 text-sm text-gray-600 dark:text-gray-400 hover:text-primary dark:hover:text-primary transition-colors"
                     onClick={onClose}
                   >

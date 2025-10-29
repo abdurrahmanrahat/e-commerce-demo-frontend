@@ -11,7 +11,7 @@ const Toaster = ({ ...props }) => {
       theme={theme as "system" | "light" | "dark" | undefined}
       className="toaster group"
       toastOptions={{
-        duration: 3000,
+        duration: 2500,
         // duration: 300,
 
         classNames: {

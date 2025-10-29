@@ -12,7 +12,7 @@ const MobileFilterToggle = async () => {
       <SheetTrigger asChild>
         <Button
           variant="outline"
-          className="lg:hidden border border-gray-200 dark:border-gray-700"
+          className="w-auto lg:hidden border border-gray-200 dark:border-gray-700 py-[22px]"
         >
           <SlidersHorizontal className="w-4 h-4 mr-2" />
           Filters

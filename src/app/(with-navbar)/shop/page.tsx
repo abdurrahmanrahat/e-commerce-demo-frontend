@@ -87,10 +87,12 @@ const ShopPage = async (props: { searchParams: Promise<TShopPageParams> }) => {
             <div className="flex flex-col md:flex-row gap-4 mb-6">
               <ProductsSearch />
 
-              <ProductsSort />
+              <div className="flex flex-row-reverse justify-between items-center gap-4">
+                <ProductsSort />
 
-              {/* Mobile Filter Toggle */}
-              <MobileFilterToggle />
+                {/* Mobile Filter Toggle */}
+                <MobileFilterToggle />
+              </div>
             </div>
 
             {!productsResponse?.success ? (

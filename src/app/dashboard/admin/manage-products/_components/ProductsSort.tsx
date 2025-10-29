@@ -63,7 +63,7 @@ const ProductsSort = () => {
 
   return (
     <Select value={sort} onValueChange={handleSortChange}>
-      <SelectTrigger className="w-full sm:w-[180px] bg-card">
+      <SelectTrigger className="w-auto sm:w-[180px] bg-card">
         <SelectValue placeholder="Sort by" />
       </SelectTrigger>
       <SelectContent>
