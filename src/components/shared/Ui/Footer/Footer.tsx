@@ -12,7 +12,7 @@ import Container from "../Container";
 const quickLinks = [
   { label: "About us", href: "/about" },
   { label: "Privacy Policy", href: "/privacy-policy" },
-  { label: "Returns & Refund", href: "/returns-and-refund" },
+  { label: "Returns & Refunds", href: "/returns-and-refunds" },
   { label: "Terms & Conditions", href: "/terms-and-conditions" },
 ];
 
