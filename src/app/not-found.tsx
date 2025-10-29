@@ -46,7 +46,7 @@ const NotFoundPage = () => {
               variant="outline"
               asChild
               size="lg"
-              className="transition-all hover:scale-105"
+              className="w-auto transition-all hover:scale-105"
             >
               <Link href="/dashboard/user">
                 <BookOpenIcon className="mr-2 h-4 w-4" />

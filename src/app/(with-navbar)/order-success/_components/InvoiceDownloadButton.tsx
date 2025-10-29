@@ -24,14 +24,14 @@ export const InvoiceDownloadButton = ({ order }: TInvoiceButtonProps) => {
         {
           columns: [
             [
-              { text: "RoyelHaat", style: "shopName" },
+              { text: "Gadgetoria", style: "shopName" },
               {
                 text: "Smart, Affordable & Problem-Solving Products",
                 style: "subText",
               },
-              { text: "Email: support@royelhaat.com", style: "subText" },
+              { text: "Email: support@gadgetoria.com", style: "subText" },
               {
-                text: "Phone: +880-XXX-XXXXXXX",
+                text: "Phone: +880-1788888888",
                 style: "subText",
                 margin: [0, 0, 0, 20],
               },
@@ -125,7 +125,7 @@ export const InvoiceDownloadButton = ({ order }: TInvoiceButtonProps) => {
           layout: "lightHorizontalLines",
         },
         {
-          text: "\nThank you for shopping with RoyelHaat!",
+          text: "\nThank you for shopping with Gadgetoria!",
           alignment: "center",
           margin: [0, 20, 0, 0],
           italics: true,

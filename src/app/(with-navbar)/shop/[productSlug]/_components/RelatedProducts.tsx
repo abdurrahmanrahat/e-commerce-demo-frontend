@@ -5,7 +5,6 @@ import { TProduct } from "@/types";
 import { ProductCard } from "../../_components/ProductCard";
 
 const RelatedProducts = async ({ tags }: { tags: string[] }) => {
-  console.log("tags", tags);
   const tagsInString = tags.join(",");
 
   const productsResponse = await getAllProductsFromDB({ tags: tagsInString });
