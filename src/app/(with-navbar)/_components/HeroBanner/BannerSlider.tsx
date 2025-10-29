@@ -145,7 +145,7 @@ export default function BannerSlider() {
                 {slides[currentSlide].description}
               </p>
 
-              <Link href="/products" className="inline-block relative z-30">
+              <Link href="/shop" className="inline-block relative z-30">
                 <Button
                   variant="outline"
                   className="mt-4 text-white border-primary hover:bg-primary hover:text-white transition-all duration-300 cursor-pointer font-medium tracking-wide px-6 py-2 rounded-md"

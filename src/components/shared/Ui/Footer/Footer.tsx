@@ -19,19 +19,19 @@ const quickLinks = [
 const categories = [
   {
     label: "Smartphones & Accessories",
-    href: "/products?category=smartphones-and-accessories",
+    href: "/shop?category=smartphones-and-accessories",
   },
   {
     label: "Laptops & Computers",
-    href: "/products?category=laptops-and-computers",
+    href: "/shop?category=laptops-and-computers",
   },
   {
     label: "Smart Wearables",
-    href: "/products?category=smart-wearables",
+    href: "/shop?category=smart-wearables",
   },
   {
     label: "Gaming & Entertainment",
-    href: "/products?category=gaming-and-entertainment",
+    href: "/shop?category=gaming-and-entertainment",
   },
 ];
 

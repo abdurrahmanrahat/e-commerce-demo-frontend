@@ -68,7 +68,7 @@ export default function WishlistSheet() {
                         </p>
                       </div>
                       <Button asChild>
-                        <Link href="/products">Continue Shopping</Link>
+                        <Link href="/shop">Continue Shopping</Link>
                       </Button>
                     </div>
                   ) : (

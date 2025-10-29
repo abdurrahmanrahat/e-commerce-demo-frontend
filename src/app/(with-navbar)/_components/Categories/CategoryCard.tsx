@@ -4,7 +4,7 @@ import Link from "next/link";
 
 const CategoryCard = ({ category }: { category: TCategory }) => {
   return (
-    <Link href={`/products?category=${category.slug}`}>
+    <Link href={`/shop?category=${category.slug}`}>
       <div className="flex flex-col items-center justify-center gap-1 md:gap-2 cursor-pointer group">
         <div
           className="relative h-16 w-16 md:h-24 md:w-24 rounded-full overflow-hidden

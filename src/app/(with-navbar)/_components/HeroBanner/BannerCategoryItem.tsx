@@ -25,7 +25,7 @@ const BannerCategoryItem = ({ category }: TCategoryItemProps) => {
         {/* Header Row */}
         <div className="flex items-center justify-between">
           <Link
-            href={`/products?category=${category.slug}`}
+            href={`/shop?category=${category.slug}`}
             className="flex-1 py-2 text-sm font-semibold text-gray-800 dark:text-gray-200 hover:text-primary dark:hover:text-primary transition-colors flex items-center gap-2"
           >
             <MyImage
@@ -64,7 +64,7 @@ const BannerCategoryItem = ({ category }: TCategoryItemProps) => {
                 {category.subCategories.map((sub) => (
                   <Link
                     key={sub._id}
-                    href={`/products?category=${category.slug}`}
+                    href={`/shop?category=${category.slug}`}
                     className="block py-[3px] text-sm font-medium text-gray-600 dark:text-gray-400 hover:text-primary dark:hover:text-primary transition-colors"
                   >
                     {sub.name}
