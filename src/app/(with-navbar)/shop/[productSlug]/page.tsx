@@ -11,6 +11,7 @@ import { TProduct } from "@/types";
 import { slugToTitle } from "@/utils/createSlug";
 import { RotateCcw, Shield, Tag, Truck } from "lucide-react";
 import ProductActions from "./_components/ProductActions";
+import RelatedProducts from "./_components/RelatedProducts";
 
 const ProductDetailPage = async (props: {
   params: Promise<{ productSlug: string }>;
@@ -162,7 +163,7 @@ const ProductDetailPage = async (props: {
           <TabsContent value="description" className="mt-6">
             <Card className="p-6">
               <div
-                className="prose dark:prose-invert max-w-none html-content"
+                className="prose dark:prose-invert max-w-none html-content text-justify"
                 dangerouslySetInnerHTML={{ __html: product.description }}
               />
             </Card>
@@ -175,6 +176,9 @@ const ProductDetailPage = async (props: {
             </Card>
           </TabsContent>
         </Tabs>
+
+        {/* related products */}
+        <RelatedProducts tags={product.tags} />
       </Container>
     </div>
   );

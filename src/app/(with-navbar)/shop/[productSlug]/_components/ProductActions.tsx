@@ -88,7 +88,7 @@ const ProductActions = ({ product }: { product: TProduct }) => {
             onClick={handleRemoveFromWishlist}
             variant="outline"
             aria-label="Remove from wishlist"
-            className="border border-gray-200 dark:border-gray-700"
+            className="w-auto"
           >
             <Heart className={cn("h-5 w-5 fill-red-500 text-red-500")} />
           </Button>
@@ -98,7 +98,7 @@ const ProductActions = ({ product }: { product: TProduct }) => {
             onClick={handleAddToWishlist}
             variant="outline"
             aria-label="Add to wishlist"
-            className="border border-gray-200 dark:border-gray-700 hover:bg-primary hover:text-white transition-all duration-300"
+            className="w-auto"
           >
             <Heart className={cn("h-5 w-5")} />
           </Button>
@@ -108,7 +108,7 @@ const ProductActions = ({ product }: { product: TProduct }) => {
       <div className="mt-4">
         <Button
           size="lg"
-          className="w-full border border-gray-200 dark:border-gray-700 hover:bg-primary hover:text-white transition-all duration-300"
+          className="w-full"
           variant="outline"
           onClick={() => {
             handleAddToCart();

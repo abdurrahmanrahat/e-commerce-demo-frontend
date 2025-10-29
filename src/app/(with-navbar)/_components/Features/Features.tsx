@@ -36,7 +36,7 @@ const features = [
 
 const Features = () => {
   return (
-    <Container className="py-12 md:py-16">
+    <Container className="pt-12 md:pt-16">
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
         {features.map((item) => {
           const Icon = item.icon;

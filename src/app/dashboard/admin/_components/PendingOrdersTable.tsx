@@ -22,9 +22,15 @@ import { TOrder } from "@/types/order.type";
 import { getOrderStatusColor } from "@/utils/getOrderStatusColor";
 
 import Link from "next/link";
+import DeleteOrderModal from "../manage-orders/_components/DeleteOrderModal";
+import OrderDetailsModal from "../manage-orders/_components/OrderDetailsModal";
+import OrderStatusUpdateModal from "../manage-orders/_components/OrderStatusUpdateModal";
 
 const PendingOrdersTable = async () => {
-  const ordersResponse = await getAllOrdersFromDB({ status: "pending" });
+  const ordersResponse = await getAllOrdersFromDB({
+    status: "pending",
+    limit: 6,
+  });
 
   return (
     <Card>
@@ -46,8 +52,8 @@ const PendingOrdersTable = async () => {
 
       {!ordersResponse?.success ? (
         <NoDataFound
-          title="Orders not found!"
-          description="We couldn’t find any orders right now. Please check back later for new orders."
+          title="Pending orders not found!"
+          description="We couldn’t find any orders in pending right now. Please check back later for new orders."
         />
       ) : (
         <CardContent className="px-3 md:px-6">
@@ -67,7 +73,7 @@ const PendingOrdersTable = async () => {
                     <TableHead>Phone Number</TableHead>
                     <TableHead>Total</TableHead>
                     <TableHead>Status</TableHead>
-                    {/* <TableHead className="text-center">Action</TableHead> */}
+                    <TableHead className="text-center">Action</TableHead>
                   </TableRow>
                 </TableHeader>
 
@@ -94,7 +100,7 @@ const PendingOrdersTable = async () => {
                         </span>
                       </TableCell>
 
-                      {/* <TableCell>
+                      <TableCell>
                         <div className="flex items-center justify-center gap-1 md:gap-2">
                           <OrderDetailsModal order={order} />
 
@@ -102,7 +108,7 @@ const PendingOrdersTable = async () => {
 
                           <DeleteOrderModal orderId={order?._id} />
                         </div>
-                      </TableCell> */}
+                      </TableCell>
                     </tr>
                   ))}
                 </TableBody>

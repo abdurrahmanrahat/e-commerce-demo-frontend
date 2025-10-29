@@ -7,7 +7,7 @@ const Categories = async () => {
   const categoriesResponse = await getAllCategoriesFromDB();
 
   return (
-    <Container className="py-12 md:py-16">
+    <Container className="pt-12 md:pt-16">
       <div className="shadow-cardLightShadow dark:shadow-cardDarkShadow rounded-xl section-space-for-shadow">
         <SectionTitle title="Popular Categories" />
 

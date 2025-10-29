@@ -64,27 +64,27 @@
 
 /* for text editor */
 .html-content h1 {
-  @apply text-2xl font-semibold;
+  @apply text-2xl font-semibold leading-5 mb-2;
 }
 
 .html-content h2 {
-  @apply text-xl font-semibold;
+  @apply text-xl font-semibold leading-5 mb-2;
 }
 
 .html-content h3 {
-  @apply text-lg font-semibold;
+  @apply text-lg font-semibold leading-5 mb-2
 }
 
 .html-content h4 {
-  @apply text-[17px] font-medium;
+  @apply text-[17px] font-medium leading-5 mb-2;
 }
 
 .html-content h5 {
-  @apply text-base font-medium;
+  @apply text-base font-medium leading-5 mb-2;
 }
 
 .html-content h6 {
-  @apply text-sm font-medium;
+  @apply text-sm font-medium leading-5 mb-2;
 }
 
 .html-content p {
