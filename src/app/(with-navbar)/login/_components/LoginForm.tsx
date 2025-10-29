@@ -3,12 +3,12 @@
 import { loginUser } from "@/app/actions/loginUser";
 import MYForm from "@/components/shared/Forms/MYForm";
 import MYInput from "@/components/shared/Forms/MYInput";
-import { LoaderSpinner } from "@/components/shared/Ui/Loader/LoaderSpinner";
 import { Button } from "@/components/ui/button";
 import { useAppDispatch } from "@/redux/hooks";
 import { setUser } from "@/redux/reducers/authSlice";
 import { storeUserInfo } from "@/services/auth.services";
 import { decodedToken } from "@/utils/jwt";
+import { Loader } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { FieldValues } from "react-hook-form";
@@ -64,8 +64,8 @@ const LoginForm = () => {
       onSubmit={handleLogin}
       schema={userLoginSchema}
       defaultValues={{
-        email: "",
-        password: "",
+        email: "admin@gmail.com",
+        password: "admin123",
       }}
     >
       <div className="flex flex-col gap-4">
@@ -100,8 +100,9 @@ const LoginForm = () => {
         <div className="mt-2 w-full">
           <Button className="h-11 cursor-pointer w-full" type="submit">
             {isLoading ? (
-              <span className="flex gap-2">
-                <LoaderSpinner /> <span>Signing...</span>
+              <span className="flex items-center gap-2">
+                <Loader className="h-4 w-4 animate-spin [animation-duration:1.4s]" />
+                <span>Signing...</span>
               </span>
             ) : (
               "Sign In"

@@ -140,8 +140,8 @@ const OrderStatusUpdateModal = ({ order }: TOrderStatusUpdateModalProps) => {
                 onClick={handleUpdate}
               >
                 {isLoading ? (
-                  <span className="flex gap-2">
-                    <Loader className="mr-2 h-4 w-4 animate-spin [animation-duration:1.4s]" />
+                  <span className="flex items-center gap-2">
+                    <Loader className="h-4 w-4 animate-spin [animation-duration:1.4s]" />
                     <span>Deleting...</span>
                   </span>
                 ) : (

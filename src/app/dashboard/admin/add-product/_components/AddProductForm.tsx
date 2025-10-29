@@ -7,10 +7,9 @@ import MYForm from "@/components/shared/Forms/MYForm";
 import MYInput from "@/components/shared/Forms/MYInput";
 import MYSelect from "@/components/shared/Forms/MYSelect";
 import MyImage from "@/components/shared/Ui/Image/MyImage";
-import { LoaderSpinner } from "@/components/shared/Ui/Loader/LoaderSpinner";
 import { Button } from "@/components/ui/button";
 import { createSlug } from "@/utils/createSlug";
-import { ImageUp } from "lucide-react";
+import { ImageUp, Loader } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { ChangeEvent, useState } from "react";
 import { toast } from "sonner";
@@ -316,8 +315,9 @@ const AddProductForm = ({
             disabled={isLoading || isImageUploading}
           >
             {isLoading ? (
-              <span className="flex gap-2 items-center">
-                <LoaderSpinner /> <span>Uploading...</span>
+              <span className="flex items-center gap-2">
+                <Loader className="h-4 w-4 animate-spin [animation-duration:1.4s]" />{" "}
+                <span>Uploading...</span>
               </span>
             ) : (
               "Upload Product"

@@ -6,7 +6,6 @@ import MYInput from "@/components/shared/Forms/MYInput";
 import MYTextArea from "@/components/shared/Forms/MYTextArea";
 import Container from "@/components/shared/Ui/Container";
 import MyImage from "@/components/shared/Ui/Image/MyImage";
-import { LoaderSpinner } from "@/components/shared/Ui/Loader/LoaderSpinner";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
@@ -19,7 +18,7 @@ import {
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { clearCart } from "@/redux/reducers/cartSlice";
 import { shippingOptions } from "@/utils/shippingOptions";
-import { Lock, ShoppingBag } from "lucide-react";
+import { Loader, Lock, ShoppingBag } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -381,8 +380,9 @@ export default function Checkout() {
                     disabled={isLoading || cartItems.length === 0}
                   >
                     {isLoading ? (
-                      <span className="flex gap-2">
-                        <LoaderSpinner /> <span>Processing...</span>
+                      <span className="flex items-center gap-2">
+                        <Loader className="h-4 w-4 animate-spin [animation-duration:1.4s]" />
+                        <span>Processing...</span>
                       </span>
                     ) : (
                       <>

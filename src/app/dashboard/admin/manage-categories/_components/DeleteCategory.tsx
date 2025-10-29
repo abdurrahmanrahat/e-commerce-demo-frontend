@@ -1,7 +1,6 @@
 "use client";
 
 import { deleteCategoryFromDB } from "@/app/actions/categories";
-import { LoaderSpinner } from "@/components/shared/Ui/Loader/LoaderSpinner";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -12,7 +11,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { Trash2 } from "lucide-react";
+import { Loader, Trash2 } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
 
@@ -76,8 +75,9 @@ export default function DeleteCategory({ categoryId }: { categoryId: string }) {
               disabled={isLoading}
             >
               {isLoading ? (
-                <span className="flex gap-2">
-                  <LoaderSpinner /> <span>Deleting...</span>
+                <span className="flex items-center gap-2">
+                  <Loader className="h-4 w-4 animate-spin [animation-duration:1.4s]" />{" "}
+                  <span>Deleting...</span>
                 </span>
               ) : (
                 "Delete"

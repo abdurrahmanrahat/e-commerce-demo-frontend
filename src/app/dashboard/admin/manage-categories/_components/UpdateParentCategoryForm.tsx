@@ -3,12 +3,11 @@
 import { updateCategoryInDB } from "@/app/actions/categories";
 import MYForm from "@/components/shared/Forms/MYForm";
 import MYInput from "@/components/shared/Forms/MYInput";
-import { LoaderSpinner } from "@/components/shared/Ui/Loader/LoaderSpinner";
 import { Button } from "@/components/ui/button";
 import { DialogClose } from "@/components/ui/dialog";
 import { TUpdateCategory } from "@/types";
 import { createSlug } from "@/utils/createSlug";
-import { ImageUp } from "lucide-react";
+import { ImageUp, Loader } from "lucide-react";
 import Image from "next/image";
 import { ChangeEvent, useState } from "react";
 import { toast } from "sonner";
@@ -195,8 +194,9 @@ const UpdateParentCategoryForm = ({
               disabled={isLoading || isImageUploading}
             >
               {isLoading ? (
-                <span className="flex gap-2">
-                  <LoaderSpinner /> <span>Updating...</span>
+                <span className="flex items-center gap-2">
+                  <Loader className="h-4 w-4 animate-spin [animation-duration:1.4s]" />{" "}
+                  <span>Updating...</span>
                 </span>
               ) : (
                 "Update Parent Category"
