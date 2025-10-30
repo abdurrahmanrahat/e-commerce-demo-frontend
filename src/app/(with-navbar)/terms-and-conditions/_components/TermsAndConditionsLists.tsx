@@ -103,7 +103,7 @@ const sections = [
 
 const TermsAndConditionsLists = () => {
   return (
-    <div className="space-y-8">
+    <div className="space-y-8 px-2">
       {sections.map((section, index) => (
         <div key={index}>
           <h2 className="text-xl md:text-2xl font-bold text-foreground mb-3">

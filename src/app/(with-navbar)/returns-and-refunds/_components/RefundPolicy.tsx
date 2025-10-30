@@ -5,7 +5,7 @@ const RefundPolicy = () => {
         Refund Policy
       </h2>
 
-      <div className="space-y-3 text-muted-foreground text-justify">
+      <div className="space-y-3 text-muted-foreground text-justify px-2">
         <p>
           <strong className="text-foreground">Processing Time:</strong> Once we
           receive your returned item, we&apos;ll inspect it and notify you of
