@@ -4,6 +4,7 @@ import ProductsSort from "@/app/dashboard/admin/manage-products/_components/Prod
 import Container from "@/components/shared/Ui/Container";
 import NoDataFound from "@/components/shared/Ui/Data/NoDataFound";
 import NoDataFoundBySearchFilter from "@/components/shared/Ui/Data/NoDataFoundBySearchFilter";
+import MYPagination from "@/components/shared/Ui/Pagination/MYPagination";
 import { TProduct } from "@/types";
 import { Metadata } from "next";
 import Banner from "../../../components/common/Banner";
@@ -27,7 +28,7 @@ type TShopPageParams = {
   maxPrice?: string;
 };
 
-const SHOP_PAGE_DATA_LIMIT = "10";
+const SHOP_PAGE_DATA_LIMIT = "8";
 
 const ShopPage = async (props: { searchParams: Promise<TShopPageParams> }) => {
   const searchParams = await props?.searchParams;
@@ -66,6 +67,8 @@ const ShopPage = async (props: { searchParams: Promise<TShopPageParams> }) => {
   }
 
   const productsResponse = await getAllProductsFromDB(params);
+
+  const totalData = productsResponse?.data?.totalCount || 0;
 
   return (
     <div className="min-h-screen">
@@ -113,11 +116,23 @@ const ShopPage = async (props: { searchParams: Promise<TShopPageParams> }) => {
                     description="Try searching for something else or clear all filters to explore available collections."
                   />
                 ) : (
-                  <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 gap-2 md:gap-3">
-                    {productsResponse?.data?.data.map((product: TProduct) => (
-                      <ProductCard key={product._id} product={product} />
-                    ))}
-                  </div>
+                  <>
+                    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 gap-2 md:gap-3">
+                      {productsResponse?.data?.data.map((product: TProduct) => (
+                        <ProductCard key={product._id} product={product} />
+                      ))}
+                    </div>
+
+                    {productsResponse?.data?.data?.length !== 0 &&
+                      SHOP_PAGE_DATA_LIMIT < totalData && (
+                        <div className="mt-6">
+                          <MYPagination
+                            totalData={totalData}
+                            dataLimit={Number(SHOP_PAGE_DATA_LIMIT)}
+                          />
+                        </div>
+                      )}
+                  </>
                 )}
               </>
             )}

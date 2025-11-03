@@ -40,7 +40,7 @@ type TManageProductsPageParams = {
   sort?: string;
 };
 
-const MANAGE_PRODUCTS_DATA_LIMIT = "10";
+const MANAGE_PRODUCTS_DATA_LIMIT = "8";
 
 const ManageProductsPage = async (props: {
   searchParams: Promise<TManageProductsPageParams>;
@@ -227,16 +227,15 @@ const ManageProductsPage = async (props: {
                 )}
               </div>
 
-              {productsResponse?.data?.data?.length !== 0 ||
-                (MANAGE_PRODUCTS_DATA_LIMIT <=
-                  productsResponse?.data?.data?.length && (
+              {productsResponse?.data?.data?.length !== 0 &&
+                MANAGE_PRODUCTS_DATA_LIMIT < totalData && (
                   <div className="mt-6">
                     <MYPagination
                       totalData={totalData}
                       dataLimit={Number(MANAGE_PRODUCTS_DATA_LIMIT)}
                     />
                   </div>
-                ))}
+                )}
             </CardContent>
           )}
         </Card>

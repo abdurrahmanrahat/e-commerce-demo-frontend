@@ -34,7 +34,7 @@ type TManageOrdersPageParams = {
   limit?: string;
 };
 
-const MANAGE_ORDERS_DATA_LIMIT = "10";
+const MANAGE_ORDERS_DATA_LIMIT = "8";
 
 const ManageOrdersPage = async (props: {
   searchParams: Promise<TManageOrdersPageParams>;
@@ -150,16 +150,15 @@ const ManageOrdersPage = async (props: {
                 )}
               </div>
 
-              {ordersResponse?.data?.data?.length !== 0 ||
-                (MANAGE_ORDERS_DATA_LIMIT <=
-                  ordersResponse?.data?.data?.length && (
+              {ordersResponse?.data?.data?.length !== 0 &&
+                MANAGE_ORDERS_DATA_LIMIT < totalData && (
                   <div className="mt-6">
                     <MYPagination
                       totalData={totalData}
                       dataLimit={Number(MANAGE_ORDERS_DATA_LIMIT)}
                     />
                   </div>
-                ))}
+                )}
             </CardContent>
           )}
         </Card>

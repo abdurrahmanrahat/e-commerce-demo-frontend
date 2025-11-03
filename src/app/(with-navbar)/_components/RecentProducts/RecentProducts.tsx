@@ -3,7 +3,9 @@ import Container from "@/components/shared/Ui/Container";
 import NoDataFound from "@/components/shared/Ui/Data/NoDataFound";
 import NoDataFoundBySearchFilter from "@/components/shared/Ui/Data/NoDataFoundBySearchFilter";
 import SectionTitle from "@/components/shared/Ui/Title/SectionTitle";
+import { Button } from "@/components/ui/button";
 import { TProduct } from "@/types";
+import Link from "next/link";
 import { ProductCard } from "../../shop/_components/ProductCard";
 
 const RecentProducts = async () => {
@@ -38,6 +40,18 @@ const RecentProducts = async () => {
               )}
             </>
           )}
+        </div>
+
+        <div className="mt-6 mb-2 flex justify-center">
+          <Link href={`/shop`}>
+            <Button
+              size="lg"
+              variant="outline"
+              className="border border-primary dark:border-primary text-primary"
+            >
+              View All
+            </Button>
+          </Link>
         </div>
       </div>
     </Container>

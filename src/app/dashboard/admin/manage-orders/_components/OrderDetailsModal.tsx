@@ -21,7 +21,7 @@ const OrderDetailsModal = ({ order }: { order: TOrder }) => {
 
       <DialogContent
         className="!max-w-4xl max-h-[90vh] overflow-y-auto scroll-hidden"
-        showCloseButton={false}
+        // showCloseButton={false}
         aria-describedby={undefined}
       >
         {/* Header */}
@@ -144,7 +144,7 @@ const OrderDetailsModal = ({ order }: { order: TOrder }) => {
                   </Link>
                   <div>
                     <Link href={`/shop/${item.product.slug}`}>
-                      <p className="font-medium text-sm md:text-base">
+                      <p className="font-medium text-sm md:text-base line-clamp-2">
                         {item.product.name}
                       </p>
                     </Link>

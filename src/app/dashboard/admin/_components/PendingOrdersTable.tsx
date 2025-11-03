@@ -43,7 +43,11 @@ const PendingOrdersTable = async () => {
             </CardDescription>
           </div>
           <Link href="/dashboard/admin/manage-orders?status=pending">
-            <Button variant="outline" size="sm">
+            <Button
+              variant="outline"
+              size="sm"
+              className="border border-primary dark:border-primary text-primary"
+            >
               View All
             </Button>
           </Link>
@@ -78,39 +82,41 @@ const PendingOrdersTable = async () => {
                 </TableHeader>
 
                 <TableBody>
-                  {ordersResponse?.data?.data?.map((order: TOrder) => (
-                    <tr
-                      key={order._id}
-                      className="group border-b border-gray-200 dark:border-gray-700 hover:bg-muted/30 transition-colors"
-                    >
-                      <TableCell>{order.orderNumber}</TableCell>
-                      <TableCell className="font-medium">
-                        {order.fullName}
-                      </TableCell>
-                      <TableCell>{order.phone}</TableCell>
-                      <TableCell>${order.total}</TableCell>
-                      <TableCell>
-                        <span
-                          className={cn(
-                            "inline-flex items-center justify-center px-3 py-[3px] rounded-full text-xs font-semibold capitalize select-none transition-all duration-200",
-                            getOrderStatusColor(order.status)
-                          )}
-                        >
-                          {order.status}
-                        </span>
-                      </TableCell>
+                  {ordersResponse?.data?.data
+                    ?.slice(0, 4)
+                    .map((order: TOrder) => (
+                      <tr
+                        key={order._id}
+                        className="group border-b border-gray-200 dark:border-gray-700 hover:bg-muted/30 transition-colors"
+                      >
+                        <TableCell>{order.orderNumber}</TableCell>
+                        <TableCell className="font-medium">
+                          {order.fullName}
+                        </TableCell>
+                        <TableCell>{order.phone}</TableCell>
+                        <TableCell>${order.total}</TableCell>
+                        <TableCell>
+                          <span
+                            className={cn(
+                              "inline-flex items-center justify-center px-3 py-[3px] rounded-full text-xs font-semibold capitalize select-none transition-all duration-200",
+                              getOrderStatusColor(order.status)
+                            )}
+                          >
+                            {order.status}
+                          </span>
+                        </TableCell>
 
-                      <TableCell>
-                        <div className="flex items-center justify-center gap-1 md:gap-2">
-                          <OrderDetailsModal order={order} />
+                        <TableCell>
+                          <div className="flex items-center justify-center gap-1 md:gap-2">
+                            <OrderDetailsModal order={order} />
 
-                          <OrderStatusUpdateModal order={order} />
+                            <OrderStatusUpdateModal order={order} />
 
-                          <DeleteOrderModal orderId={order?._id} />
-                        </div>
-                      </TableCell>
-                    </tr>
-                  ))}
+                            <DeleteOrderModal orderId={order?._id} />
+                          </div>
+                        </TableCell>
+                      </tr>
+                    ))}
                 </TableBody>
               </Table>
             )}
