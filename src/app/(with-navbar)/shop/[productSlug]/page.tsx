@@ -2,6 +2,7 @@ import {
   getAllProductsFromDB,
   getSingleProductFromDB,
 } from "@/app/actions/product";
+import { getMeFromDB } from "@/app/actions/users";
 import { Breadcrumb } from "@/components/common/Breadcrumb";
 import ProductGallery from "@/components/common/Product/ProductGallery";
 import { Rating } from "@/components/common/Product/Rating";
@@ -16,6 +17,7 @@ import { slugToTitle } from "@/utils/createSlug";
 import { RotateCcw, Shield, Tag, Truck } from "lucide-react";
 import ProductActions from "./_components/ProductActions";
 import RelatedProducts from "./_components/RelatedProducts";
+import { ReviewsSection } from "./_components/ReviewsSection";
 
 export async function generateMetadata(props: {
   params: Promise<{ productSlug: string }>;
@@ -60,6 +62,9 @@ const ProductDetailPage = async (props: {
 }) => {
   const params = await props.params;
   const productSlug = params?.productSlug;
+
+  const user = await getMeFromDB();
+  console.log("user", user?.data?.user._id);
 
   const singleProductResponse = await getSingleProductFromDB(productSlug);
 
@@ -212,9 +217,12 @@ const ProductDetailPage = async (props: {
           </TabsContent>
           <TabsContent value="reviews" className="mt-6">
             <Card className="p-6">
-              <p className="text-muted-foreground text-center py-8">
-                Reviews section coming soon
-              </p>
+              <ReviewsSection
+                productId={product._id}
+                averageRating={product.averageRatings}
+                totalReviews={product.totalReviews}
+                userId={user?.data?.user._id}
+              />
             </Card>
           </TabsContent>
         </Tabs>

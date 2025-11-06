@@ -3,11 +3,11 @@
 import { addCategoryToDB } from "@/app/actions/categories";
 import MYForm from "@/components/shared/Forms/MYForm";
 import MYInput from "@/components/shared/Forms/MYInput";
+import MyImage from "@/components/shared/Ui/Image/MyImage";
 import { Button } from "@/components/ui/button";
 import { DialogClose } from "@/components/ui/dialog";
 import { createSlug } from "@/utils/createSlug";
 import { ImageUp, Loader } from "lucide-react";
-import Image from "next/image";
 import { ChangeEvent, useState } from "react";
 import { toast } from "sonner";
 import z from "zod";
@@ -150,7 +150,7 @@ const ParentCategoryForm = () => {
                 </div>
               ) : (
                 <div className="relative w-40 h-32 mx-auto group rounded-md overflow-hidden border border-gray-200 dark:border-gray-700">
-                  <Image
+                  <MyImage
                     src={image}
                     alt="category-image"
                     fill
