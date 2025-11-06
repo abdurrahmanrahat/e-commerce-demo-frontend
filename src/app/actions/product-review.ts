@@ -183,6 +183,7 @@ export const approveReviewInDB = async (
 
     const data = await res.json();
     revalidateTag(tagLists.PRODUCT_REVIEW);
+    revalidateTag(tagLists.PRODUCT);
 
     if (data?.success) {
       return {

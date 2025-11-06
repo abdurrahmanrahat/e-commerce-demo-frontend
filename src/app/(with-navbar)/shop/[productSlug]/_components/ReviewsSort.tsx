@@ -7,36 +7,34 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Filter } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
-const ratingOptions = [
-  { label: "All Ratings", value: "all" },
-  { label: "5 Stars", value: "5" },
-  { label: "4 Stars", value: "4" },
-  { label: "3 Stars", value: "3" },
-  { label: "2 Stars", value: "2" },
-  { label: "1 Star", value: "1" },
+const sortOptions = [
+  { label: "Default", value: "all" },
+  { label: "Highest Rating", value: "highest_rating" },
+  { label: "Lowest Rating", value: "lowest_rating" },
 ];
 
-const ReviewRatingFilter = () => {
+const ReviewsSort = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const [rating, setRating] = useState("");
+  const [sort, setSort] = useState("");
 
+  // Load from URL query on mount
   useEffect(() => {
-    const existing = searchParams.get("rating") || "";
-    setRating(existing);
+    const existing = searchParams.get("sort") || "";
+    setSort(existing);
   }, [searchParams]);
 
+  // Update URL on change
   useEffect(() => {
     const params = new URLSearchParams(searchParams.toString());
 
-    if (rating && rating !== "all") {
-      params.set("rating", rating);
+    if (sort && sort !== "all") {
+      params.set("sort", sort);
     } else {
-      params.delete("rating");
+      params.delete("sort");
     }
 
     const newUrl = params.toString()
@@ -44,22 +42,19 @@ const ReviewRatingFilter = () => {
       : window.location.pathname;
 
     router.push(newUrl, { scroll: false });
-  }, [rating, router, searchParams]);
+  }, [sort, router, searchParams]);
 
   const handleChange = (value: string) => {
-    setRating(value === "all" ? "" : value);
+    setSort(value === "all" ? "" : value);
   };
 
   return (
-    <Select value={rating} onValueChange={handleChange}>
+    <Select value={sort} onValueChange={handleChange}>
       <SelectTrigger className="w-auto md:w-[180px] bg-card">
-        <div className="flex items-center gap-2">
-          <Filter className="w-4 h-4" />
-          <SelectValue placeholder="Filter by Rating" />
-        </div>
+        <SelectValue placeholder="Sort by" />
       </SelectTrigger>
       <SelectContent>
-        {ratingOptions.map((opt) => (
+        {sortOptions.map((opt) => (
           <SelectItem key={opt.value} value={opt.value}>
             {opt.label}
           </SelectItem>
@@ -69,4 +64,4 @@ const ReviewRatingFilter = () => {
   );
 };
 
-export default ReviewRatingFilter;
+export default ReviewsSort;

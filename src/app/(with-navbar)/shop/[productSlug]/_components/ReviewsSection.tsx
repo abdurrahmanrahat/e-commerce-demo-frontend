@@ -1,89 +1,35 @@
-"use client";
-
+import { getProductReviewsFromDB } from "@/app/actions/product-review";
+import { Rating } from "@/components/common/Product/Rating";
+import NoDataFound from "@/components/shared/Ui/Data/NoDataFound";
+import MYPagination from "@/components/shared/Ui/Pagination/MYPagination";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import { TProduct } from "@/types";
-import { ChevronDown, Filter, Star } from "lucide-react";
-import { useState } from "react";
+import { TProduct, TProductReview } from "@/types";
+import { Star } from "lucide-react";
 import { ReviewCard } from "./ReviewCard";
 import { ReviewForm } from "./ReviewForm";
-
-// Mock reviews data
-const mockReviews = [
-  {
-    id: "1",
-    userName: "Abdur Rahman",
-    userAvatar: "",
-    rating: 5,
-    comment:
-      "Awesome product! The quality exceeded my expectations. Fast delivery and great customer service.",
-    images: [],
-    verified: true,
-    createdAt: new Date("2025-10-29"),
-  },
-  {
-    id: "2",
-    userName: "Mosaddekur Rahman",
-    userAvatar: "",
-    rating: 5,
-    comment:
-      "গতকাল (১৯/১০/২৫) সোমবাটি নিমিত করেছি। আইভা অনুযায়ী পোলুইট এর কেলোনালটি ভালইছে তাছে। ১৬ ঘণ্টা চার্জ করার পর আজাকব টিমারটি বযবহার করলাম। থেম পাই মিনিট বযবহার করার পরও দুরইব পোলারফুল মনে হয়েছে। টিমারটি টক আর তার বাছাই মিনিট উইনিট একবাই টোডলে কোম করে হেন।",
-    images: [
-      "https://images.unsplash.com/photo-1585386959984-a4155224a1ad?w=200",
-      "https://images.unsplash.com/photo-1522338242992-e1a54906a8da?w=200",
-    ],
-    verified: true,
-    createdAt: new Date("2025-10-15"),
-  },
-  {
-    id: "3",
-    userName: "Farheen F.",
-    userAvatar: "",
-    rating: 3,
-    comment:
-      "one clipper comb is missing got 3 only... the power drops & normals depending on holding position which shows battery problem of the device",
-    images: [
-      "https://images.unsplash.com/photo-1503602642458-232111445657?w=200",
-      "https://images.unsplash.com/photo-1631729371254-42c2892f0e6e?w=200",
-    ],
-    verified: true,
-    createdAt: new Date("2025-10-10"),
-  },
-  {
-    id: "4",
-    userName: "Sarah Johnson",
-    userAvatar: "",
-    rating: 4,
-    comment:
-      "Good product overall, but shipping took longer than expected. Quality is solid though.",
-    images: [],
-    verified: false,
-    createdAt: new Date("2025-10-05"),
-  },
-];
+import ReviewRatingFilter from "./ReviewRatingFilter";
+import ReviewsSort from "./ReviewsSort";
 
 interface ReviewsSectionProps {
   product: TProduct;
   averageRating: number;
   totalReviews: number;
   userId: string;
+  paramsObj: Record<string, string>;
+  MANAGE_REVIEWS_DATA_LIMIT: string;
 }
 
-export const ReviewsSection = ({
+export const ReviewsSection = async ({
   product,
   averageRating,
   totalReviews,
   userId,
+  paramsObj,
+  MANAGE_REVIEWS_DATA_LIMIT,
 }: ReviewsSectionProps) => {
-  const [sortBy, setSortBy] = useState("relevance");
-  const [filterBy, setFilterBy] = useState("all");
+  const reviewsResponse = await getProductReviewsFromDB(product._id, paramsObj);
+  console.log("reviewsResponse", reviewsResponse);
 
   // Calculate rating distribution
   const ratingDistribution = [
@@ -94,10 +40,7 @@ export const ReviewsSection = ({
     { stars: 1, count: 13, percentage: 9 },
   ];
 
-  const totalRatingCount = ratingDistribution.reduce(
-    (sum, item) => sum + item.count,
-    0
-  );
+  const totalData = reviewsResponse?.data?.totalCount || 0;
 
   return (
     <div className="space-y-8">
@@ -108,7 +51,9 @@ export const ReviewsSection = ({
         <Card>
           <CardContent className="p-6">
             <div className="flex items-center justify-between mb-6">
-              <h2 className="text-2xl font-bold">Customer Reviews</h2>
+              <h2 className="text-xl md:text-2xl font-bold">
+                Customer Reviews
+              </h2>
               <Badge variant="outline">{totalReviews} reviews</Badge>
             </div>
 
@@ -118,7 +63,7 @@ export const ReviewsSection = ({
                 {averageRating.toFixed(1)}
               </div>
               <div className="flex items-center justify-center gap-1 mb-2">
-                {[1, 2, 3, 4, 5].map((star) => (
+                {/* {[1, 2, 3, 4, 5].map((star) => (
                   <Star
                     key={star}
                     className={`w-6 h-6 ${
@@ -127,10 +72,11 @@ export const ReviewsSection = ({
                         : "text-muted"
                     }`}
                   />
-                ))}
+                ))} */}
+                <Rating rating={averageRating} size="lg" />
               </div>
               <p className="text-sm text-muted-foreground">
-                Based on {totalRatingCount} reviews
+                Based on {totalReviews} reviews
               </p>
             </div>
 
@@ -171,48 +117,57 @@ export const ReviewsSection = ({
           <h3 className="text-xl font-bold">All Reviews</h3>
 
           {/* Sort and Filter */}
-          <div className="flex items-center gap-3">
-            <Select value={sortBy} onValueChange={setSortBy}>
-              <SelectTrigger className="w-[180px]">
-                <div className="flex items-center gap-2">
-                  <ChevronDown className="w-4 h-4" />
-                  <SelectValue placeholder="Sort by" />
-                </div>
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="relevance">Sort: Relevance</SelectItem>
-                <SelectItem value="recent">Sort: Most Recent</SelectItem>
-                <SelectItem value="highest">Sort: Highest Rating</SelectItem>
-                <SelectItem value="lowest">Sort: Lowest Rating</SelectItem>
-              </SelectContent>
-            </Select>
+          <div className="flex flex-col gap-2 md:gap-4 sm:flex-row sm:items-center sm:justify-end">
+            <ReviewRatingFilter />
 
-            <Select value={filterBy} onValueChange={setFilterBy}>
-              <SelectTrigger className="w-[180px]">
-                <div className="flex items-center gap-2">
-                  <Filter className="w-4 h-4" />
-                  <SelectValue placeholder="Filter" />
-                </div>
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="all">Filter: All stars</SelectItem>
-                <SelectItem value="5">5 Stars</SelectItem>
-                <SelectItem value="4">4 Stars</SelectItem>
-                <SelectItem value="3">3 Stars</SelectItem>
-                <SelectItem value="2">2 Stars</SelectItem>
-                <SelectItem value="1">1 Star</SelectItem>
-                <SelectItem value="verified">Verified Purchase</SelectItem>
-              </SelectContent>
-            </Select>
+            <ReviewsSort />
           </div>
         </div>
 
-        {/* Review Cards */}
-        <div className="space-y-4">
-          {mockReviews.map((review) => (
-            <ReviewCard key={review.id} review={review} />
-          ))}
-        </div>
+        {!reviewsResponse?.success ? (
+          <NoDataFound
+            title="Reviews not found!"
+            description="We couldn’t find any orders right now. Please check back later for new orders."
+          />
+        ) : (
+          <div>
+            {reviewsResponse?.data?.data?.length === 0 ? (
+              <div className="flex flex-col items-center justify-center py-16 text-center">
+                {/* Icon */}
+                <div className="p-4 rounded-full bg-gray-100 dark:bg-deep-dark mb-4">
+                  <Star className="w-10 h-10 text-gray-500 dark:text-gray-400" />
+                </div>
+
+                {/* Title */}
+                <h3 className="text-2xl font-semibold text-gray-800 dark:text-gray-100 mb-1">
+                  Reviews not found!
+                </h3>
+
+                {/* Description */}
+                <p className="text-gray-500 dark:text-gray-400 text-sm max-w-md">
+                  Try searching for something else or clear all filters to
+                  explore available reviews.
+                </p>
+              </div>
+            ) : (
+              <div className="space-y-4">
+                {reviewsResponse?.data?.data?.map((review: TProductReview) => (
+                  <ReviewCard key={review._id} review={review} />
+                ))}
+
+                {reviewsResponse?.data?.data?.length !== 0 &&
+                  MANAGE_REVIEWS_DATA_LIMIT < totalData && (
+                    <div className="mt-2">
+                      <MYPagination
+                        totalData={totalData}
+                        dataLimit={Number(MANAGE_REVIEWS_DATA_LIMIT)}
+                      />
+                    </div>
+                  )}
+              </div>
+            )}
+          </div>
+        )}
       </div>
     </div>
   );

@@ -54,7 +54,8 @@ export const ReviewForm = ({
 
     const reviewData = {
       user: userId,
-      product: productSlug,
+      product: productId,
+      productSlug,
       rating: values?.rating,
       review: values?.review,
       ...(images && { images }),

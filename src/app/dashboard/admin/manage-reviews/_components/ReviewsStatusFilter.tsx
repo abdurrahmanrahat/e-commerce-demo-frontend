@@ -7,6 +7,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { Filter } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
@@ -49,7 +50,10 @@ const ReviewsStatusFilter = () => {
   return (
     <Select value={status} onValueChange={handleChange}>
       <SelectTrigger className="w-auto md:w-[180px] bg-card">
-        <SelectValue placeholder="Filter Reviews" />
+        <div className="flex items-center gap-2">
+          <Filter className="w-4 h-4" />
+          <SelectValue placeholder="Filter by Status" />
+        </div>
       </SelectTrigger>
       <SelectContent>
         {reviewStatusOptions.map((option) => (

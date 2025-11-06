@@ -1,17 +1,18 @@
 import { getSingleProductFromDB } from "@/app/actions/product";
 import { getSingleUserFromDB } from "@/app/actions/users";
+import { Rating } from "@/components/common/Product/Rating";
 import MyImage from "@/components/shared/Ui/Image/MyImage";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { cn } from "@/lib/utils";
 import { TProductReview } from "@/types";
 import { formatTimeForHowLongAgo } from "@/utils/date";
-import { Calendar, CheckCircle, Eye, Star } from "lucide-react";
+import { Calendar, CheckCircle2, Eye } from "lucide-react";
 import Link from "next/link";
 
 const ReviewDetailsModal = async ({ review }: { review: TProductReview }) => {
   const userRes = await getSingleUserFromDB(review?.user);
-  const productRes = await getSingleProductFromDB(review?.product);
+  const productRes = await getSingleProductFromDB(review?.productSlug);
 
   return (
     <Dialog>
@@ -60,23 +61,12 @@ const ReviewDetailsModal = async ({ review }: { review: TProductReview }) => {
           </p>
 
           <div className="flex items-center gap-[2px]">
-            {[...Array(5)].map((_, i) => (
-              <Star
-                key={i}
-                className={cn(
-                  "h-4 w-4",
-                  i < review.rating
-                    ? "text-yellow-400"
-                    : "text-gray-300 dark:text-gray-600"
-                )}
-                fill={i < review.rating ? "currentColor" : "none"}
-              />
-            ))}
+            <Rating rating={review.rating} />
           </div>
 
           {review.isVerified && (
             <div className="inline-flex items-center gap-1 text-xs px-2 py-[2px] bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 rounded-full">
-              <CheckCircle className="h-3 w-3" />
+              <CheckCircle2 className="h-3 w-3" />
               Verified Purchase
             </div>
           )}
@@ -86,7 +76,7 @@ const ReviewDetailsModal = async ({ review }: { review: TProductReview }) => {
         <p className="text-sm leading-relaxed mb-4">{review.review}</p>
 
         {/* Review Images */}
-        {review?.images.length > 0 && (
+        {review?.images && review?.images.length > 0 && (
           <div className="flex flex-wrap gap-3 mb-4">
             {review?.images.map((img, idx) => (
               <MyImage

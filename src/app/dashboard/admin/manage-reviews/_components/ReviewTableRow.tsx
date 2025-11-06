@@ -9,7 +9,7 @@ import ReviewDetailsModal from "./ReviewDetailsModal";
 
 const ReviewTableRow = async ({ review }: { review: TProductReview }) => {
   const userRes = await getSingleUserFromDB(review?.user);
-  const productRes = await getSingleProductFromDB(review?.product);
+  const productRes = await getSingleProductFromDB(review?.productSlug);
 
   return (
     <tr className="group border-b border-gray-200 dark:border-gray-700 hover:bg-muted/30 transition-colors">

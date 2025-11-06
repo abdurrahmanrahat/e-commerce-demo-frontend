@@ -57,14 +57,47 @@ export async function generateMetadata(props: {
   };
 }
 
+type TProductDetailsPageParams = {
+  rating?: string;
+  page?: string;
+  limit?: string;
+  sort?: string;
+};
+
+const MANAGE_REVIEWS_DATA_LIMIT = "8";
+
 const ProductDetailPage = async (props: {
   params: Promise<{ productSlug: string }>;
+  searchParams: Promise<TProductDetailsPageParams>;
 }) => {
   const params = await props.params;
   const productSlug = params?.productSlug;
 
+  const searchParams = await props?.searchParams;
+
+  const {
+    rating,
+    page = "1",
+    limit = MANAGE_REVIEWS_DATA_LIMIT,
+    sort,
+  } = searchParams || {};
+
+  const paramsObj: Record<string, string> = {};
+
+  if (rating) {
+    paramsObj.rating = rating;
+  }
+  if (page) {
+    paramsObj.page = page;
+  }
+  if (limit) {
+    paramsObj.limit = limit;
+  }
+  if (sort) {
+    paramsObj.sort = sort;
+  }
+
   const user = await getMeFromDB();
-  console.log("user", user?.data?.user._id);
 
   const singleProductResponse = await getSingleProductFromDB(productSlug);
 
@@ -216,14 +249,14 @@ const ProductDetailPage = async (props: {
             </Card>
           </TabsContent>
           <TabsContent value="reviews" className="mt-6">
-            <Card className="p-6">
-              <ReviewsSection
-                product={product}
-                averageRating={product.averageRatings}
-                totalReviews={product.totalReviews}
-                userId={user?.data?.user._id}
-              />
-            </Card>
+            <ReviewsSection
+              product={product}
+              averageRating={product.averageRatings}
+              totalReviews={product.totalReviews}
+              userId={user?.data?.user._id}
+              paramsObj={paramsObj}
+              MANAGE_REVIEWS_DATA_LIMIT={MANAGE_REVIEWS_DATA_LIMIT}
+            />
           </TabsContent>
         </Tabs>
 

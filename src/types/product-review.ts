@@ -2,7 +2,8 @@ export type TProductReview = {
   _id: string;
   user: string;
   product: string;
-  images: string[];
+  productSlug: string;
+  images?: string[];
   rating: number;
   review: string;
   isVerified: boolean; // Verified Purchase status
