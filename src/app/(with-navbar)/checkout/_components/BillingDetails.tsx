@@ -86,12 +86,10 @@ const BillingDetails = () => {
       total,
       paymentMethod: "CASH-ON-DELIVERY", // will be dynamic
     };
-    console.log("orderData", orderData);
 
     // send to db
     try {
       const res = await createOrderInDB(orderData);
-      console.log("res", res);
 
       if (res?.success) {
         toast.success("Order place successfully!");

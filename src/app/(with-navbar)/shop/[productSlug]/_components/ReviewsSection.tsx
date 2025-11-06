@@ -9,6 +9,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { TProduct } from "@/types";
 import { ChevronDown, Filter, Star } from "lucide-react";
 import { useState } from "react";
 import { ReviewCard } from "./ReviewCard";
@@ -69,14 +70,14 @@ const mockReviews = [
 ];
 
 interface ReviewsSectionProps {
-  productId: string;
+  product: TProduct;
   averageRating: number;
   totalReviews: number;
   userId: string;
 }
 
 export const ReviewsSection = ({
-  productId,
+  product,
   averageRating,
   totalReviews,
   userId,
@@ -157,7 +158,11 @@ export const ReviewsSection = ({
         </Card>
 
         {/* Right: Write Review Form */}
-        <ReviewForm productId={productId} userId={userId} />
+        <ReviewForm
+          productId={product._id}
+          productSlug={product.slug}
+          userId={userId}
+        />
       </div>
 
       {/* Reviews List */}

@@ -49,11 +49,16 @@ export const createProductReviewToDB = async (
    Get Reviews for a Product  (Public)
 ============================================ */
 export const getProductReviewsFromDB = async (
-  productId: string
+  productId: string,
+  params?: Record<string, any>
 ): Promise<TServerResponse> => {
+  const queryParams = params
+    ? "?" + new URLSearchParams(params).toString()
+    : "";
+
   try {
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_BACKED_URL}/products/${productId}/reviews`,
+      `${process.env.NEXT_PUBLIC_BACKED_URL}/products/${productId}/reviews${queryParams}`,
       {
         cache: "force-cache",
         next: { tags: [tagLists.PRODUCT_REVIEW] },
@@ -88,10 +93,16 @@ export const getProductReviewsFromDB = async (
 /* ============================================
    Get All Reviews (Admin)
 ============================================ */
-export const getAllReviewsFromDB = async (): Promise<TServerResponse> => {
+export const getAllReviewsFromDB = async (
+  params?: Record<string, any>
+): Promise<TServerResponse> => {
+  const queryParams = params
+    ? "?" + new URLSearchParams(params).toString()
+    : "";
+
   try {
     const res = await fetchWithAuth(
-      `${process.env.NEXT_PUBLIC_BACKED_URL}/products/reviews/all-reviews`,
+      `${process.env.NEXT_PUBLIC_BACKED_URL}/products/reviews/all-reviews${queryParams}`,
       { cache: "no-store" }
     );
 

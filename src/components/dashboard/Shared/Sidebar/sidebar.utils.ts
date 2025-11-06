@@ -6,6 +6,7 @@ import {
   Settings,
   ShoppingBag,
   ShoppingCart,
+  Star,
   Users,
 } from "lucide-react";
 
@@ -40,6 +41,11 @@ export const adminSidebarItems = [
     text: "Manage Orders",
     href: "/dashboard/admin/manage-orders",
     icon: Package,
+  },
+  {
+    text: "Manage Reviews",
+    href: "/dashboard/admin/manage-reviews?isVerified=false",
+    icon: Star,
   },
   { text: "Manage Users", href: "/dashboard/admin/manage-users", icon: Users },
 ];

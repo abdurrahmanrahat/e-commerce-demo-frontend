@@ -218,7 +218,7 @@ const ProductDetailPage = async (props: {
           <TabsContent value="reviews" className="mt-6">
             <Card className="p-6">
               <ReviewsSection
-                productId={product._id}
+                product={product}
                 averageRating={product.averageRatings}
                 totalReviews={product.totalReviews}
                 userId={user?.data?.user._id}

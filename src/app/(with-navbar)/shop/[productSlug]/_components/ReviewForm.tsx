@@ -16,6 +16,7 @@ import z from "zod";
 
 type TReviewFormProps = {
   productId: string;
+  productSlug: string;
   userId: string;
 };
 
@@ -35,15 +36,15 @@ const reviewDefaultValues = {
 const img_hosting_token = process.env.NEXT_PUBLIC_imgBB_token;
 const img_hosting_url = `https://api.imgbb.com/1/upload?key=${img_hosting_token}`;
 
-export const ReviewForm = ({ productId, userId }: TReviewFormProps) => {
+export const ReviewForm = ({
+  productId,
+  productSlug,
+  userId,
+}: TReviewFormProps) => {
   const [isLoading, setIsLoading] = useState(false);
 
   const [images, setImages] = useState<string[]>([]);
   const [isImageUploading, setIsImageUploading] = useState(false);
-
-  //   const user = useGetCurrentUser();
-
-  //   console.log("user", user);
 
   // Mock: Check if user is logged in
   const isLoggedIn = userId ? true : false; // Change to true to see the form
@@ -53,17 +54,15 @@ export const ReviewForm = ({ productId, userId }: TReviewFormProps) => {
 
     const reviewData = {
       user: userId,
-      product: productId,
+      product: productSlug,
       rating: values?.rating,
       review: values?.review,
       ...(images && { images }),
     };
-    console.log("reviewData", reviewData);
 
     // send to db
     try {
       const res = await createProductReviewToDB(productId, reviewData);
-      console.log("res", res);
 
       if (res?.success) {
         toast.success("Review has been given successfully!");
