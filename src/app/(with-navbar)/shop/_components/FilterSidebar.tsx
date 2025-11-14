@@ -142,7 +142,7 @@ export const FilterSidebar = ({ categories }: { categories: TCategory[] }) => {
         <h4 className=" font-medium mb-3">Categories</h4>
         <Accordion
           type="multiple"
-          className="w-full"
+          className="w-full "
           value={openItems}
           onValueChange={setOpenItems}
         >
@@ -157,7 +157,7 @@ export const FilterSidebar = ({ categories }: { categories: TCategory[] }) => {
                 <AccordionItem
                   key={category._id}
                   value={category._id}
-                  className="py-2"
+                  className="py-2 text-gray-700 dark:text-gray-300"
                 >
                   <div className="flex items-center justify-between py-2">
                     <div className="flex items-center gap-2 flex-1">

@@ -1,13 +1,15 @@
 "use client";
 
+import { TUser } from "@/types";
 import Link from "next/link";
 import { SidebarItem } from "./Sidebar.helpers";
 import { adminSidebarItems, userSidebarItems } from "./sidebar.utils";
+import SidebarProfile from "./SidebarProfile";
 
-const Sidebar = ({ role }: { role: "user" | "admin" }) => {
+const Sidebar = ({ role, user }: { role: "user" | "admin"; user: TUser }) => {
   return (
     <div className="h-screen fixed border-r border-gray-200 dark:border-gray-700">
-      <div className="py-10 mx-3 2xl:mx-4">
+      <div className="relative h-full w-full py-10 px-3 2xl:px-4">
         {/* logo section */}
         <div className="flex justify-center items-center">
           <Link href="/">
@@ -29,6 +31,10 @@ const Sidebar = ({ role }: { role: "user" | "admin" }) => {
             adminSidebarItems.map((item, index) => (
               <SidebarItem key={index} item={item} />
             ))}
+        </div>
+
+        <div className="absolute bottom-4 left-0 w-full">
+          <SidebarProfile user={user} />
         </div>
       </div>
     </div>
