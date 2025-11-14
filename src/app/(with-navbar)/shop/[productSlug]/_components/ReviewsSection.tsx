@@ -1,4 +1,7 @@
-import { getProductReviewsFromDB } from "@/app/actions/product-review";
+import {
+  getProductReviewsFromDB,
+  getProductReviewsStatsFromDB,
+} from "@/app/actions/product-review";
 import { Rating } from "@/components/common/Product/Rating";
 import NoDataFound from "@/components/shared/Ui/Data/NoDataFound";
 import MYPagination from "@/components/shared/Ui/Pagination/MYPagination";
@@ -11,14 +14,14 @@ import { ReviewForm } from "./ReviewForm";
 import ReviewRatingFilter from "./ReviewRatingFilter";
 import ReviewsSort from "./ReviewsSort";
 
-interface ReviewsSectionProps {
+type TReviewsSectionProps = {
   product: TProduct;
   averageRating: number;
   totalReviews: number;
   userId: string;
   paramsObj: Record<string, string>;
   MANAGE_REVIEWS_DATA_LIMIT: string;
-}
+};
 
 export const ReviewsSection = async ({
   product,
@@ -27,18 +30,21 @@ export const ReviewsSection = async ({
   userId,
   paramsObj,
   MANAGE_REVIEWS_DATA_LIMIT,
-}: ReviewsSectionProps) => {
+}: TReviewsSectionProps) => {
   const reviewsResponse = await getProductReviewsFromDB(product._id, paramsObj);
-  console.log("reviewsResponse", reviewsResponse);
 
   // Calculate rating distribution
-  const ratingDistribution = [
-    { stars: 5, count: 141, percentage: 85 },
-    { stars: 4, count: 7, percentage: 4 },
-    { stars: 3, count: 4, percentage: 2 },
-    { stars: 2, count: 0, percentage: 0 },
-    { stars: 1, count: 13, percentage: 9 },
-  ];
+  const ratingDistributionStatsResponse = await getProductReviewsStatsFromDB(
+    product._id
+  );
+
+  // const ratingDistribution = [
+  //   { stars: 5, count: 141, percentage: 85 },
+  //   { stars: 4, count: 7, percentage: 4 },
+  //   { stars: 3, count: 4, percentage: 2 },
+  //   { stars: 2, count: 0, percentage: 0 },
+  //   { stars: 1, count: 13, percentage: 9 },
+  // ];
 
   const totalData = reviewsResponse?.data?.totalCount || 0;
 
@@ -50,56 +56,65 @@ export const ReviewsSection = async ({
 
         <Card>
           <CardContent className="p-6">
-            <div className="flex items-center justify-between mb-6">
+            <div className="flex items-center justify-between mb-6 xl:mb-12">
               <h2 className="text-xl md:text-2xl font-bold">
                 Customer Reviews
               </h2>
-              <Badge variant="outline">{totalReviews} reviews</Badge>
+              <Badge variant="outline">{totalReviews || 0} reviews</Badge>
             </div>
 
-            {/* Overall Rating */}
-            <div className="text-center mb-6">
-              <div className="text-5xl font-bold mb-2">
-                {averageRating.toFixed(1)}
-              </div>
-              <div className="flex items-center justify-center gap-1 mb-2">
-                {/* {[1, 2, 3, 4, 5].map((star) => (
-                  <Star
-                    key={star}
-                    className={`w-6 h-6 ${
-                      star <= Math.round(averageRating)
-                        ? "fill-yellow-400 text-yellow-400"
-                        : "text-muted"
-                    }`}
-                  />
-                ))} */}
-                <Rating rating={averageRating} size="lg" />
-              </div>
-              <p className="text-sm text-muted-foreground">
-                Based on {totalReviews} reviews
-              </p>
-            </div>
-
-            {/* Rating Distribution */}
-            <div className="space-y-2">
-              {ratingDistribution.map(({ stars, count, percentage }) => (
-                <div key={stars} className="flex items-center gap-3">
-                  <div className="flex items-center gap-1 w-12">
-                    <span className="text-sm font-medium">{stars}</span>
-                    <Star className="w-3 h-3 fill-yellow-400 text-yellow-400" />
+            {!ratingDistributionStatsResponse?.success ? (
+              <NoDataFound
+                title={`Reviews stats with the product '${product.name}' is not found!`}
+                description="We couldn’t find any reviews stats right now. Please check back later for new reviews by user."
+              />
+            ) : (
+              <div>
+                {/* Overall Rating */}
+                <div className="text-center mb-6 xl:mb-12">
+                  <div className="text-5xl font-bold mb-2">
+                    {averageRating.toFixed(1)}
                   </div>
-                  <div className="flex-1 h-2 bg-muted rounded-full overflow-hidden">
-                    <div
-                      className="h-full bg-primary rounded-full transition-all"
-                      style={{ width: `${percentage}%` }}
-                    />
+                  <div className="flex items-center justify-center gap-1 mb-2">
+                    <Rating rating={averageRating} size="lg" />
                   </div>
-                  <span className="text-sm text-muted-foreground w-8 text-right">
-                    {count}
-                  </span>
+                  <p className="text-sm text-muted-foreground">
+                    Based on {totalReviews} reviews
+                  </p>
                 </div>
-              ))}
-            </div>
+
+                {/* Rating Distribution */}
+                <div className="space-y-2">
+                  {ratingDistributionStatsResponse?.data.map(
+                    ({
+                      stars,
+                      count,
+                      percentage,
+                    }: {
+                      stars: number;
+                      count: number;
+                      percentage: number;
+                    }) => (
+                      <div key={stars} className="flex items-center gap-3">
+                        <div className="flex items-center gap-1 w-12">
+                          <span className="text-sm font-medium">{stars}</span>
+                          <Star className="w-3 h-3 fill-yellow-400 text-yellow-400" />
+                        </div>
+                        <div className="flex-1 h-2 bg-muted rounded-full overflow-hidden">
+                          <div
+                            className="h-full bg-primary rounded-full transition-all"
+                            style={{ width: `${percentage}%` }}
+                          />
+                        </div>
+                        <span className="text-sm text-muted-foreground w-8 text-right">
+                          {count}
+                        </span>
+                      </div>
+                    )
+                  )}
+                </div>
+              </div>
+            )}
           </CardContent>
         </Card>
 
@@ -114,10 +129,10 @@ export const ReviewsSection = async ({
       {/* Reviews List */}
       <div>
         <div className="md:flex items-center justify-between mb-6">
-          <h3 className="text-xl font-bold">All Reviews</h3>
+          <h3 className="text-xl font-bold mb-4 md:mb-0">All Reviews</h3>
 
           {/* Sort and Filter */}
-          <div className="flex flex-col gap-2 md:gap-4 sm:flex-row sm:items-center sm:justify-end">
+          <div className="flex flex-row gap-2 md:gap-4 sm:flex-row sm:items-center justify-between sm:justify-end">
             <ReviewRatingFilter />
 
             <ReviewsSort />
@@ -140,12 +155,12 @@ export const ReviewsSection = async ({
 
                 {/* Title */}
                 <h3 className="text-2xl font-semibold text-gray-800 dark:text-gray-100 mb-1">
-                  Reviews not found!
+                  This product has no review yet!
                 </h3>
 
                 {/* Description */}
                 <p className="text-gray-500 dark:text-gray-400 text-sm max-w-md">
-                  Try searching for something else or clear all filters to
+                  Try searching for another product or clear all filters to
                   explore available reviews.
                 </p>
               </div>

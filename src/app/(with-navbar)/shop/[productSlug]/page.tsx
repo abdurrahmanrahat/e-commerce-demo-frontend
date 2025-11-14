@@ -64,7 +64,7 @@ type TProductDetailsPageParams = {
   sort?: string;
 };
 
-const MANAGE_REVIEWS_DATA_LIMIT = "8";
+const MANAGE_REVIEWS_DATA_LIMIT = "3";
 
 const ProductDetailPage = async (props: {
   params: Promise<{ productSlug: string }>;

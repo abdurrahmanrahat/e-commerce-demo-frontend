@@ -89,6 +89,42 @@ export const getProductReviewsFromDB = async (
     return { success: false, data: [], message: "Network or server error" };
   }
 };
+export const getProductReviewsStatsFromDB = async (
+  productId: string
+): Promise<TServerResponse> => {
+  try {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_BACKED_URL}/products/${productId}/reviews/stats`,
+      {
+        cache: "force-cache",
+        next: { tags: [tagLists.PRODUCT_REVIEW] },
+      }
+    );
+
+    if (!res.ok) {
+      return { success: false, data: [], message: "Failed to fetch reviews" };
+    }
+
+    const data = await res.json();
+
+    if (data?.success) {
+      return {
+        success: data?.success ?? true,
+        data: data?.data || [],
+        message: data?.message,
+      };
+    } else {
+      return {
+        success: data?.success ?? false,
+        data: data?.data || null,
+        message: data?.errorSources?.[0]?.message || data?.message,
+      };
+    }
+  } catch (error) {
+    console.error("Error fetching product reviews stats:", error);
+    return { success: false, data: [], message: "Network or server error" };
+  }
+};
 
 /* ============================================
    Get All Reviews (Admin)

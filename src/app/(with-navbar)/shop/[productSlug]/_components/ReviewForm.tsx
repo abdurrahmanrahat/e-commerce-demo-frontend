@@ -130,7 +130,7 @@ export const ReviewForm = ({
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Write a Review</CardTitle>
+        <CardTitle className="xl:text-lg 2xl:text-xl">Write a Review</CardTitle>
       </CardHeader>
       <CardContent>
         {!isLoggedIn ? (

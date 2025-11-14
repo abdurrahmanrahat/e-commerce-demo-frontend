@@ -15,12 +15,12 @@ export const shippingOptions: TShippingOption[] = [
     id: "dhaka",
     name: "Inside Dhaka city (2-3 Days)",
     price: insideDhakaShippingCost,
-    estimatedDays: "2-3 days",
+    estimatedDays: "1-2 days",
   },
   {
     id: "outside",
     name: "Outside Dhaka City (3-5 Days)",
     price: outsideDhakaShippingCost,
-    estimatedDays: "3-5 days",
+    estimatedDays: "2-4 days",
   },
 ];

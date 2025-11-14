@@ -11,16 +11,17 @@ export const ReviewCard = async ({ review }: { review: TProductReview }) => {
 
   return (
     <Card>
-      <CardContent className="p-6">
+      <CardContent className="">
         <div className="flex gap-4">
           <div className="flex-1 space-y-3">
             {/* Header */}
             <div className="flex items-start justify-between gap-4">
               <div>
-                <div className="flex items-center gap-2 mb-1">
+                <div className="md:flex items-center gap-2 mb-1">
                   <h4 className="font-semibold">
                     {userRes?.data?.name || "Anonymous"}
                   </h4>
+
                   {review.isVerified && (
                     <div className="inline-flex items-center gap-1 text-xs px-2 py-[2px] bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 rounded-full">
                       <CheckCircle2 className="h-3 w-3" />
