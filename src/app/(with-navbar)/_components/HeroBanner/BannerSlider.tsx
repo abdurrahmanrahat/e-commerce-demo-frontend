@@ -133,11 +133,11 @@ export default function BannerSlider() {
             // animate={{ opacity: 1, y: 0 }}
             // transition={{ delay: 0.3, duration: 0.6 }}
             >
-              <p className="text-sm sm:text-base text-gray-300">
+              <p className="text-sm sm:text-base 2xl:text-lg text-gray-300">
                 {slides[currentSlide].title}
               </p>
 
-              <h2 className="text-3xl md:text-3xl lg:text-4xl font-bold text-white">
+              <h2 className="text-3xl md:text-3xl lg:text-4xl 2xl:text-5xl font-bold text-white">
                 {slides[currentSlide].subtitle}
               </h2>
 
@@ -148,10 +148,10 @@ export default function BannerSlider() {
               <Link href="/shop" className="inline-block relative z-30">
                 <Button
                   variant="outline"
-                  className="mt-4 text-white border-primary hover:bg-primary hover:text-white transition-all duration-300 cursor-pointer font-medium tracking-wide px-6 py-2 rounded-md"
+                  className="mt-4 text-white border-primary hover:bg-primary hover:text-white transition-all duration-300 cursor-pointer font-medium tracking-wide px-6 2xl:px-8 py-2 2xl:py-3 rounded-md"
                 >
                   {slides[currentSlide].buttonText}
-                  <ArrowRight className="ml-2 w-4 h-4" />
+                  <ArrowRight className="ml-2 w-4 2xl:w-5 h-4 2xl:h-5" />
                 </Button>
               </Link>
             </motion.div>

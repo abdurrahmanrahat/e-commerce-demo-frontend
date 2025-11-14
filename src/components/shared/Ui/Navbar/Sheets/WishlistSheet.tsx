@@ -33,7 +33,7 @@ export default function WishlistSheet() {
     <Sheet open={isOpen} onOpenChange={setIsOpen}>
       <SheetTrigger asChild>
         <span className="relative cursor-pointer">
-          <Heart className="h-5 w-5" />
+          <Heart className="w-5 h-5 2xl:w-6 2xl:h-6" />
 
           {wishlists.length > 0 && (
             <Badge

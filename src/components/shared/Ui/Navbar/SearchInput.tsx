@@ -1,11 +1,13 @@
 "use client";
 
+import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import useDebounced from "@/hooks/useDebounced";
 import { cn } from "@/lib/utils";
 import { TProduct } from "@/types";
 import { AnimatePresence, motion } from "framer-motion";
 import { PackageSearch, Search, X } from "lucide-react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { LoaderSpinner } from "../Loader/LoaderSpinner";
@@ -19,6 +21,7 @@ const SearchInput = () => {
   // const [readOnly, setReadOnly] = useState(true);
 
   const [results, setResults] = useState<TProduct[]>([]);
+  console.log("results", results);
 
   const inputRef = useRef<HTMLInputElement>(null);
   const router = useRouter();
@@ -44,6 +47,7 @@ const SearchInput = () => {
             signal: controller.signal,
           }
         );
+        console.log("res", res);
 
         const data = await res.json();
 
@@ -91,7 +95,7 @@ const SearchInput = () => {
           onClick={handleClear}
           className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"
         >
-          <X className="h-4 w-4" />
+          <X className="h-4 2xl:h-5 w-4 2xl:w-5" />
         </button>
       )}
 
@@ -105,7 +109,7 @@ const SearchInput = () => {
         // onClick={() => setReadOnly(false)}
         onChange={(e) => setQuery(e.target.value)}
         className={cn(
-          "pl-9 pr-8 py-[10px] text-sm rounded-md border border-gray-200 dark:border-gray-700",
+          "pl-9 pr-8 py-[10px] 2xl:py-5 text-sm rounded-md border border-gray-200 dark:border-gray-700",
           "text-gray-900 dark:text-gray-100",
           "placeholder:text-gray-400 dark:placeholder:text-gray-500",
           "focus:border-primary focus:ring-2 focus:ring-primary/30 focus:outline-none",
@@ -126,13 +130,13 @@ const SearchInput = () => {
             {isLoading ? (
               <div className="text-center py-8">
                 <LoaderSpinner />
-                <p className="text-sm text-gray-500 dark:text-gray-400 mt-2 animate-pulse">
+                <p className="text-sm 2xl:text-base text-gray-500 dark:text-gray-400 mt-2 animate-pulse">
                   Searching...
                 </p>
               </div>
             ) : results.length > 0 ? (
               <div>
-                {results.map((product, i) => (
+                {results.slice(0, 8).map((product, i) => (
                   <div key={product._id}>
                     <SearchProductCard
                       product={product}
@@ -143,21 +147,34 @@ const SearchInput = () => {
                     )}
                   </div>
                 ))}
+                {results.length > 8 && (
+                  <div className="mt-4 flex justify-center items-center">
+                    <Link href="/shop">
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        className="border border-primary dark:border-primary text-primary"
+                      >
+                        View More
+                      </Button>
+                    </Link>
+                  </div>
+                )}
               </div>
             ) : (
               <div className="flex flex-col items-center justify-center py-8 md:py-4 text-center">
                 {/* Icon */}
                 <div className="p-3 rounded-full bg-gray-100 dark:bg-deep-dark mb-3">
-                  <PackageSearch className="w-7 h-7 text-gray-500 dark:text-gray-400" />
+                  <PackageSearch className="w-7 2xl:w-9 h-7 2xl:h-9 text-gray-500 dark:text-gray-400" />
                 </div>
 
                 {/* Title */}
-                <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-100 mb-1">
+                <h3 className="text-lg 2xl:text-xl font-semibold text-gray-800 dark:text-gray-100 mb-1">
                   Products not found!
                 </h3>
 
                 {/* Description */}
-                <p className="text-gray-500 dark:text-gray-400 text-sm max-w-md">
+                <p className="text-gray-500 dark:text-gray-400 text-sm 2xl:text-base max-w-md">
                   Try searching for something else to explore available
                   collections.
                 </p>

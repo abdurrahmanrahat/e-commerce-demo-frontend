@@ -76,7 +76,7 @@ export default function CartSheet() {
     <Sheet open={isOpen} onOpenChange={setIsOpen}>
       <SheetTrigger asChild>
         <span className="relative cursor-pointer">
-          <ShoppingCart className="h-5 w-5" />
+          <ShoppingCart className="w-5 h-5 2xl:w-6 2xl:h-6" />
 
           <Badge
             variant="destructive"

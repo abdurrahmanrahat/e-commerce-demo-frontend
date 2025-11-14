@@ -25,17 +25,17 @@ const SearchProductCard = ({
         />
       </div>
 
-      <div className="col-span-9 space-y-2">
-        <h3 className="text-sm line-clamp-2 text-gray-700 dark:text-gray-200">
+      <div className="col-span-9 space-y-1 2xl:space-y-[2px]">
+        <h3 className="text-sm 2xl:text-base line-clamp-2 text-gray-700 dark:text-gray-200">
           {product.name}
         </h3>
 
         <div className="flex items-center gap-2">
-          <span className="text-sm font-semibold text-primary">
+          <span className="text-sm 2xl:text-base font-semibold text-primary">
             ${product.sellingPrice.toFixed(2)}
           </span>
           {product.price > product.sellingPrice && (
-            <span className="text-xs text-gray-600 dark:text-gray-400 line-through">
+            <span className="text-xs 2xl:text-sm text-gray-600 dark:text-gray-400 line-through">
               ${product.price.toFixed(2)}
             </span>
           )}

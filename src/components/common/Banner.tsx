@@ -9,7 +9,7 @@ type TBannerProps = {
 
 const Banner = ({ bgImage, title, description, breadcrumbs }: TBannerProps) => {
   return (
-    <div className="relative h-[250px] md:h-[300px] lg:h-[380px] flex items-center justify-center overflow-hidden">
+    <div className="relative h-[250px] md:h-[300px] lg:h-[380px] 2xl:h-[400px] flex items-center justify-center overflow-hidden">
       {/* Background Image */}
       <div
         className={`absolute inset-0  bg-cover bg-center`}
