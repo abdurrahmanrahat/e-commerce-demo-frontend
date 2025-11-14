@@ -43,7 +43,7 @@ function TabsTrigger({
     <TabsPrimitive.Trigger
       {...props}
       className={cn(
-        "relative flex-1 select-none text-sm font-medium px-4 py-2 transition-all duration-300",
+        "relative flex-1 select-none text-sm 2xl:text-base font-medium px-4 py-2 transition-all duration-300",
         "text-gray-600 dark:text-gray-300 hover:text-primary",
         "data-[state=active]:text-primary data-[state=active]:shadow-[0_0_10px_rgba(0,0,0,0.05)] font-medium cursor-pointer",
 

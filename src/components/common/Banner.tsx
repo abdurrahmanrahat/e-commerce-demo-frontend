@@ -23,10 +23,10 @@ const Banner = ({ bgImage, title, description, breadcrumbs }: TBannerProps) => {
 
       {/* Centered Content */}
       <div className="relative z-10 px-4 text-center space-y-4 animate-fadeIn">
-        <h1 className="text-2xl md:text-3xl lg:text-4xl text-gray-200 font-semibold uppercase tracking-tight drop-shadow-md">
+        <h1 className="text-2xl md:text-3xl lg:text-4xl 2xl:text-5xl text-gray-200 font-semibold uppercase tracking-tight drop-shadow-md">
           {title}
         </h1>
-        <p className="text-gray-300 max-w-lg mx-auto text-sm md:text-base">
+        <p className="text-gray-300 max-w-lg mx-auto text-sm md:text-base 2xl:text-lg">
           {description}
         </p>
 

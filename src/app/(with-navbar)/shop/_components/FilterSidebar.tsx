@@ -131,7 +131,7 @@ export const FilterSidebar = ({ categories }: { categories: TCategory[] }) => {
     <div className="w-full space-y-6">
       {/* Header */}
       <div className="flex items-center justify-between">
-        <h3 className="font-semibold text-lg">Filters</h3>
+        <h3 className="font-semibold text-lg 2xl:text-xl">Filters</h3>
         <Button variant="ghost" size="sm" onClick={handleClearAll}>
           Clear All
         </Button>
@@ -139,7 +139,7 @@ export const FilterSidebar = ({ categories }: { categories: TCategory[] }) => {
 
       {/* Categories */}
       <div>
-        <h4 className=" font-medium mb-3">Categories</h4>
+        <h4 className="2xl:text-lg font-medium mb-3">Categories</h4>
         <Accordion
           type="multiple"
           className="w-full "
@@ -232,7 +232,7 @@ export const FilterSidebar = ({ categories }: { categories: TCategory[] }) => {
 
       {/* Price Range */}
       <div>
-        <h4 className="font-medium mb-3">Price Range</h4>
+        <h4 className="2xl:text-lg font-medium mb-3">Price Range</h4>
         <div className="space-y-4">
           <Slider
             value={priceRange}

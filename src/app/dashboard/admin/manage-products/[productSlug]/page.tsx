@@ -65,10 +65,10 @@ const ManageProductEditPage = async (props: {
         </Link>
 
         <div className="flex flex-col">
-          <p className="text-sm text-gray-500 dark:text-gray-400">
+          <p className="text-sm 2xl:text-base text-gray-500 dark:text-gray-400">
             Back to product list
           </p>
-          <h2 className="text-lg md:text-2xl font-semibold text-gray-900 dark:text-gray-100">
+          <h2 className="text-lg md:text-2xl 2xl:text-2xl font-semibold text-gray-900 dark:text-gray-100">
             Edit Product
           </h2>
         </div>

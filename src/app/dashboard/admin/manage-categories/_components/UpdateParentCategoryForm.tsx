@@ -115,7 +115,7 @@ const UpdateParentCategoryForm = ({
           <div className="grid gap-[6px]">
             <label
               htmlFor="name"
-              className="text-sm font-medium text-gray-700 dark:text-gray-300"
+              className="text-sm 2xl:text-base font-medium text-gray-700 dark:text-gray-300"
             >
               Category Image <span className="text-red-500 font-medium">*</span>
             </label>
@@ -143,12 +143,12 @@ const UpdateParentCategoryForm = ({
                           : "text-gray-400"
                       } mb-2 mx-auto`}
                     />
-                    <p className="text-sm text-gray-900 dark:text-white">
+                    <p className="text-sm 2xl:text-base text-gray-900 dark:text-white">
                       {isImageUploading
                         ? "Uploading..."
                         : "Click to upload image"}
                     </p>
-                    <p className="text-xs text-gray-500 dark:text-gray-400 mt-0.5">
+                    <p className="text-xs 2xl:text-sm text-gray-500 dark:text-gray-400 mt-0.5">
                       PNG, JPG up to 2MB
                     </p>
                   </label>
@@ -177,7 +177,7 @@ const UpdateParentCategoryForm = ({
           <div className="grid gap-[6px]">
             <label
               htmlFor="name"
-              className="text-sm font-medium text-gray-700 dark:text-gray-300"
+              className="text-sm 2xl:text-base font-medium text-gray-700 dark:text-gray-300"
             >
               Category Name <span className="text-red-500 font-medium">*</span>
             </label>
@@ -189,7 +189,7 @@ const UpdateParentCategoryForm = ({
         <div className="mt-2 w-full">
           <DialogClose asChild>
             <Button
-              className="h-11 cursor-pointer w-full"
+              className="h-11 2xl:h-12 cursor-pointer w-full"
               type="submit"
               disabled={isLoading || isImageUploading}
             >

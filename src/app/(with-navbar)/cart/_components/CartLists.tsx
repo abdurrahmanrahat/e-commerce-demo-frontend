@@ -70,13 +70,13 @@ const CartLists = () => {
       <div className="lg:col-span-1">
         <Card className="sticky top-6 py-0">
           <CardContent className="p-6 space-y-4">
-            <div className="flex justify-between text-sm md:text-base">
+            <div className="flex justify-between text-sm md:text-base 2xl:text-lg">
               <span className="text-muted-foreground">Subtotal:</span>
               <span className="font-medium">${subtotal.toFixed(2)}</span>
             </div>
 
             <div>
-              <h3 className="font-medium mb-3">Shipping</h3>
+              <h3 className="font-medium mb-3 2xl:text-lg">Shipping</h3>
               <RadioGroup
                 value={shippingOption}
                 onValueChange={(value) =>
@@ -99,19 +99,21 @@ const CartLists = () => {
                       </Label>
                     </div>
 
-                    <span className="text-sm font-medium">${option.price}</span>
+                    <span className="text-sm 2xl:text-base font-medium">
+                      ${option.price}
+                    </span>
                   </div>
                 ))}
               </RadioGroup>
 
-              <p className="text-xs text-muted-foreground mt-2">
+              <p className="text-xs 2xl:text-sm text-muted-foreground mt-2">
                 Shipping options will be updated during checkout.
               </p>
             </div>
 
             <Separator />
 
-            <div className="flex justify-between text-base font-bold">
+            <div className="flex justify-between text-base 2xl:text-lg font-bold">
               <span>Total</span>
               <span className="text-primary">${total.toFixed(2)}</span>
             </div>
@@ -121,7 +123,7 @@ const CartLists = () => {
             </Button>
 
             <Link href="/shop">
-              <Button variant="outline" size="lg">
+              <Button variant="outline" size="lg" className="w-full">
                 Continue Shopping
               </Button>
             </Link>

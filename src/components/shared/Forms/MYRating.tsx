@@ -43,7 +43,7 @@ const MYRating = ({ name }: TMYRatingProps) => {
         )}
       />
       {errors[name] && (
-        <p className="text-red-500 text-sm mt-1">
+        <p className="text-red-500 text-sm 2xl:text-base mt-1">
           {(errors[name]?.message as string) || "Rating is required"}
         </p>
       )}

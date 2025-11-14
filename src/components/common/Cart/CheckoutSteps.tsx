@@ -14,7 +14,7 @@ export const CheckoutSteps = ({ currentStep }: TCheckoutStepsProps) => {
           {/* Step Icon + Label */}
           <div className="flex items-center gap-1 md:gap-2">
             <div
-              className={`flex items-center justify-center w-6 h-6 md:w-10 md:h-10 rounded-full font-semibold text-xs md:text-base transition-colors
+              className={`flex items-center justify-center w-6 h-6 md:w-10 md:h-10 rounded-full font-semibold text-xs md:text-base 2xl:text-lg transition-colors
                 ${
                   step.number === currentStep
                     ? "bg-primary text-white"
@@ -27,7 +27,7 @@ export const CheckoutSteps = ({ currentStep }: TCheckoutStepsProps) => {
             </div>
 
             <span
-              className={`text-[11px] md:text-base font-medium
+              className={`text-[11px] md:text-base 2xl:text-lg font-medium
                 ${step.number === currentStep ? "text-primary" : ""}
               `}
             >

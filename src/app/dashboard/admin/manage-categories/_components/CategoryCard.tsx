@@ -30,10 +30,10 @@ const CategoryCard = ({ category }: { category: TCategory }) => {
             </div>
 
             <div className="flex-1 min-w-0">
-              <h3 className="font-semibold text-lg text-foreground group-hover:text-primary transition-colors truncate">
+              <h3 className="font-semibold text-lg 2xl:text-xl text-foreground group-hover:text-primary transition-colors truncate">
                 {category.name}
               </h3>
-              <p className="text-sm text-muted-foreground">
+              <p className="text-sm 2xl:text-base text-muted-foreground">
                 {hasSubCategories
                   ? `${category.subCategories.length} Subcategories`
                   : "No subcategories"}
@@ -58,19 +58,29 @@ const CategoryCard = ({ category }: { category: TCategory }) => {
                 <DeleteCategory categoryId={category._id} />
               </>
             ) : (
-              // Show toggle arrow for categories with subcategories
-              <Button
-                variant="ghost"
-                size="icon"
-                className="h-8 w-8 hover:text-primary hover:bg-primary/10"
-                onClick={() => setIsOpen(!isOpen)}
-              >
-                {isOpen ? (
-                  <ChevronUp className="h-5 w-5" />
-                ) : (
-                  <ChevronDown className="h-5 w-5" />
-                )}
-              </Button>
+              <>
+                <UpdateCategory
+                  isParentUpdate={true}
+                  category={{
+                    _id: category._id,
+                    name: category.name,
+                    slug: category.slug,
+                    image: category.image,
+                  }}
+                />
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="h-8 w-8 hover:text-primary hover:bg-primary/10"
+                  onClick={() => setIsOpen(!isOpen)}
+                >
+                  {isOpen ? (
+                    <ChevronUp className="h-5 w-5 2xl:h-6 2xl:w-6" />
+                  ) : (
+                    <ChevronDown className="h-5 w-5 2xl:h-6 2xl:w-6" />
+                  )}
+                </Button>
+              </>
             )}
           </div>
         </div>
@@ -91,10 +101,10 @@ const CategoryCard = ({ category }: { category: TCategory }) => {
                   className="flex items-center justify-between px-3 rounded-lg hover:bg-muted/50 transition-all duration-200 group/sub border border-transparent hover:border-border"
                 >
                   <div className="flex items-center gap-3 flex-1 min-w-0">
-                    <span className="text-sm font-medium text-foreground group-hover/sub:text-primary transition-colors truncate">
+                    <span className="text-sm 2xl:text-base font-medium text-foreground group-hover/sub:text-primary transition-colors truncate">
                       {sub.name}
                     </span>
-                    <span className="text-xs text-muted-foreground font-mono bg-muted px-2 py-1 rounded">
+                    <span className="text-xs 2xl:text-sm text-muted-foreground font-mono bg-muted px-2 py-1 rounded">
                       /{sub.slug}
                     </span>
                   </div>

@@ -53,7 +53,7 @@ export default function DeleteProductModal({
       </DialogTrigger>
 
       {/* Dialog content */}
-      <DialogContent className="max-w-[420px]! border border-gray-200 dark:border-gray-800 shadow-lg">
+      <DialogContent className="max-w-[460px]! border border-gray-200 dark:border-gray-800 shadow-lg">
         <DialogHeader>
           <DialogTitle className="text-lg font-semibold text-red-600 dark:text-red-400 flex items-center gap-2">
             <Trash2 className="h-5 w-5 text-red-500" /> Delete Product

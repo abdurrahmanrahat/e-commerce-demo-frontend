@@ -38,7 +38,7 @@ export default function WishlistSheet() {
           {wishlists.length > 0 && (
             <Badge
               variant="destructive"
-              className="absolute -top-2 -right-[10px] h-4 w-4 rounded-full p-0 flex items-center justify-center text-[10px] bg-primary"
+              className="absolute -top-2 -right-[10px] h-4 2xl:h-5 w-4 2xl:w-5 rounded-full p-0 flex items-center justify-center text-[10px] bg-primary"
             >
               {wishlists.length}
             </Badge>

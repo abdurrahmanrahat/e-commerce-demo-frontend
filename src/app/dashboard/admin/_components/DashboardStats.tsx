@@ -53,21 +53,21 @@ const DashboardStats = () => {
           <Card key={stat.title} className="">
             <CardContent className="">
               <div className="flex items-start justify-between mb-3">
-                <div className="text-sm font-medium text-muted-foreground">
+                <div className="text-sm xl:text-base 2xl:text-lg font-medium text-muted-foreground">
                   {stat.title}
                 </div>
                 <div className={`p-2 rounded-lg bg-muted/50 ${stat.iconColor}`}>
-                  <Icon className="h-4 w-4" />
+                  <Icon className="h-4 w-4 2xl:h-5 2xl:w-5" />
                 </div>
               </div>
               <div className="space-y-1">
                 <div className="text-2xl md:text-3xl font-bold text-foreground">
                   {stat.value}
                 </div>
-                <div className="flex items-center gap-1 text-xs">
+                <div className="flex items-center gap-1 text-xs 2xl:text-sm">
                   {stat.trend === "up" && (
                     <>
-                      <TrendingUp className="h-3 w-3 text-emerald-500" />
+                      <TrendingUp className="h-3 w-3 2xl:h-4 2xl:w-4 text-emerald-500" />
                       <span className="text-emerald-600 dark:text-emerald-400 font-medium">
                         {stat.change}
                       </span>
@@ -75,7 +75,7 @@ const DashboardStats = () => {
                   )}
                   {stat.trend === "down" && (
                     <>
-                      <TrendingDown className="h-3 w-3 text-red-500" />
+                      <TrendingDown className="h-3 w-3 2xl:h-4 2xl:w-4 text-red-500" />
                       <span className="text-red-600 dark:text-red-400 font-medium">
                         {stat.change}
                       </span>
@@ -83,7 +83,7 @@ const DashboardStats = () => {
                   )}
                   {stat.trend === "warning" && (
                     <>
-                      <MessageCircleWarning className="h-3 w-3 text-orange-500" />
+                      <MessageCircleWarning className="h-3 w-3 2xl:h-4 2xl:w-4 text-orange-500" />
                       <span className="text-orange-600 dark:text-orange-400 font-medium">
                         {stat.change}
                       </span>

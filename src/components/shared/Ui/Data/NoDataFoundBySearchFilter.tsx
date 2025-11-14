@@ -15,12 +15,12 @@ export default function NoDataFoundBySearchFilter({
       </div>
 
       {/* Title */}
-      <h3 className="text-2xl font-semibold text-gray-800 dark:text-gray-100 mb-1">
+      <h3 className="text-2xl 2xl:text-3xl font-semibold text-gray-800 dark:text-gray-100 mb-1">
         {title}
       </h3>
 
       {/* Description */}
-      <p className="text-gray-500 dark:text-gray-400 text-sm max-w-md">
+      <p className="text-gray-500 dark:text-gray-400 text-sm 2xl:text-base max-w-md">
         {description}
       </p>
     </div>

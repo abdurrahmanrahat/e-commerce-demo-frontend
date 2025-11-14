@@ -63,7 +63,7 @@ const UpdateSubCategoryForm = ({ category }: { category: TUpdateCategory }) => {
           <div className="grid gap-[6px]">
             <label
               htmlFor="name"
-              className="text-sm font-medium text-gray-700 dark:text-gray-300"
+              className="text-sm 2xl:text-base font-medium text-gray-700 dark:text-gray-300"
             >
               Category Name <span className="text-red-500 font-medium">*</span>
             </label>
@@ -75,7 +75,7 @@ const UpdateSubCategoryForm = ({ category }: { category: TUpdateCategory }) => {
         <div className="mt-2 w-full">
           <DialogClose asChild>
             <Button
-              className="h-11 cursor-pointer w-full"
+              className="h-11 2xl:h-12 cursor-pointer w-full"
               type="submit"
               disabled={isLoading}
             >

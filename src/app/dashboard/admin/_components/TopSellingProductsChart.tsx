@@ -45,7 +45,9 @@ const TopSellingProductsChart = () => {
   return (
     <Card className="transition-colors duration-300">
       <CardHeader>
-        <CardTitle className="text-lg">Top Selling Products</CardTitle>
+        <CardTitle className="text-lg 2xl:text-2xl">
+          Top Selling Products
+        </CardTitle>
         <CardDescription>
           Best performing products by sales and revenue
         </CardDescription>

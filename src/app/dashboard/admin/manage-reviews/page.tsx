@@ -78,7 +78,7 @@ const ManageReviewsPage = async (props: {
       <div>
         <Card className="border border-gray-200 dark:border-gray-700">
           <CardHeader className="border-b border-gray-200 dark:border-gray-700 bg-card px-3 md:px-6">
-            <CardTitle className="text-xl md:text-2xl font-semibold">
+            <CardTitle className="text-xl md:text-2xl 2xl:text-3xl font-semibold">
               All Reviews List
             </CardTitle>
           </CardHeader>

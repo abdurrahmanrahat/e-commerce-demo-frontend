@@ -45,11 +45,11 @@ const AddToWishlistButton = ({ product }: { product: TProduct }) => {
             handleRemoveFromWishlist();
           }}
           className={cn(
-            "absolute top-2 right-2 p-1 rounded-full bg-white shadow-md opacity-0 group-hover:opacity-100 transition-opacity duration-300 cursor-pointer text-red-500"
+            "absolute top-2 right-2 p-1 2xl:p-2 rounded-full bg-white shadow-md opacity-0 group-hover:opacity-100 transition-opacity duration-300 cursor-pointer text-red-500"
           )}
           aria-label="Add to wishlist"
         >
-          <Heart className={cn("h-4 w-4 fill-red-500")} />
+          <Heart className={cn("h-4 2xl:h-5 w-4 2xl:w-5 fill-red-500")} />
         </button>
       ) : (
         <button
@@ -59,11 +59,11 @@ const AddToWishlistButton = ({ product }: { product: TProduct }) => {
             handleAddToWishlist();
           }}
           className={cn(
-            "absolute top-2 right-2 p-1 rounded-full bg-white shadow-md opacity-0 group-hover:opacity-100 transition-opacity duration-300 cursor-pointer text-gray-500 hover:text-red-500"
+            "absolute top-2 right-2 p-1 2xl:p-2 rounded-full bg-white shadow-md opacity-0 group-hover:opacity-100 transition-opacity duration-300 cursor-pointer text-gray-500 hover:text-red-500"
           )}
           aria-label="Add to wishlist"
         >
-          <Heart className={cn("h-4 w-4")} />
+          <Heart className={cn("h-4 2xl:h-5 w-4 2xl:w-5")} />
         </button>
       )}
     </>

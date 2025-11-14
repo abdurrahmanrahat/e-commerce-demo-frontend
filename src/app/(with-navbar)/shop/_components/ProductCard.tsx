@@ -50,7 +50,7 @@ export const ProductCard = ({ product }: { product: TProduct }) => {
 
         <CardContent className="py-3 px-3 h-[150px] md:h-[165px] flex flex-col justify-between">
           {/* Product Name */}
-          <h4 className="font-medium text-xs md:text-sm line-clamp-2 mb-2 ">
+          <h4 className="font-medium text-xs md:text-sm 2xl:text-base line-clamp-2 mb-2 leading-[18px] 2xl:leading-5">
             {product.name}
           </h4>
 
@@ -66,11 +66,11 @@ export const ProductCard = ({ product }: { product: TProduct }) => {
 
             {/* Price */}
             <div className="flex items-center gap-2 mb-2">
-              <span className="text-sm md:text-base font-semibold text-primary">
+              <span className="text-sm md:text-base 2xl:text-lg font-semibold text-primary">
                 ${product.sellingPrice.toFixed(2)}
               </span>
               {product.price > product.sellingPrice && (
-                <span className="text-xs md:text-sm text-gray-600 dark:text-gray-400 line-through">
+                <span className="text-xs md:text-sm 2xl:text-base text-gray-600 dark:text-gray-400 line-through">
                   ${product.price.toFixed(2)}
                 </span>
               )}

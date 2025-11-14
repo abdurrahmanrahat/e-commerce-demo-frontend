@@ -71,13 +71,13 @@ const MYMultiSelectWithExtra = ({
                       ? "border-red-500 dark:border-red-400"
                       : "border-gray-200 dark:border-gray-700 hover:border-primary focus-within:border-primary"
                   }
-                  bg-light-gray dark:bg-deep-dark`}
+                  bg-light-gray dark:bg-deep-dark 2xl:text-lg`}
               >
                 {selectedTags.length > 0 ? (
                   selectedTags.map((tag) => (
                     <Badge
                       key={tag}
-                      className="flex items-center gap-1 text-white bg-primary hover:bg-primary/90"
+                      className="flex items-center gap-1 text-white bg-primary hover:bg-primary/90 2xl:text-sm"
                     >
                       {tag}
                       <button
@@ -88,12 +88,12 @@ const MYMultiSelectWithExtra = ({
                         }}
                         className="hover:text-gray-200 cursor-pointer"
                       >
-                        <X className="w-3 h-3" />
+                        <X className="w-3 h-3 2xl:w-4 2xl:h-4" />
                       </button>
                     </Badge>
                   ))
                 ) : (
-                  <span className="text-sm text-gray-600 dark:text-gray-400 px-1">
+                  <span className="text-sm 2xl:text-base text-gray-600 dark:text-gray-400 px-1">
                     {placeholder}
                   </span>
                 )}
@@ -141,7 +141,7 @@ const MYMultiSelectWithExtra = ({
 
           {/* Error Message */}
           {hasError && (
-            <p className="text-red-600 text-sm mt-1">
+            <p className="text-red-600 text-sm 2xl:text-base mt-1">
               {(errors[name]?.message as string) || "Invalid selection"}
             </p>
           )}

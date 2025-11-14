@@ -73,7 +73,7 @@ export default function SubCategoryForm({
           <div className="grid gap-1">
             <label
               htmlFor="subCategoryOf"
-              className="text-sm font-medium text-gray-700 dark:text-gray-300"
+              className="text-sm 2xl:text-base font-medium text-gray-700 dark:text-gray-300"
             >
               Select Parent Category{" "}
               <span className="text-red-500 font-medium">*</span>
@@ -90,7 +90,7 @@ export default function SubCategoryForm({
           <div className="grid gap-1">
             <label
               htmlFor="name"
-              className="text-sm font-medium text-gray-700 dark:text-gray-300"
+              className="text-sm 2xl:text-base font-medium text-gray-700 dark:text-gray-300"
             >
               Subcategory Name{" "}
               <span className="text-red-500 font-medium">*</span>
@@ -105,7 +105,7 @@ export default function SubCategoryForm({
             <Button
               type="submit"
               disabled={isLoading}
-              className="h-11 cursor-pointer w-full bg-primary text-white hover:bg-primary/90"
+              className="h-11 2xl:h-12 cursor-pointer w-full bg-primary text-white hover:bg-primary/90"
             >
               {isLoading ? (
                 <span className="flex items-center gap-2">

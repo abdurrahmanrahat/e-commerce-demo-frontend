@@ -43,7 +43,7 @@ const CartCard = ({ item }: { item: TCartItem }) => {
         </Link>
         <div className="flex-1 space-y-2">
           <Link href={`/product/${item.product.slug}`}>
-            <h3 className="hidden md:block text-sm md:text-base font-medium hover:text-primary transition-colors">
+            <h3 className="hidden md:block text-sm md:text-base 2xl:text-lg font-medium hover:text-primary transition-colors">
               {item.product.name}
             </h3>
 
@@ -53,7 +53,7 @@ const CartCard = ({ item }: { item: TCartItem }) => {
                 : item.product.name}
             </h3>
           </Link>
-          <p className="font-semibold text-sm md:text-base">
+          <p className="font-semibold text-sm md:text-base 2xl:text-lg">
             ${item.product.sellingPrice}
           </p>
           <div className="flex items-center gap-3 md:gap-4">
@@ -68,12 +68,12 @@ const CartCard = ({ item }: { item: TCartItem }) => {
               onClick={() => handleRemoveItem(item.product._id)}
               className="text-destructive hover:text-destructive hover:bg-destructive/10"
             >
-              <Trash2 className="h-4 w-4" />
+              <Trash2 className="h-4 2xl:h-5 w-4 2xl:w-5" />
             </Button>
           </div>
         </div>
         <div className="text-right">
-          <p className="font-semibold md:text-lg">
+          <p className="font-semibold md:text-lg 2xl:text-xl">
             ${(item.product.sellingPrice * item.quantity).toFixed(2)}
           </p>
         </div>

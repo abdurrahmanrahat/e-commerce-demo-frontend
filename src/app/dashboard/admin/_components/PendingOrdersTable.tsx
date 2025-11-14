@@ -37,7 +37,9 @@ const PendingOrdersTable = async () => {
       <CardHeader>
         <div className="flex items-center justify-between">
           <div className="space-y-2">
-            <CardTitle>Pending Orders</CardTitle>
+            <CardTitle className="text-lg 2xl:text-2xl">
+              Pending Orders
+            </CardTitle>
             <CardDescription>
               Recent orders that need your attention
             </CardDescription>
@@ -98,7 +100,7 @@ const PendingOrdersTable = async () => {
                         <TableCell>
                           <span
                             className={cn(
-                              "inline-flex items-center justify-center px-3 py-[3px] rounded-full text-xs font-semibold capitalize select-none transition-all duration-200",
+                              "inline-flex items-center justify-center px-3 py-[3px] rounded-full text-xs 2xl:text-sm font-semibold capitalize select-none transition-all duration-200",
                               getOrderStatusColor(order.status)
                             )}
                           >
@@ -107,7 +109,7 @@ const PendingOrdersTable = async () => {
                         </TableCell>
 
                         <TableCell>
-                          <div className="flex items-center justify-center gap-1 md:gap-2">
+                          <div className="flex items-center justify-end gap-1 md:gap-2">
                             <OrderDetailsModal order={order} />
 
                             <OrderStatusUpdateModal order={order} />

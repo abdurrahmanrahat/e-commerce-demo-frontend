@@ -99,7 +99,7 @@ const ManageProductsPage = async (props: {
         <Card className="border border-gray-200 dark:border-gray-700">
           <CardHeader className="border-b border-gray-200 dark:border-gray-700 bg-card px-3 md:px-6">
             <div className="flex gap-4 items-center justify-between">
-              <CardTitle className="text-xl md:text-2xl font-semibold">
+              <CardTitle className="text-xl md:text-2xl 2xl:text-3xl font-semibold">
                 All Product List
               </CardTitle>
               <Link href="/dashboard/admin/add-product">
@@ -174,11 +174,11 @@ const ManageProductsPage = async (props: {
                               ${product.sellingPrice.toFixed(2)}
                             </TableCell>
                             <TableCell>
-                              <div className="text-sm">
+                              <div className="text-sm 2xl:text-base">
                                 <p className="text-muted-foreground">
                                   {product.stock} Item Left
                                 </p>
-                                <p className="text-xs text-muted-foreground">
+                                <p className="text-xs 2xl:text-sm text-muted-foreground">
                                   {product.salesCount} Sold
                                 </p>
                               </div>
@@ -196,7 +196,7 @@ const ManageProductsPage = async (props: {
                                     {product.averageRatings.toFixed(1)}
                                   </span>
                                 </div>
-                                <span className="text-xs text-muted-foreground">
+                                <span className="text-xs 2xl:text-sm text-muted-foreground">
                                   {product.totalReviews} Review
                                 </span>
                               </div>

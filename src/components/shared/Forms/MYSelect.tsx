@@ -85,7 +85,7 @@ const MYSelect = ({ name, options, placeholder }: TMYSelectProps) => {
       />
 
       {error && (
-        <p className="text-sm text-red-500 mt-1">
+        <p className="text-sm 2xl:text-base text-red-500 mt-1">
           {(error?.message as string) || "Invalid selection"}
         </p>
       )}

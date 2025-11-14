@@ -27,18 +27,18 @@ export const Breadcrumb = ({
     >
       <Link
         href="/"
-        className="hover:text-primary transition-colors flex items-center gap-1"
+        className="hover:text-primary transition-colors flex items-center gap-1 2xl:text-base"
       >
-        <Home className="h-4 w-4" />
+        <Home className="h-4 2xl:h-5 w-4 2xl:w-5" />
         Home
       </Link>
       {items.map((item, index) => (
         <div key={index} className="flex items-center gap-2">
-          <ChevronRight className="h-4 w-4" />
+          <ChevronRight className="h-4 2xl:h-5 w-4 2xl:w-5" />
 
           <Link
             href={item.href}
-            className={`hover:text-primary transition-colors ${
+            className={`hover:text-primary transition-colors 2xl:text-base ${
               index === items.length - 1 ? "text-primary font-medium" : ""
             }`}
           >

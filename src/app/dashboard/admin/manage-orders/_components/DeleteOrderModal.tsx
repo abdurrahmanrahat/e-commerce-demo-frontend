@@ -42,9 +42,9 @@ export default function DeleteOrderModal({ orderId }: { orderId: string }) {
         <Button
           variant="ghost"
           size="icon"
-          className="h-7 w-7 text-red-500 hover:text-red-600 hover:bg-red-500/10 dark:hover:bg-red-500/20 transition"
+          className="h-7 w-7 2xl:h-9 2xl:w-9 text-red-500 hover:text-red-600 hover:bg-red-500/10 dark:hover:bg-red-500/20 transition"
         >
-          <Trash2 className="h-4 w-4" />
+          <Trash2 className="h-4 w-4 2xl:h-5 2xl:w-5" />
         </Button>
       </DialogTrigger>
 

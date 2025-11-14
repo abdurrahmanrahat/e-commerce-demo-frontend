@@ -74,8 +74,12 @@ const OrderStatusUpdateModal = ({ order }: TOrderStatusUpdateModalProps) => {
     <Dialog>
       {/* Trigger Button */}
       <DialogTrigger asChild>
-        <Button variant="ghost" size="icon" className="h-8 w-8 hover:bg-muted">
-          <Pencil className="h-4 w-4 text-muted-foreground" />
+        <Button
+          variant="ghost"
+          size="icon"
+          className="h-8 w-8 2xl:h-9 2xl:w-9 hover:bg-muted"
+        >
+          <Pencil className="h-4 w-4 2xl:h-5 2xl:w-5 text-muted-foreground" />
         </Button>
       </DialogTrigger>
 

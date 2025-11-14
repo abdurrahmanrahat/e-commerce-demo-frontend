@@ -30,10 +30,12 @@ const ReviewDetailsModal = async ({ review }: { review: TProductReview }) => {
         {/* Header */}
         <div className="space-y-1 mb-4">
           <div className="flex items-center gap-2">
-            <h2 className="text-lg md:text-xl font-semibold">Review Details</h2>{" "}
+            <h2 className="text-lg md:text-xl 2xl:text-2xl font-semibold">
+              Review Details
+            </h2>{" "}
             <span
               className={cn(
-                "inline-flex items-center justify-center px-3 py-[3px] rounded-full text-xs font-semibold capitalize select-none transition-all duration-200",
+                "inline-flex items-center justify-center px-3 py-[3px] rounded-full text-xs 2xl:text-base font-semibold capitalize select-none transition-all duration-200",
                 review.isVerified
                   ? "bg-green-100 text-green-800 dark:bg-green-900/40 dark:text-green-300"
                   : "bg-yellow-100 text-yellow-800 dark:bg-yellow-900/40 dark:text-yellow-300"
@@ -42,7 +44,7 @@ const ReviewDetailsModal = async ({ review }: { review: TProductReview }) => {
               {review.isVerified ? "Approved" : "Pending"}
             </span>
           </div>
-          <div className="flex flex-wrap items-center gap-2 text-sm text-muted-foreground">
+          <div className="flex flex-wrap items-center gap-2 text-sm 2xl:text-base text-muted-foreground">
             <Calendar className="h-4 w-4" />
             <p>
               <span className="text-gray-800 dark:text-gray-100 font-medium">
@@ -65,7 +67,7 @@ const ReviewDetailsModal = async ({ review }: { review: TProductReview }) => {
           </div>
 
           {review.isVerified && (
-            <div className="inline-flex items-center gap-1 text-xs px-2 py-[2px] bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 rounded-full">
+            <div className="inline-flex items-center gap-1 text-xs 2xl:text-sm px-2 py-[2px] bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 rounded-full">
               <CheckCircle2 className="h-3 w-3" />
               Verified Purchase
             </div>
@@ -73,7 +75,9 @@ const ReviewDetailsModal = async ({ review }: { review: TProductReview }) => {
         </div>
 
         {/* Review Text */}
-        <p className="text-sm leading-relaxed mb-4">{review.review}</p>
+        <p className="text-sm 2xl:text-base leading-relaxed mb-4">
+          {review.review}
+        </p>
 
         {/* Review Images */}
         {review?.images && review?.images.length > 0 && (
@@ -107,11 +111,11 @@ const ReviewDetailsModal = async ({ review }: { review: TProductReview }) => {
 
             <div>
               <Link href={`/shop/${productRes?.data.slug}`}>
-                <p className="font-medium text-sm md:text-base">
+                <p className="font-medium text-sm 2xl:text-base md:text-base">
                   {productRes?.data.name}
                 </p>
               </Link>
-              <p className="text-sm text-muted-foreground">
+              <p className="text-sm 2xl:text-base text-muted-foreground">
                 ৳{productRes?.data.sellingPrice}
               </p>
             </div>

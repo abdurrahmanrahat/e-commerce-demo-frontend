@@ -30,7 +30,8 @@ const SidebarProfile = ({ user }: { user: TUser }) => {
   };
 
   const userNameInArray = user?.name?.split(" ");
-  const fullname = userNameInArray[0] + " " + userNameInArray[1];
+  const fullname =
+    userNameInArray[0] + " " + userNameInArray[1] ? userNameInArray[1] : "";
   return (
     <DropdownMenu>
       <DropdownMenuTrigger
@@ -58,7 +59,7 @@ const SidebarProfile = ({ user }: { user: TUser }) => {
             <h4 className="text-sm 2xl:text-base font-medium text-gray-900 dark:text-gray-100">
               {fullname || "Anonymous"}
             </h4>
-            <p className="text-xs capitalize text-gray-600 dark:text-gray-300">
+            <p className="text-xs 2xl:text-sm capitalize text-gray-600 dark:text-gray-300">
               {user.role}
             </p>
           </div>

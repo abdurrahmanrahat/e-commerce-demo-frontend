@@ -14,8 +14,12 @@ const OrderDetailsModal = ({ order }: { order: TOrder }) => {
     <Dialog>
       {/* Trigger button */}
       <DialogTrigger asChild>
-        <Button variant="ghost" size="icon" className="h-8 w-8 hover:bg-muted">
-          <Eye className="h-4 w-4 text-muted-foreground" />
+        <Button
+          variant="ghost"
+          size="icon"
+          className="h-8 w-8 2xl:h-9 2xl:w-9 hover:bg-muted"
+        >
+          <Eye className="h-4 w-4 2xl:h-5 2xl:w-5 text-muted-foreground" />
         </Button>
       </DialogTrigger>
 
@@ -26,11 +30,11 @@ const OrderDetailsModal = ({ order }: { order: TOrder }) => {
       >
         {/* Header */}
         <div className="space-y-1 mb-4">
-          <h2 className="text-lg md:text-xl font-semibold">
+          <h2 className="text-lg md:text-xl 2xl:text-2xl font-semibold">
             Order Details —{" "}
             <span className="text-primary">{order.orderNumber}</span>
           </h2>
-          <div className="flex flex-wrap items-center gap-2 text-sm text-muted-foreground">
+          <div className="flex flex-wrap items-center gap-2 text-sm 2xl:text-base text-muted-foreground">
             <Calendar className="h-4 w-4" />
             <p>
               <span className="text-gray-800 dark:text-gray-100 font-medium">
@@ -47,10 +51,12 @@ const OrderDetailsModal = ({ order }: { order: TOrder }) => {
           <div className="space-y-2">
             <div className="flex items-center gap-2 text-muted-foreground">
               <MapPin className="h-4 w-4" />
-              <span className="text-sm font-medium">Customer Information</span>
+              <span className="text-sm 2xl:text-base font-medium">
+                Customer Information
+              </span>
             </div>
 
-            <div className="text-sm leading-relaxed space-y-[2px]">
+            <div className="text-sm 2xl:text-base leading-relaxed space-y-[2px]">
               <p>
                 <span className="font-semibold text-foreground">Name:</span>{" "}
                 {order.fullName}
@@ -82,10 +88,12 @@ const OrderDetailsModal = ({ order }: { order: TOrder }) => {
           <div className="space-y-2">
             <div className="flex items-center gap-2 text-muted-foreground">
               <Truck className="h-4 w-4" />
-              <span className="text-sm font-medium">Shipping & Status</span>
+              <span className="text-sm 2xl:text-base font-medium">
+                Shipping & Status
+              </span>
             </div>
 
-            <div className="text-sm leading-relaxed space-y-[2px]">
+            <div className="text-sm 2xl:text-base leading-relaxed space-y-[2px]">
               <p>
                 <span className="font-semibold text-foreground">
                   Shipping Option:
@@ -101,7 +109,7 @@ const OrderDetailsModal = ({ order }: { order: TOrder }) => {
                 <span className="font-semibold text-foreground">Status:</span>{" "}
                 <span
                   className={cn(
-                    "inline-flex items-center justify-center px-3 py-[3px] rounded-full text-xs font-semibold capitalize select-none transition-all duration-200",
+                    "inline-flex items-center justify-center px-3 py-[3px] rounded-full text-xs 2xl:text-sm font-semibold capitalize select-none transition-all duration-200",
                     getOrderStatusColor(order.status)
                   )}
                 >
@@ -123,7 +131,7 @@ const OrderDetailsModal = ({ order }: { order: TOrder }) => {
         <div className="mt-2">
           <div className="flex items-center gap-2 text-muted-foreground mb-3">
             <Package className="h-4 w-4" />
-            <h3 className="text-sm font-medium">Order Items</h3>
+            <h3 className="2xl:text-lg font-medium">Order Items</h3>
           </div>
 
           <div className="space-y-2">
@@ -144,7 +152,7 @@ const OrderDetailsModal = ({ order }: { order: TOrder }) => {
                   </Link>
                   <div>
                     <Link href={`/shop/${item.product.slug}`}>
-                      <p className="font-medium text-sm md:text-base line-clamp-2">
+                      <p className="font-medium text-sm 2xl:text-base md:text-base line-clamp-2">
                         {item.product.name}
                       </p>
                     </Link>
@@ -154,7 +162,7 @@ const OrderDetailsModal = ({ order }: { order: TOrder }) => {
                     </p>
                   </div>
                 </div>
-                <p className="font-semibold text-sm md:text-base">
+                <p className="font-semibold text-sm 2xl:text-base md:text-base">
                   ${item.product.sellingPrice * item.quantity}
                 </p>
               </div>
@@ -163,7 +171,7 @@ const OrderDetailsModal = ({ order }: { order: TOrder }) => {
         </div>
 
         {/* Order Summary */}
-        <div className="space-y-2 text-sm md:text-base mt-4 mb-2">
+        <div className="space-y-2 text-sm 2xl:text-base md:text-base mt-4 mb-2">
           <div className="flex justify-between">
             <span className="text-muted-foreground">Subtotal:</span>
             <span className="font-medium">${order.subtotal.toFixed(2)}</span>

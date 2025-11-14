@@ -37,7 +37,7 @@ const AddToCartButton = ({ product }: { product: TProduct }) => {
       }}
       disabled={product.stock === 0}
     >
-      <ShoppingCart className="w-4 h-4 mr-2" />
+      <ShoppingCart className="w-4 2xl:w-5 h-4 2xl:h-5 mr-1" />
       {product.stock === 0 ? "Out of Stock" : "Add to Cart"}
     </Button>
   );

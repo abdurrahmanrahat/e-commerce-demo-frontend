@@ -72,7 +72,7 @@ const ManageOrdersPage = async (props: {
       <div>
         <Card className="border border-gray-200 dark:border-gray-700">
           <CardHeader className="border-b border-gray-200 dark:border-gray-700 bg-card px-3 md:px-6">
-            <CardTitle className="text-xl md:text-2xl font-semibold">
+            <CardTitle className="text-xl md:text-2xl 2xl:text-3xl font-semibold">
               All Orders List
             </CardTitle>
           </CardHeader>
@@ -126,7 +126,7 @@ const ManageOrdersPage = async (props: {
                           <TableCell>
                             <span
                               className={cn(
-                                "inline-flex items-center justify-center px-3 py-[3px] rounded-full text-xs font-semibold capitalize select-none transition-all duration-200",
+                                "inline-flex items-center justify-center px-3 py-[3px] rounded-full text-xs 2xl:text-sm font-semibold capitalize select-none transition-all duration-200",
                                 getOrderStatusColor(order.status)
                               )}
                             >

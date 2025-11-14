@@ -19,7 +19,7 @@ const ReviewTableRow = async ({ review }: { review: TProductReview }) => {
       <TableCell>
         <span
           className={cn(
-            "inline-flex items-center justify-center px-3 py-[3px] rounded-full text-xs font-semibold capitalize select-none transition-all duration-200",
+            "inline-flex items-center justify-center px-3 py-[3px] rounded-full text-xs 2xl:text-sm font-semibold capitalize select-none transition-all duration-200",
             review.isVerified
               ? "bg-green-100 text-green-800 dark:bg-green-900/40 dark:text-green-300"
               : "bg-yellow-100 text-yellow-800 dark:bg-yellow-900/40 dark:text-yellow-300"

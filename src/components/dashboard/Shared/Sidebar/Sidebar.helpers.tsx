@@ -28,8 +28,8 @@ export const SidebarItem = ({ item }: { item: TItemProps }) => {
       )}
     >
       <div className="flex items-center gap-3">
-        <item.icon className="w-4 h-4 text-gray-700 dark:text-gray-300" />
-        <span className="text-base text-gray-900 dark:text-gray-100">
+        <item.icon className="w-4 h-4 2xl:w-5 2xl:h-5 text-gray-700 dark:text-gray-300" />
+        <span className="text-base 2xl:text-lg text-gray-900 dark:text-gray-100">
           {item.text}
         </span>
       </div>

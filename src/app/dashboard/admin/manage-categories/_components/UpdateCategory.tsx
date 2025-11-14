@@ -30,7 +30,7 @@ export default function UpdateCategory({
           size="icon"
           className="h-7 w-7 hover:text-primary hover:bg-primary/10"
         >
-          <Edit className="h-4 w-4" />
+          <Edit className="h-4 w-4 2xl:h-5 2xl:w-5" />
         </Button>
       </DialogTrigger>
 

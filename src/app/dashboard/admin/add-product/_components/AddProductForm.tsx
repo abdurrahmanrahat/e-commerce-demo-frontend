@@ -153,7 +153,7 @@ const AddProductForm = ({
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {/* Product Name */}
           <div className="grid gap-[6px]">
-            <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
+            <label className="text-sm 2xl:text-base font-medium text-gray-700 dark:text-gray-300">
               Product Name <span className="text-red-500 font-medium">*</span>
             </label>
             <MYInput name="name" placeholder="Enter product name" />
@@ -161,7 +161,7 @@ const AddProductForm = ({
 
           {/* category */}
           <div className="grid gap-[6px]">
-            <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
+            <label className="text-sm 2xl:text-base font-medium text-gray-700 dark:text-gray-300">
               Product Category{" "}
               <span className="text-red-500 font-medium">*</span>
             </label>
@@ -174,7 +174,7 @@ const AddProductForm = ({
 
           {/* Price */}
           <div className="grid gap-[6px]">
-            <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
+            <label className="text-sm 2xl:text-base font-medium text-gray-700 dark:text-gray-300">
               Regular Price <span className="text-red-500 font-medium">*</span>
             </label>
             <MYInput name="price" placeholder="Enter price" type="number" />
@@ -182,7 +182,7 @@ const AddProductForm = ({
 
           {/* Selling Price */}
           <div className="grid gap-[6px]">
-            <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
+            <label className="text-sm 2xl:text-base font-medium text-gray-700 dark:text-gray-300">
               Selling Price <span className="text-red-500 font-medium">*</span>
             </label>
             <MYInput
@@ -194,7 +194,7 @@ const AddProductForm = ({
 
           {/* Stock */}
           <div className="grid gap-[6px]">
-            <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
+            <label className="text-sm 2xl:text-base font-medium text-gray-700 dark:text-gray-300">
               Stock <span className="text-red-500 font-medium">*</span>
             </label>
             <MYInput
@@ -207,7 +207,7 @@ const AddProductForm = ({
 
         {/* Images */}
         <div className="grid gap-[6px]">
-          <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
+          <label className="text-sm 2xl:text-base font-medium text-gray-700 dark:text-gray-300">
             Product Images <span className="text-red-500 font-medium">*</span>
           </label>
 
@@ -233,10 +233,10 @@ const AddProductForm = ({
                       : "text-gray-400"
                   }`}
                 />
-                <p className="text-sm">
+                <p className="text-sm 2xl:text-base">
                   {isImageUploading ? "Uploading..." : "Click to upload images"}
                 </p>
-                <p className="text-xs text-gray-500 dark:text-gray-400 mt-0.5">
+                <p className="text-xs 2xl:text-sm text-gray-500 dark:text-gray-400 mt-0.5">
                   PNG, JPG up to 1MB each — max 5 images
                 </p>
               </label>
@@ -286,7 +286,7 @@ const AddProductForm = ({
 
         {/* description */}
         <div className="grid gap-[6px]">
-          <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
+          <label className="text-sm 2xl:text-base font-medium text-gray-700 dark:text-gray-300">
             Product Description{" "}
             <span className="text-red-500 font-medium">*</span>
           </label>
@@ -296,7 +296,7 @@ const AddProductForm = ({
 
         {/* tags */}
         <div className="grid gap-[6px]">
-          <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
+          <label className="text-sm 2xl:text-base font-medium text-gray-700 dark:text-gray-300">
             Product Tags <span className="text-red-500 font-medium">*</span>
           </label>
 
@@ -310,7 +310,7 @@ const AddProductForm = ({
         {/* Submit Button */}
         <div className="mt-2 w-full">
           <Button
-            className="h-11 cursor-pointer w-full"
+            className="h-11 2xl:h-12 cursor-pointer w-full"
             type="submit"
             disabled={isLoading || isImageUploading}
           >

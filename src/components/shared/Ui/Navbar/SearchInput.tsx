@@ -21,7 +21,6 @@ const SearchInput = () => {
   // const [readOnly, setReadOnly] = useState(true);
 
   const [results, setResults] = useState<TProduct[]>([]);
-  console.log("results", results);
 
   const inputRef = useRef<HTMLInputElement>(null);
   const router = useRouter();
@@ -47,7 +46,6 @@ const SearchInput = () => {
             signal: controller.signal,
           }
         );
-        console.log("res", res);
 
         const data = await res.json();
 

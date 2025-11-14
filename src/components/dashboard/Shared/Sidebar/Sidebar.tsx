@@ -8,13 +8,13 @@ import SidebarProfile from "./SidebarProfile";
 
 const Sidebar = ({ role, user }: { role: "user" | "admin"; user: TUser }) => {
   return (
-    <div className="h-screen fixed border-r border-gray-200 dark:border-gray-700">
+    <div className="h-screen fixed border-r border-gray-200 dark:border-gray-700 ">
       <div className="relative h-full w-full py-10 px-3 2xl:px-4">
         {/* logo section */}
         <div className="flex justify-center items-center">
           <Link href="/">
             {/* <Image src={IMAGES.shared.Logo} alt="Logo" /> */}
-            <span className="font-bold text-xl bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent uppercase">
+            <span className="font-bold text-xl 2xl:text-2xl bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent uppercase">
               Gadgetoria
             </span>
           </Link>

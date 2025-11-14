@@ -13,10 +13,10 @@ const ManageCategoriesPage = () => {
     <div>
       <div className="flex justify-between items-center mb-6">
         <div>
-          <h2 className="text-xl md:text-2xl font-semibold">
+          <h2 className="text-xl md:text-2xl 2xl:text-3xl font-semibold">
             Manage Categories
           </h2>
-          <p className="text-base mt-1">
+          <p className="text-base 2xl:text-lg mt-1">
             Explore all available categories and their subcategories
           </p>
         </div>

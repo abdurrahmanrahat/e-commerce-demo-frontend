@@ -47,7 +47,7 @@ const RevenueTrendChart = () => {
   return (
     <Card className="transition-colors duration-300">
       <CardHeader>
-        <CardTitle className="text-lg">Revenue Overview</CardTitle>
+        <CardTitle className="text-lg 2xl:text-2xl">Revenue Overview</CardTitle>
         <CardDescription>
           Daily revenue and order trends (Last 7 days)
         </CardDescription>

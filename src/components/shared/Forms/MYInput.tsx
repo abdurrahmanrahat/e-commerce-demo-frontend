@@ -40,7 +40,7 @@ const MYInput = ({ name, type = "text", placeholder }: TMTInputProps) => {
         )}
       />
       {errors[name] && (
-        <p className="text-red-600 text-sm mt-1">
+        <p className="text-red-600 text-sm 2xl:text-base mt-1">
           {(errors[name]?.message as string) || "Invalid input"}
         </p>
       )}

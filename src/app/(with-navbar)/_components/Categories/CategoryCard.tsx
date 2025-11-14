@@ -28,7 +28,7 @@ const CategoryCard = ({ category }: { category: TCategory }) => {
         </div>
 
         <h3
-          className="text-xs md:text-base font-medium text-center
+          className="text-xs md:text-base 2xl:text-lg font-medium text-center
         text-gray-800 dark:text-gray-200
         group-hover:text-primary dark:group-hover:text-primary
         transition-colors duration-300 leading-tight"

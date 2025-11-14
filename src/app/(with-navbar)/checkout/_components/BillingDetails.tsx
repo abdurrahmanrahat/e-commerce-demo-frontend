@@ -117,7 +117,7 @@ const BillingDetails = () => {
         <div className="lg:col-span-2">
           <Card>
             <CardHeader>
-              <CardTitle className="text-lg md:text-xl">
+              <CardTitle className="text-lg md:text-xl 2xl:text-2xl">
                 Billing & Shipping
               </CardTitle>
             </CardHeader>
@@ -130,7 +130,7 @@ const BillingDetails = () => {
                       <div className="grid gap-1">
                         <label
                           htmlFor="fullName"
-                          className="text-sm font-medium"
+                          className="text-sm 2xl:text-base font-medium"
                         >
                           Full Name{" "}
                           <span className="text-red-500 font-medium">*</span>
@@ -146,7 +146,7 @@ const BillingDetails = () => {
                       <div className="grid gap-1">
                         <label
                           htmlFor="fullAddress"
-                          className="text-sm font-medium"
+                          className="text-sm 2xl:text-base font-medium"
                         >
                           Full Address{" "}
                           <span className="text-red-500 font-medium">*</span>
@@ -160,7 +160,10 @@ const BillingDetails = () => {
                       </div>
 
                       <div className="grid gap-1">
-                        <label htmlFor="phone" className="text-sm font-medium">
+                        <label
+                          htmlFor="phone"
+                          className="text-sm 2xl:text-base font-medium"
+                        >
                           Phone No{" "}
                           <span className="text-red-500 font-medium">*</span>
                         </label>
@@ -175,7 +178,7 @@ const BillingDetails = () => {
                       <div className="grid gap-1">
                         <label
                           htmlFor="country"
-                          className="text-sm font-medium"
+                          className="text-sm 2xl:text-base font-medium"
                         >
                           Country / Region{" "}
                           <span className="text-red-500 font-medium">*</span>
@@ -193,7 +196,7 @@ const BillingDetails = () => {
                       <div className="grid gap-1">
                         <label
                           htmlFor="orderNotes"
-                          className="text-sm font-medium"
+                          className="text-sm 2xl:text-base font-medium"
                         >
                           Order notes (optional)
                         </label>
@@ -215,7 +218,9 @@ const BillingDetails = () => {
         <div className="lg:col-span-1">
           <Card className="sticky top-20">
             <CardHeader>
-              <CardTitle>Your order</CardTitle>
+              <CardTitle className="md:text-lg 2xl:text-xl">
+                Your order
+              </CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
               {/* Cart Items */}
@@ -227,7 +232,7 @@ const BillingDetails = () => {
                       <h4 className="text-lg lg:text-xl font-medium">
                         Your cart is empty!
                       </h4>
-                      <p className="text-sm text-gray-600 dark:text-gray-300 mb-6">
+                      <p className="text-sm 2xl:text-base text-gray-600 dark:text-gray-300 mb-6">
                         Add some products to get started
                       </p>
                     </div>
@@ -247,14 +252,14 @@ const BillingDetails = () => {
                           className="w-16 h-16 rounded object-cover"
                         />
                         <div className="flex-1 min-w-0">
-                          <p className="text-sm line-clamp-2">
+                          <p className="text-sm 2xl:text-base line-clamp-2">
                             {item.product.name}
                           </p>
-                          <p className="text-xs text-muted-foreground">
+                          <p className="text-xs 2xl:text-sm text-muted-foreground">
                             × {item.quantity}
                           </p>
                         </div>
-                        <span className="text-sm font-medium">
+                        <span className="text-sm 2xl:text-base font-medium">
                           ${" "}
                           {(item.product.sellingPrice * item.quantity).toFixed(
                             2
@@ -269,14 +274,14 @@ const BillingDetails = () => {
               <Separator />
 
               {/* Subtotal */}
-              <div className="flex justify-between text-sm">
-                <span>Subtotal:</span>
+              <div className="flex justify-between text-sm 2xl:text-base">
+                <span className="">Subtotal:</span>
                 <span className="font-medium">$ {subtotal.toFixed(2)}</span>
               </div>
 
               {/* Shipping */}
               <div>
-                <h4 className="font-medium mb-3">Shipping</h4>
+                <h4 className="font-medium mb-3 2xl:text-lg">Shipping</h4>
                 <RadioGroup
                   value={shippingOption}
                   onValueChange={(value) =>
@@ -293,13 +298,13 @@ const BillingDetails = () => {
                         <RadioGroupItem value={option.id} id={option.id} />
                         <Label
                           htmlFor={option.id}
-                          className="text-sm cursor-pointer"
+                          className="text-sm 2xl:text-base cursor-pointer"
                         >
                           {option.name}
                         </Label>
                       </div>
 
-                      <span className="text-sm font-medium">
+                      <span className="text-sm 2xl:text-base font-medium">
                         ${option.price}
                       </span>
                     </div>
@@ -310,7 +315,7 @@ const BillingDetails = () => {
               <Separator />
 
               {/* Total */}
-              <div className="flex justify-between text-base font-bold">
+              <div className="flex justify-between text-base 2xl:text-lg font-bold">
                 <span>Total</span>
                 <span className="text-primary">$ {total.toFixed(2)}</span>
               </div>
@@ -329,7 +334,7 @@ const BillingDetails = () => {
                         >
                           Cash on delivery
                         </Label>
-                        <p className="text-sm mt-1">
+                        <p className="text-sm 2xl:text-base mt-1">
                           Pay with cash upon delivery.
                         </p>
                       </div>
@@ -338,7 +343,7 @@ const BillingDetails = () => {
                 </CardContent>
               </Card>
 
-              <p className="text-xs text-muted-foreground">
+              <p className="text-xs 2xl:text-sm text-muted-foreground">
                 Your personal data will be used to process your order, support
                 your experience throughout this website, and for other purposes
                 described in our{" "}
@@ -363,7 +368,7 @@ const BillingDetails = () => {
                   </span>
                 ) : (
                   <>
-                    <Lock className="w-4 h-4 mr-2" />
+                    <Lock className="w-4 h-4 2xl:w-5 2xl:h-5 mr-2" />
                     Place order
                   </>
                 )}

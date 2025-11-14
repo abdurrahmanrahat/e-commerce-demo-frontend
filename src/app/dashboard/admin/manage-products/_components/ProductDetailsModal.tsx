@@ -54,7 +54,7 @@ const ProductDetailsModal = ({ product }: { product: TProduct }) => {
 
           {/* Product Details */}
           <div className="space-y-2 lg:space-y-3">
-            <h2 className="text-base md:text-lg font-semibold">
+            <h2 className="text-base md:text-lg 2xl:text-xl font-semibold">
               {product.name}
             </h2>
 
@@ -165,7 +165,9 @@ const ProductDetailsModal = ({ product }: { product: TProduct }) => {
 
         {/* Description */}
         <div className="space-y-3 mt-4">
-          <h3 className="text-lg font-semibold">Product Description</h3>
+          <h3 className="text-lg xl:text-xl 2xl:text-2xl font-semibold">
+            Product Description
+          </h3>
           <div
             className="prose prose-sm max-w-none text-foreground prose-headings:text-foreground prose-p:text-muted-foreground prose-strong:text-foreground html-content"
             dangerouslySetInnerHTML={{

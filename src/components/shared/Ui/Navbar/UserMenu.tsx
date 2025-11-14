@@ -36,7 +36,7 @@ export default function UserMenu({ user }: { user: any }) {
           size="icon"
           className="relative rounded-full border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 transition"
         >
-          <User className="h-5 w-5 text-gray-700 dark:text-gray-300" />
+          <User className="h-5 2xl:h-6 w-5 2xl:w-6 text-gray-700 dark:text-gray-300" />
         </Button>
       </DropdownMenuTrigger>
 
