@@ -33,7 +33,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${inter.className} antialiased bg-white dark:bg-gray-950 text-gray-900 dark:text-gray-100`}
+        className={`${inter.className} antialiased bg-white dark:bg-dark text-gray-900 dark:text-gray-100 transition-colors duration-300`}
         suppressHydrationWarning
       >
         <Providers>
