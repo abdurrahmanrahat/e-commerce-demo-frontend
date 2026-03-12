@@ -9,7 +9,7 @@ import { fetchWithAuth } from "./fetchWithAuth";
    Get All Orders (Admin Only)
 ============================================ */
 export const getAllOrdersFromDB = async (
-  params?: Record<string, any>
+  params?: Record<string, any>,
 ): Promise<TServerResponse> => {
   try {
     const queryParams = params
@@ -20,7 +20,7 @@ export const getAllOrdersFromDB = async (
       `${process.env.NEXT_PUBLIC_BACKED_URL}/orders${queryParams}`,
       {
         cache: "no-store",
-      }
+      },
     );
 
     const data = await res.json();
@@ -48,12 +48,12 @@ export const getAllOrdersFromDB = async (
    Get Single Order (Public - For Tracking)
 ============================================ */
 export const getSingleOrderFromDB = async (
-  orderId: string
+  orderId: string,
 ): Promise<TServerResponse> => {
   try {
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_BACKED_URL}/orders/${orderId}`,
-      { cache: "no-store" }
+      { cache: "no-store" },
     );
 
     const data = await res.json();
@@ -81,7 +81,7 @@ export const getSingleOrderFromDB = async (
    Create Order (Public - Checkout)
 ============================================ */
 export const createOrderInDB = async (
-  orderData: Record<string, any>
+  orderData: Record<string, any>,
 ): Promise<TServerResponse> => {
   try {
     const res = await fetch(
@@ -91,11 +91,11 @@ export const createOrderInDB = async (
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(orderData),
         cache: "no-store",
-      }
+      },
     );
 
     const data = await res.json();
-    revalidateTag(tagLists.ORDER);
+    revalidateTag(tagLists.ORDER, "max");
 
     if (data?.success) {
       return {
@@ -121,7 +121,7 @@ export const createOrderInDB = async (
 ============================================ */
 export const updateOrderInDB = async (
   orderId: string,
-  updatedData: Record<string, any>
+  updatedData: Record<string, any>,
 ): Promise<TServerResponse> => {
   try {
     const res = await fetchWithAuth(
@@ -131,11 +131,11 @@ export const updateOrderInDB = async (
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(updatedData),
         cache: "no-store",
-      }
+      },
     );
 
     const data = await res.json();
-    revalidateTag(tagLists.ORDER);
+    revalidateTag(tagLists.ORDER, "max");
 
     if (data?.success) {
       return {
@@ -160,16 +160,16 @@ export const updateOrderInDB = async (
    Delete Order (Admin Only)
 ============================================ */
 export const deleteOrderFromDB = async (
-  orderId: string
+  orderId: string,
 ): Promise<TServerResponse> => {
   try {
     const res = await fetchWithAuth(
       `${process.env.NEXT_PUBLIC_BACKED_URL}/orders/${orderId}`,
-      { method: "DELETE", cache: "no-store" }
+      { method: "DELETE", cache: "no-store" },
     );
 
     const data = await res.json();
-    revalidateTag(tagLists.ORDER);
+    revalidateTag(tagLists.ORDER, "max");
 
     if (data?.success) {
       return {

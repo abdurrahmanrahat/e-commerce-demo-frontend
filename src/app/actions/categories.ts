@@ -10,7 +10,7 @@ import { fetchWithAuth } from "./fetchWithAuth";
    Get All categories : use here normal fetch, do not need auth token 
 ============================================ */
 export const getAllCategoriesFromDB = async (
-  params?: Record<string, any>
+  params?: Record<string, any>,
 ): Promise<TServerResponse> => {
   try {
     const queryParams = params
@@ -22,7 +22,7 @@ export const getAllCategoriesFromDB = async (
       {
         cache: "force-cache",
         next: { tags: [tagLists.CATEGORY] },
-      }
+      },
     );
 
     if (!res.ok) {
@@ -58,7 +58,7 @@ export const getAllCategoriesFromDB = async (
   Add category
 ============================================ */
 export const addCategoryToDB = async (
-  categoryData: TCategoryUploadData
+  categoryData: TCategoryUploadData,
 ): Promise<TServerResponse> => {
   let newCategory = {};
 
@@ -88,7 +88,7 @@ export const addCategoryToDB = async (
         },
         body: JSON.stringify(newCategory),
         cache: "no-store",
-      }
+      },
     );
 
     // if (!res.ok) {
@@ -96,7 +96,7 @@ export const addCategoryToDB = async (
     // }
 
     const data = await res.json();
-    revalidateTag(tagLists.CATEGORY);
+    revalidateTag(tagLists.CATEGORY, "max");
 
     if (data?.success) {
       return {
@@ -122,7 +122,7 @@ export const addCategoryToDB = async (
 ============================================ */
 export const updateCategoryInDB = async (
   categoryId: string,
-  updatedData: Record<string, any>
+  updatedData: Record<string, any>,
 ): Promise<TServerResponse> => {
   try {
     const res = await fetchWithAuth(
@@ -134,7 +134,7 @@ export const updateCategoryInDB = async (
         },
         body: JSON.stringify(updatedData),
         cache: "no-store",
-      }
+      },
     );
 
     if (!res.ok) {
@@ -146,7 +146,7 @@ export const updateCategoryInDB = async (
     }
 
     const data = await res.json();
-    revalidateTag(tagLists.CATEGORY);
+    revalidateTag(tagLists.CATEGORY, "max");
 
     if (data?.success) {
       return {
@@ -171,7 +171,7 @@ export const updateCategoryInDB = async (
   Delete Category
 ============================================ */
 export const deleteCategoryFromDB = async (
-  categoryId: string
+  categoryId: string,
 ): Promise<TServerResponse> => {
   try {
     const res = await fetchWithAuth(
@@ -179,7 +179,7 @@ export const deleteCategoryFromDB = async (
       {
         method: "DELETE",
         cache: "no-store",
-      }
+      },
     );
 
     if (!res.ok) {
@@ -191,7 +191,7 @@ export const deleteCategoryFromDB = async (
     }
 
     const data = await res.json();
-    revalidateTag(tagLists.CATEGORY);
+    revalidateTag(tagLists.CATEGORY, "max");
 
     if (data?.success) {
       return {

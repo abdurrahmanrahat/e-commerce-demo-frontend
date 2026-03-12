@@ -10,7 +10,7 @@ import { fetchWithAuth } from "./fetchWithAuth";
 ============================================ */
 export const createProductReviewToDB = async (
   productId: string,
-  reviewData: Record<string, any>
+  reviewData: Record<string, any>,
 ): Promise<TServerResponse> => {
   try {
     const res = await fetchWithAuth(
@@ -20,11 +20,11 @@ export const createProductReviewToDB = async (
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(reviewData),
         cache: "no-store",
-      }
+      },
     );
 
     const data = await res.json();
-    revalidateTag(tagLists.PRODUCT_REVIEW);
+    revalidateTag(tagLists.PRODUCT_REVIEW, "max");
 
     if (data?.success) {
       return {
@@ -50,7 +50,7 @@ export const createProductReviewToDB = async (
 ============================================ */
 export const getProductReviewsFromDB = async (
   productId: string,
-  params?: Record<string, any>
+  params?: Record<string, any>,
 ): Promise<TServerResponse> => {
   const queryParams = params
     ? "?" + new URLSearchParams(params).toString()
@@ -62,7 +62,7 @@ export const getProductReviewsFromDB = async (
       {
         cache: "force-cache",
         next: { tags: [tagLists.PRODUCT_REVIEW] },
-      }
+      },
     );
 
     if (!res.ok) {
@@ -90,7 +90,7 @@ export const getProductReviewsFromDB = async (
   }
 };
 export const getProductReviewsStatsFromDB = async (
-  productId: string
+  productId: string,
 ): Promise<TServerResponse> => {
   try {
     const res = await fetch(
@@ -98,7 +98,7 @@ export const getProductReviewsStatsFromDB = async (
       {
         cache: "force-cache",
         next: { tags: [tagLists.PRODUCT_REVIEW] },
-      }
+      },
     );
 
     if (!res.ok) {
@@ -130,7 +130,7 @@ export const getProductReviewsStatsFromDB = async (
    Get All Reviews (Admin)
 ============================================ */
 export const getAllReviewsFromDB = async (
-  params?: Record<string, any>
+  params?: Record<string, any>,
 ): Promise<TServerResponse> => {
   const queryParams = params
     ? "?" + new URLSearchParams(params).toString()
@@ -139,7 +139,7 @@ export const getAllReviewsFromDB = async (
   try {
     const res = await fetchWithAuth(
       `${process.env.NEXT_PUBLIC_BACKED_URL}/products/reviews/all-reviews${queryParams}`,
-      { cache: "no-store" }
+      { cache: "no-store" },
     );
 
     const data = await res.json();
@@ -168,7 +168,7 @@ export const getAllReviewsFromDB = async (
 ============================================ */
 export const deleteReviewFromDB = async (
   productId: string,
-  reviewId: string
+  reviewId: string,
 ): Promise<TServerResponse> => {
   try {
     const res = await fetchWithAuth(
@@ -176,11 +176,11 @@ export const deleteReviewFromDB = async (
       {
         method: "DELETE",
         cache: "no-store",
-      }
+      },
     );
 
     const data = await res.json();
-    revalidateTag(tagLists.PRODUCT_REVIEW);
+    revalidateTag(tagLists.PRODUCT_REVIEW, "max");
 
     if (data?.success) {
       return {
@@ -206,7 +206,7 @@ export const deleteReviewFromDB = async (
 ============================================ */
 export const approveReviewInDB = async (
   productId: string,
-  reviewId: string
+  reviewId: string,
 ): Promise<TServerResponse> => {
   try {
     const res = await fetchWithAuth(
@@ -214,12 +214,12 @@ export const approveReviewInDB = async (
       {
         method: "POST",
         cache: "no-store",
-      }
+      },
     );
 
     const data = await res.json();
-    revalidateTag(tagLists.PRODUCT_REVIEW);
-    revalidateTag(tagLists.PRODUCT);
+    revalidateTag(tagLists.PRODUCT_REVIEW, "max");
+    revalidateTag(tagLists.PRODUCT, "max");
 
     if (data?.success) {
       return {

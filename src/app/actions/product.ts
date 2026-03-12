@@ -9,7 +9,7 @@ import { fetchWithAuth } from "./fetchWithAuth";
    Get All Products : use here normal fetch, no auth required
 ============================================ */
 export const getAllProductsFromDB = async (
-  params?: Record<string, any>
+  params?: Record<string, any>,
 ): Promise<TServerResponse> => {
   try {
     const queryParams = params
@@ -21,7 +21,7 @@ export const getAllProductsFromDB = async (
       {
         cache: "force-cache",
         next: { tags: [tagLists.PRODUCT] },
-      }
+      },
     );
 
     if (!res.ok) {
@@ -53,7 +53,7 @@ export const getAllProductsFromDB = async (
    Get Single Product
 ============================================ */
 export const getSingleProductFromDB = async (
-  productSlug: string
+  productSlug: string,
 ): Promise<TServerResponse> => {
   try {
     const res = await fetch(
@@ -61,7 +61,7 @@ export const getSingleProductFromDB = async (
       {
         cache: "force-cache",
         next: { tags: [tagLists.PRODUCT] },
-      }
+      },
     );
 
     if (!res.ok) {
@@ -93,7 +93,7 @@ export const getSingleProductFromDB = async (
    Add Product
 ============================================ */
 export const addProductToDB = async (
-  productData: Record<string, any>
+  productData: Record<string, any>,
 ): Promise<TServerResponse> => {
   try {
     const res = await fetchWithAuth(
@@ -103,11 +103,11 @@ export const addProductToDB = async (
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(productData),
         cache: "no-store",
-      }
+      },
     );
 
     const data = await res.json();
-    revalidateTag(tagLists.PRODUCT);
+    revalidateTag(tagLists.PRODUCT, "max");
 
     if (data?.success) {
       return {
@@ -133,7 +133,7 @@ export const addProductToDB = async (
 ============================================ */
 export const updateProductInDB = async (
   productId: string,
-  updatedData: Record<string, any>
+  updatedData: Record<string, any>,
 ): Promise<TServerResponse> => {
   try {
     const res = await fetchWithAuth(
@@ -143,7 +143,7 @@ export const updateProductInDB = async (
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(updatedData),
         cache: "no-store",
-      }
+      },
     );
 
     if (!res.ok) {
@@ -155,7 +155,7 @@ export const updateProductInDB = async (
     }
 
     const data = await res.json();
-    revalidateTag(tagLists.PRODUCT);
+    revalidateTag(tagLists.PRODUCT, "max");
 
     if (data?.success) {
       return {
@@ -180,7 +180,7 @@ export const updateProductInDB = async (
    Delete Product
 ============================================ */
 export const deleteProductFromDB = async (
-  productId: string
+  productId: string,
 ): Promise<TServerResponse> => {
   try {
     const res = await fetchWithAuth(
@@ -188,7 +188,7 @@ export const deleteProductFromDB = async (
       {
         method: "DELETE",
         cache: "no-store",
-      }
+      },
     );
 
     if (!res.ok) {
@@ -200,7 +200,7 @@ export const deleteProductFromDB = async (
     }
 
     const data = await res.json();
-    revalidateTag(tagLists.PRODUCT);
+    revalidateTag(tagLists.PRODUCT, "max");
 
     if (data?.success) {
       return {
