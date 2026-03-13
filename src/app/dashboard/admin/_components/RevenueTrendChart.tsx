@@ -102,14 +102,17 @@ const RevenueTrendChart = () => {
                 boxShadow: "0 4px 8px rgba(0,0,0,0.15)",
                 color: colors.text,
               }}
-              formatter={(value: number, name: string) => {
+              formatter={(value: any, name: any) => {
+                const numValue = Number(value || 0);
+
                 if (name === "revenue" || name === "prevRevenue") {
                   return [
-                    `$${value.toLocaleString()}`,
+                    `$${numValue.toLocaleString()}`,
                     name === "revenue" ? "Current Revenue" : "Previous Period",
                   ];
                 }
-                return [value, name === "orders" ? "Orders" : name];
+
+                return [numValue, name === "orders" ? "Orders" : name];
               }}
             />
 
@@ -120,8 +123,8 @@ const RevenueTrendChart = () => {
                 value === "revenue"
                   ? "Current Revenue"
                   : value === "prevRevenue"
-                  ? "Previous Period"
-                  : "Orders"
+                    ? "Previous Period"
+                    : "Orders"
               }
             />
 

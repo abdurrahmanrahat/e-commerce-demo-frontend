@@ -81,8 +81,8 @@ const DashboardAnalyticsCharts = () => {
                     borderRadius: "8px",
                     color: colors.text,
                   }}
-                  formatter={(value: number, name: string, props: any) => [
-                    `${value.toLocaleString()} (${props.payload.percentage}%)`,
+                  formatter={(value: any, name: any, props: any) => [
+                    `${Number(value).toLocaleString()} (${props.payload.percentage}%)`,
                     "Count",
                   ]}
                 />
@@ -133,11 +133,10 @@ const DashboardAnalyticsCharts = () => {
                     borderRadius: "8px",
                     color: colors.text,
                   }}
-                  formatter={(value: number, name: string) =>
-                    name === "visits"
-                      ? [`${value.toLocaleString()} visits`, "Visits"]
-                      : [`${value}%`, "Conversion Rate"]
-                  }
+                  formatter={(value: any, name: any, props: any) => [
+                    `${Number(value).toLocaleString()} (${props.payload.percentage}%)`,
+                    "Count",
+                  ]}
                 />
                 <Bar
                   dataKey="visits"
@@ -230,8 +229,8 @@ const DashboardAnalyticsCharts = () => {
                     borderRadius: "8px",
                     color: colors.text,
                   }}
-                  formatter={(value: number) => [
-                    `$${value.toLocaleString()}`,
+                  formatter={(value: any, name: any, props: any) => [
+                    `${Number(value).toLocaleString()} (${props.payload.percentage}%)`,
                     "Revenue",
                   ]}
                 />

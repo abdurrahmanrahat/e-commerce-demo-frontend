@@ -89,12 +89,16 @@ const TopSellingProductsChart = () => {
                 boxShadow: "0 4px 8px rgba(0,0,0,0.15)",
                 color: colors.text,
               }}
-              formatter={(value: number, name: string) => {
+              formatter={(value: any, name: any) => {
+                const num = Number(value || 0);
+
                 if (name === "sales")
-                  return [`${value.toLocaleString()} units`, "Units Sold"];
+                  return [`${num.toLocaleString()} units`, "Units Sold"];
+
                 if (name === "revenue")
-                  return [`$${value.toLocaleString()}`, "Revenue"];
-                return [value, name];
+                  return [`$${num.toLocaleString()}`, "Revenue"];
+
+                return [num, name];
               }}
             />
 
@@ -108,8 +112,8 @@ const TopSellingProductsChart = () => {
                 value === "sales"
                   ? "Units Sold"
                   : value === "revenue"
-                  ? "Revenue Generated"
-                  : value
+                    ? "Revenue Generated"
+                    : value
               }
             />
 

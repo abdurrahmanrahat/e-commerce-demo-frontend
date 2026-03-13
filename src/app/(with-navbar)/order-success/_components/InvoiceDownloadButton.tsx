@@ -5,7 +5,7 @@ import { FileDown } from "lucide-react";
 import pdfMake from "pdfmake/build/pdfmake";
 import pdfFonts from "pdfmake/build/vfs_fonts";
 
-pdfMake.vfs = pdfFonts.vfs;
+(pdfMake as any).vfs = pdfFonts.vfs;
 
 type TInvoiceButtonProps = {
   order: any;
@@ -45,7 +45,7 @@ export const InvoiceDownloadButton = ({ order }: TInvoiceButtonProps) => {
                   },
                   {
                     text: `Date: ${new Date(order.createdAt).toLocaleDateString(
-                      "en-GB"
+                      "en-GB",
                     )}`,
                     style: "rightText",
                   },

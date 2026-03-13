@@ -31,7 +31,7 @@ const WishlistCard = ({ product, onSheetClose }: TWishlistCardProps) => {
 
   const addProductToCart = (product: TProduct) => {
     const alreadyCart = cartItems.some(
-      (item) => item.product._id === product._id
+      (item) => item.productId === product._id,
     );
 
     if (alreadyCart) {
@@ -39,7 +39,7 @@ const WishlistCard = ({ product, onSheetClose }: TWishlistCardProps) => {
     } else if (product.stock === 0) {
       toast.error("Out of stock!");
     } else {
-      dispatch(addToCart({ product, quantity: quantity }));
+      dispatch(addToCart({ productId: product._id, quantity: quantity }));
       dispatch(removeFromWishlist(product._id));
 
       toast.success("Add to cart success");
