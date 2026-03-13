@@ -1,8 +1,11 @@
-import { TProduct } from "@/types";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
+type TWishlistItem = {
+  productId: string;
+};
+
 type TWishlistState = {
-  items: TProduct[];
+  items: TWishlistItem[];
 };
 
 const initialState: TWishlistState = {
@@ -13,18 +16,22 @@ const wishlistSlice = createSlice({
   name: "wishlist",
   initialState,
   reducers: {
-    addToWishlist: (state, action: PayloadAction<TProduct>) => {
-      // Check if already exists to prevent duplicates
+    addToWishlist: (state, action: PayloadAction<string>) => {
       const exists = state.items.find(
-        (item) => item._id === action.payload._id
+        (item) => item.productId === action.payload,
       );
+
       if (!exists) {
-        state.items.push(action.payload);
+        state.items.push({ productId: action.payload });
       }
     },
+
     removeFromWishlist: (state, action: PayloadAction<string>) => {
-      state.items = state.items.filter((item) => item._id !== action.payload);
+      state.items = state.items.filter(
+        (item) => item.productId !== action.payload,
+      );
     },
+
     clearWishlist: (state) => {
       state.items = [];
     },
@@ -33,4 +40,5 @@ const wishlistSlice = createSlice({
 
 export const { addToWishlist, removeFromWishlist, clearWishlist } =
   wishlistSlice.actions;
+
 export default wishlistSlice.reducer;

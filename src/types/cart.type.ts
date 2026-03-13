@@ -1,6 +1,4 @@
-import { TProduct } from "./product.type";
-
 export type TCartItem = {
-  product: TProduct;
+  productId: string;
   quantity: number;
 };

@@ -16,33 +16,46 @@ const cartSlice = createSlice({
   initialState,
   reducers: {
     addToCart: (state, action: PayloadAction<TCartItem>) => {
-      state.items.push(action.payload);
+      const existingItem = state.items.find(
+        (item) => item.productId === action.payload.productId,
+      );
+
+      if (existingItem) {
+        existingItem.quantity += action.payload.quantity;
+      } else {
+        state.items.push(action.payload);
+      }
     },
+
     removeFromCart: (state, action: PayloadAction<string>) => {
       state.items = state.items.filter(
-        (item) => item.product._id !== action.payload
+        (item) => item.productId !== action.payload,
       );
     },
+
     updateQuantity: (
       state,
       action: PayloadAction<{
         productId: string;
         quantity: number;
-      }>
+      }>,
     ) => {
       const item = state.items.find(
-        (item) => item.product._id === action.payload.productId
+        (item) => item.productId === action.payload.productId,
       );
+
       if (item) {
         item.quantity = action.payload.quantity;
       }
     },
+
     updateShippingOption: (
       state,
-      action: PayloadAction<"dhaka" | "outside">
+      action: PayloadAction<"dhaka" | "outside">,
     ) => {
       state.shippingOption = action.payload;
     },
+
     clearCart: (state) => {
       state.items = [];
     },
@@ -56,4 +69,5 @@ export const {
   clearCart,
   updateShippingOption,
 } = cartSlice.actions;
+
 export default cartSlice.reducer;
