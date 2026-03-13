@@ -110,7 +110,7 @@ const OrderDetailsModal = ({ order }: { order: TOrder }) => {
                 <span
                   className={cn(
                     "inline-flex items-center justify-center px-3 py-[3px] rounded-full text-xs 2xl:text-sm font-semibold capitalize select-none transition-all duration-200",
-                    getOrderStatusColor(order.status)
+                    getOrderStatusColor(order.status),
                   )}
                 >
                   {order.status}
@@ -179,7 +179,7 @@ const OrderDetailsModal = ({ order }: { order: TOrder }) => {
           <div className="flex justify-between">
             <span className="text-muted-foreground">Shipping:</span>
             <span className="font-medium">
-              ${(order.total - order.subtotal).toFixed(2)}
+              ${order.shippingCost.toFixed(2)}
             </span>
           </div>
           <Separator />

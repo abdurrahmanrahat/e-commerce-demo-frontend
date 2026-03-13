@@ -26,7 +26,6 @@ export default function WishlistSheet() {
   const router = useRouter();
 
   const wishlists = useAppSelector((state) => state.wishlist.items);
-  console.log("wishlists", wishlists);
 
   useEffect(() => {
     if (!isOpen) return;
@@ -85,8 +84,6 @@ export default function WishlistSheet() {
       })
       .filter(Boolean) as { product: TProduct }[];
   }, [wishlists, products]);
-
-  console.log("wishlistProducts", wishlistProducts);
 
   const handleContinueShopping = () => {
     setIsOpen((prev) => !prev);

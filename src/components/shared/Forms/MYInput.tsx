@@ -7,9 +7,15 @@ type TMTInputProps = {
   name: string;
   type?: string;
   placeholder: string;
+  readOnly?: boolean;
 };
 
-const MYInput = ({ name, type = "text", placeholder }: TMTInputProps) => {
+const MYInput = ({
+  name,
+  type = "text",
+  placeholder,
+  readOnly,
+}: TMTInputProps) => {
   const {
     control,
     formState: { errors },
@@ -25,6 +31,7 @@ const MYInput = ({ name, type = "text", placeholder }: TMTInputProps) => {
             {...field}
             type={type}
             placeholder={placeholder ?? ""}
+            {...(readOnly && { readOnly: true })}
             className={`py-[22px] px-4 rounded-md border ${
               errors[name]
                 ? "border-red-500 dark:border-red-400"
