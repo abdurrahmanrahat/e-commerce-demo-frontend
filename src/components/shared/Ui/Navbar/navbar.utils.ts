@@ -2,6 +2,7 @@ export const navItems = [
   { name: "Home", href: "/" },
   { name: "Shop", href: "/shop" },
   { name: "Cart", href: "/cart" },
+  { name: "Tracking", href: "/order-tracking" },
   { name: "About", href: "/about" },
   // {
   //   href: "",

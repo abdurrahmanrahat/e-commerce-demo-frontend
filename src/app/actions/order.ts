@@ -78,6 +78,55 @@ export const getSingleOrderFromDB = async (
 };
 
 /* ============================================
+   Track Order (Public - For Tracking)
+============================================ */
+export const trackingOrderFromDB = async (
+  orderNumber: string,
+  phone: string,
+): Promise<TServerResponse> => {
+  try {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_BACKED_URL}/orders/tracking`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          orderNumber,
+          phone,
+        }),
+        cache: "no-store",
+      },
+    );
+
+    const data = await res.json();
+
+    if (data?.success) {
+      return {
+        success: data?.success ?? true,
+        data: data?.data || {},
+        message: data?.message,
+      };
+    } else {
+      return {
+        success: data?.success ?? false,
+        data: null,
+        message: data?.message || "Order not found",
+      };
+    }
+  } catch (error) {
+    console.error("Error tracking order:", error);
+
+    return {
+      success: false,
+      data: null,
+      message: "Network or server error",
+    };
+  }
+};
+
+/* ============================================
    Create Order (Public - Checkout)
 ============================================ */
 export const createOrderInDB = async (

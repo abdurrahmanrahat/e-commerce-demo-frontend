@@ -27,6 +27,16 @@ const ShippingInfo = ({ order }: { order: TOrder }) => {
             </p>
           </div>
         </div>
+        <div>
+          {order?.orderNotes && (
+            <div className="text-sm 2xl:text-base text-muted-foreground">
+              <span className="font-medium text-gray-900 dark:text-gray-100">
+                Special Notes:
+              </span>{" "}
+              <p>{order?.orderNotes}</p>
+            </div>
+          )}
+        </div>
 
         <div className="bg-primary/10 rounded-lg p-4 flex items-start gap-3">
           <Calendar className="w-5 h-5 text-primary mt-0.5" />
