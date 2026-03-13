@@ -26,7 +26,7 @@ const ProductActions = ({ product }: { product: TProduct }) => {
   // handle add to cart
   const handleAddToCart = () => {
     const alreadyCart = cartItems.some(
-      (item) => item.product._id === product._id
+      (item) => item.productId === product._id,
     );
 
     if (alreadyCart) {
@@ -34,14 +34,14 @@ const ProductActions = ({ product }: { product: TProduct }) => {
     } else if (product.stock === 0) {
       toast.error("Out of stock!");
     } else {
-      dispatch(addToCart({ product, quantity: quantity }));
+      dispatch(addToCart({ productId: product._id, quantity: quantity }));
 
       toast.success("Add to cart success");
     }
   };
 
   const alreadyInWishlist = wishlistItems.some(
-    (item) => item._id === product._id
+    (item) => item.productId === product._id,
   );
 
   // handle add to wishlist
@@ -49,7 +49,7 @@ const ProductActions = ({ product }: { product: TProduct }) => {
     if (alreadyInWishlist) {
       toast.warning("Already you have added in wishlist!");
     } else {
-      dispatch(addToWishlist(product));
+      dispatch(addToWishlist(product._id));
 
       toast.success("Add to wishlist success");
     }

@@ -4,7 +4,7 @@ import { createOrderInDB } from "@/app/actions/order";
 import MYForm from "@/components/shared/Forms/MYForm";
 import MYInput from "@/components/shared/Forms/MYInput";
 import MYTextArea from "@/components/shared/Forms/MYTextArea";
-import MyImage from "@/components/shared/Ui/Image/MyImage";
+import EmptyCart from "@/components/shared/Ui/Data/EmptyCart";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
@@ -16,14 +16,17 @@ import {
 } from "@/constants/shippingKey";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { clearCart } from "@/redux/reducers/cartSlice";
+import { TCartProduct, TProduct } from "@/types";
 import { shippingOptions } from "@/utils/shippingOptions";
-import { Loader, Lock, ShoppingBag } from "lucide-react";
+import { Loader, Lock } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { FieldValues } from "react-hook-form";
 import { toast } from "sonner";
 import z from "zod";
+import CheckoutProductCard from "./CheckoutProductCard";
+import { CheckoutProductCardSkeleton } from "./CheckoutProductCardSkeleton";
 
 const userBillingAddressSchema = z.object({
   fullName: z.string().min(1, "Full name is required"),
@@ -45,26 +48,83 @@ const userBillingAddress = {
 };
 
 const BillingDetails = () => {
+  const [isButtonLoading, setIsButtonLoading] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [products, setProducts] = useState<TProduct[]>([]);
+
+  const router = useRouter();
+  const dispatch = useAppDispatch();
 
   // Payment Method state
-
   const shipOption = useAppSelector((state) => state.cart.shippingOption);
 
   const [shippingOption, setShippingOption] = useState(shipOption || "dhaka");
 
   const cartItems = useAppSelector((state) => state.cart.items);
 
-  const router = useRouter();
+  useEffect(() => {
+    let active = true;
 
-  const dispatch = useAppDispatch();
+    const fetchProducts = async () => {
+      setIsLoading(true);
 
-  const subtotal = cartItems.reduce(
-    (sum, item) => sum + item.product.price * item.quantity,
-    0
+      if (cartItems.length === 0) {
+        if (active) {
+          setProducts([]);
+          setIsLoading(false);
+        }
+        return;
+      }
+
+      try {
+        const ids = cartItems.map((item) => item.productId);
+
+        const res = await fetch("/api/products/byIds", {
+          method: "POST",
+          body: JSON.stringify({ ids }),
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+
+        const data = await res.json();
+
+        if (active && data.success) {
+          setProducts(data.data);
+        }
+      } catch (error) {
+        console.error(error);
+      } finally {
+        if (active) setIsLoading(false);
+      }
+    };
+
+    fetchProducts();
+
+    return () => {
+      active = false;
+    };
+  }, [cartItems]);
+
+  const cartProducts = useMemo(() => {
+    const productMap = new Map(products.map((p) => [p._id, p]));
+
+    return cartItems
+      .map((item) => {
+        const product = productMap.get(item.productId);
+        if (!product) return null;
+
+        return { product, quantity: item.quantity };
+      })
+      .filter((item): item is TCartProduct => item !== null);
+  }, [cartItems, products]);
+
+  const subtotal = cartProducts.reduce(
+    (sum, item) => sum + item.product.sellingPrice * item.quantity,
+    0,
   );
 
-  const orderItems = cartItems.map((item) => ({
+  const orderItems = cartProducts.map((item) => ({
     product: item.product._id,
     quantity: item.quantity,
   }));
@@ -76,14 +136,14 @@ const BillingDetails = () => {
   const total = subtotal + shippingCost;
 
   const handleSubmit = async (values: FieldValues) => {
-    setIsLoading(true);
+    setIsButtonLoading(true);
 
     const orderData = {
       ...values,
       shippingOption,
       orderItems,
-      subtotal,
-      total,
+      // subtotal,
+      // total,
       paymentMethod: "CASH-ON-DELIVERY", // will be dynamic
     };
 
@@ -102,7 +162,7 @@ const BillingDetails = () => {
     } catch (error: any) {
       toast.error(error?.message || "Something went wrong!");
     } finally {
-      setIsLoading(false);
+      setIsButtonLoading(false);
     }
   };
 
@@ -226,47 +286,20 @@ const BillingDetails = () => {
               {/* Cart Items */}
               <div className="space-y-2">
                 {cartItems.length === 0 ? (
-                  <div className="flex flex-col items-center justify-center gap-1 py-6">
-                    <div className="flex flex-col items-center justify-center gap-1">
-                      <ShoppingBag className="w-12 h-12" />
-                      <h4 className="text-lg lg:text-xl font-medium">
-                        Your cart is empty!
-                      </h4>
-                      <p className="text-sm 2xl:text-base text-gray-600 dark:text-gray-300 mb-6">
-                        Add some products to get started
-                      </p>
-                    </div>
-                    <Button asChild>
-                      <Link href="/shop">Continue Shopping</Link>
-                    </Button>
-                  </div>
+                  <EmptyCart />
                 ) : (
                   <>
-                    {cartItems.map((item) => (
-                      <div key={item.product._id} className="flex gap-3">
-                        <MyImage
-                          src={item.product.images[0]}
-                          alt={item.product.name}
-                          width={64}
-                          height={64}
-                          className="w-16 h-16 rounded object-cover"
-                        />
-                        <div className="flex-1 min-w-0">
-                          <p className="text-sm 2xl:text-base line-clamp-2">
-                            {item.product.name}
-                          </p>
-                          <p className="text-xs 2xl:text-sm text-muted-foreground">
-                            × {item.quantity}
-                          </p>
-                        </div>
-                        <span className="text-sm 2xl:text-base font-medium">
-                          ${" "}
-                          {(item.product.sellingPrice * item.quantity).toFixed(
-                            2
-                          )}
-                        </span>
-                      </div>
-                    ))}
+                    {isLoading ? (
+                      <>
+                        <CheckoutProductCardSkeleton />
+                      </>
+                    ) : (
+                      <>
+                        {cartProducts.map((item) => (
+                          <CheckoutProductCard item={item} />
+                        ))}
+                      </>
+                    )}
                   </>
                 )}
               </div>
@@ -276,7 +309,7 @@ const BillingDetails = () => {
               {/* Subtotal */}
               <div className="flex justify-between text-sm 2xl:text-base">
                 <span className="">Subtotal:</span>
-                <span className="font-medium">$ {subtotal.toFixed(2)}</span>
+                <span className="font-medium">${subtotal.toFixed(2)}</span>
               </div>
 
               {/* Shipping */}
@@ -317,7 +350,7 @@ const BillingDetails = () => {
               {/* Total */}
               <div className="flex justify-between text-base 2xl:text-lg font-bold">
                 <span>Total</span>
-                <span className="text-primary">$ {total.toFixed(2)}</span>
+                <span className="text-primary">${total.toFixed(2)}</span>
               </div>
 
               {/* Payment Method */}
@@ -359,9 +392,9 @@ const BillingDetails = () => {
               <Button
                 className="w-full"
                 size="lg"
-                disabled={isLoading || cartItems.length === 0}
+                disabled={isButtonLoading || cartItems.length === 0}
               >
-                {isLoading ? (
+                {isButtonLoading ? (
                   <span className="flex items-center gap-2">
                     <Loader className="h-4 w-4 animate-spin [animation-duration:1.4s]" />
                     <span>Processing...</span>

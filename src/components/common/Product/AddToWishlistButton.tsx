@@ -15,7 +15,7 @@ const AddToWishlistButton = ({ product }: { product: TProduct }) => {
   const wishlistItems = useAppSelector((state) => state.wishlist.items);
 
   const alreadyInWishlist = wishlistItems.some(
-    (item) => item._id === product._id
+    (item) => item.productId === product._id,
   );
 
   // handle add to wishlist
@@ -23,7 +23,7 @@ const AddToWishlistButton = ({ product }: { product: TProduct }) => {
     if (alreadyInWishlist) {
       toast.warning("Already you have added in wishlist!");
     } else {
-      dispatch(addToWishlist(product));
+      dispatch(addToWishlist(product._id));
 
       toast.success("Add to wishlist success");
     }
@@ -45,7 +45,7 @@ const AddToWishlistButton = ({ product }: { product: TProduct }) => {
             handleRemoveFromWishlist();
           }}
           className={cn(
-            "absolute top-2 right-2 p-1 2xl:p-2 rounded-full bg-white shadow-md opacity-0 group-hover:opacity-100 transition-opacity duration-300 cursor-pointer text-red-500"
+            "absolute top-2 right-2 p-1 2xl:p-2 rounded-full bg-white shadow-md opacity-0 group-hover:opacity-100 transition-opacity duration-300 cursor-pointer text-red-500",
           )}
           aria-label="Add to wishlist"
         >
@@ -59,7 +59,7 @@ const AddToWishlistButton = ({ product }: { product: TProduct }) => {
             handleAddToWishlist();
           }}
           className={cn(
-            "absolute top-2 right-2 p-1 2xl:p-2 rounded-full bg-white shadow-md opacity-0 group-hover:opacity-100 transition-opacity duration-300 cursor-pointer text-gray-500 hover:text-red-500"
+            "absolute top-2 right-2 p-1 2xl:p-2 rounded-full bg-white shadow-md opacity-0 group-hover:opacity-100 transition-opacity duration-300 cursor-pointer text-gray-500 hover:text-red-500",
           )}
           aria-label="Add to wishlist"
         >

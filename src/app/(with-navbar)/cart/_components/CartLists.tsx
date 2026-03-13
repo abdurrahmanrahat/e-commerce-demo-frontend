@@ -11,15 +11,18 @@ import {
 } from "@/constants/shippingKey";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { updateShippingOption } from "@/redux/reducers/cartSlice";
+import { TCartProduct, TProduct } from "@/types";
 import { shippingOptions } from "@/utils/shippingOptions";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { toast } from "sonner";
 import CartCard from "./CartCard";
 import NotFoundCartItems from "./NotFoundCartItems";
 
 const CartLists = () => {
+  const [isLoading, setIsLoading] = useState(false);
+  const [products, setProducts] = useState<TProduct[]>([]);
   const shipOption = useAppSelector((state) => state.cart.shippingOption);
   const [shippingOption, setShippingOption] = useState(shipOption || "dhaka");
 
@@ -28,9 +31,66 @@ const CartLists = () => {
   const dispatch = useAppDispatch();
   const cartItems = useAppSelector((state) => state.cart.items);
 
-  const subtotal = cartItems.reduce(
+  useEffect(() => {
+    let active = true;
+
+    const fetchProducts = async () => {
+      setIsLoading(true);
+
+      if (cartItems.length === 0) {
+        if (active) {
+          setProducts([]);
+          setIsLoading(false);
+        }
+        return;
+      }
+
+      try {
+        const ids = cartItems.map((item) => item.productId);
+
+        const res = await fetch("/api/products/byIds", {
+          method: "POST",
+          body: JSON.stringify({ ids }),
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+
+        const data = await res.json();
+
+        if (active && data.success) {
+          setProducts(data.data);
+        }
+      } catch (error) {
+        console.error(error);
+      } finally {
+        if (active) setIsLoading(false);
+      }
+    };
+
+    fetchProducts();
+
+    return () => {
+      active = false;
+    };
+  }, [cartItems]);
+
+  const cartProducts = useMemo(() => {
+    const productMap = new Map(products.map((p) => [p._id, p]));
+
+    return cartItems
+      .map((item) => {
+        const product = productMap.get(item.productId);
+        if (!product) return null;
+
+        return { product, quantity: item.quantity };
+      })
+      .filter((item): item is TCartProduct => item !== null);
+  }, [cartItems, products]);
+
+  const subtotal = cartProducts.reduce(
     (sum, item) => sum + item.product.sellingPrice * item.quantity,
-    0
+    0,
   );
 
   const shippingCost =
@@ -42,7 +102,7 @@ const CartLists = () => {
 
   // handle checkout
   const handleCheckout = () => {
-    if (cartItems.length === 0) {
+    if (cartProducts.length === 0) {
       toast.error("Your cart is empty");
       return;
     }
@@ -53,15 +113,27 @@ const CartLists = () => {
   };
 
   // cart.length === 0
-  if (cartItems.length === 0) {
+  if (cartProducts.length === 0 && !isLoading) {
     return <NotFoundCartItems />;
   }
+  console.log("cartProducts", cartProducts);
 
   return (
     <div className="grid lg:grid-cols-3 gap-6 mt-6">
       {/* Cart Items */}
       <div className="lg:col-span-2 space-y-4">
-        {cartItems.map((item) => (
+        {/* {isLoading ? (
+          <>
+            <div>Loading..</div>
+          </>
+        ) : (
+          <>
+            {cartProducts.map((item) => (
+              <CartCard key={item.product._id} item={item} />
+            ))}
+          </>
+        )} */}
+        {cartProducts.map((item) => (
           <CartCard key={item.product._id} item={item} />
         ))}
       </div>

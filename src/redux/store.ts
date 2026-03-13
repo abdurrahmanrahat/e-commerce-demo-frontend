@@ -22,11 +22,11 @@ const persistConfig = {
 };
 
 const cartPersistConfig = {
-  key: "moTeCart",
+  key: "edCart",
   storage: createExpireStorage(1 * 24 * 60 * 60 * 1000), // (here -> 1 days)
 };
 const wishlistPersistConfig = {
-  key: "moTeWishlist",
+  key: "edWishlist",
   storage: createExpireStorage(2 * 24 * 60 * 60 * 1000), // (here -> 2 days)
 };
 
@@ -34,7 +34,7 @@ const persistedAuthReducer = persistReducer(persistConfig, authReducer);
 const persistedCartReducer = persistReducer(cartPersistConfig, cartReducer);
 const persistedWishlistReducer = persistReducer(
   wishlistPersistConfig,
-  wishlistReducer
+  wishlistReducer,
 );
 
 export const store = configureStore({

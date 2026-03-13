@@ -4,12 +4,12 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { useAppDispatch } from "@/redux/hooks";
 import { removeFromCart, updateQuantity } from "@/redux/reducers/cartSlice";
-import { TCartItem } from "@/types";
+import { TCartProduct } from "@/types";
 import { Trash2 } from "lucide-react";
 import Link from "next/link";
 import { toast } from "sonner";
 
-const CartSheetCard = ({ item }: { item: TCartItem }) => {
+const CartSheetCard = ({ item }: { item: TCartProduct }) => {
   const handleUpdateQuantity = (newQuantity: number) => {
     if (newQuantity < 1) {
       toast.error("You have to put at least 1 quantity!");
@@ -17,7 +17,7 @@ const CartSheetCard = ({ item }: { item: TCartItem }) => {
       toast.error("Out of stock!");
     } else {
       dispatch(
-        updateQuantity({ productId: item.product._id, quantity: newQuantity })
+        updateQuantity({ productId: item.product._id, quantity: newQuantity }),
       );
     }
   };

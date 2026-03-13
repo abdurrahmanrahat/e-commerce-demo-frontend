@@ -1,7 +1,7 @@
 "use client";
 
 import { ShoppingBag, ShoppingCart } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -23,6 +23,7 @@ import {
 } from "@/constants/shippingKey";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { updateShippingOption } from "@/redux/reducers/cartSlice";
+import { TCartProduct, TProduct } from "@/types";
 import { shippingOptions } from "@/utils/shippingOptions";
 import { useRouter } from "next/navigation";
 import CartSheetCard from "./CartSheetCard";
@@ -30,6 +31,8 @@ import { CheckoutStepsForSheet } from "./CheckoutStepsForSheet";
 
 export default function CartSheet() {
   const [isOpen, setIsOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [products, setProducts] = useState<TProduct[]>([]);
 
   const shipOption = useAppSelector((state) => state.cart.shippingOption);
 
@@ -40,10 +43,84 @@ export default function CartSheet() {
   const dispatch = useAppDispatch();
   const cartItems = useAppSelector((state) => state.cart.items);
 
-  const subtotal = cartItems.reduce(
-    (sum, item) => sum + item.product.price * item.quantity,
-    0
-  );
+  // useEffect(() => {
+  //   const fetchProducts = async () => {
+  //     if (cartItems.length === 0) return;
+
+  //     const ids = cartItems.map((item) => item.productId);
+
+  //     const res = await getProductsByIdsFromDB(ids);
+
+  //     if (res.success) {
+  //       setProducts(res.data);
+  //     }
+  //   };
+
+  //   fetchProducts();
+  // }, [cartItems]);
+
+  useEffect(() => {
+    if (!isOpen) return;
+
+    let active = true;
+
+    const fetchProducts = async () => {
+      setIsLoading(true);
+
+      if (cartItems.length === 0) {
+        if (active) {
+          setProducts([]);
+          setIsLoading(false);
+        }
+        return;
+      }
+
+      try {
+        const ids = cartItems.map((item) => item.productId);
+
+        const res = await fetch("/api/products/byIds", {
+          method: "POST",
+          body: JSON.stringify({ ids }),
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+
+        const data = await res.json();
+
+        if (active && data.success) {
+          setProducts(data.data);
+        }
+      } catch (error) {
+        console.error(error);
+      } finally {
+        if (active) setIsLoading(false);
+      }
+    };
+
+    fetchProducts();
+
+    return () => {
+      active = false;
+    };
+  }, [cartItems, isOpen]);
+
+  const cartProducts = useMemo(() => {
+    const productMap = new Map(products.map((p) => [p._id, p]));
+
+    return cartItems
+      .map((item) => {
+        const product = productMap.get(item.productId);
+        if (!product) return null;
+
+        return { product, quantity: item.quantity };
+      })
+      .filter((item): item is TCartProduct => item !== null);
+  }, [cartItems, products]);
+
+  const subtotal = cartProducts.reduce((sum, item) => {
+    return sum + item.product.sellingPrice * item.quantity;
+  }, 0);
 
   const shippingCost =
     shippingOption === "dhaka"
@@ -106,11 +183,11 @@ export default function CartSheet() {
           </div>
 
           {/* Main Content */}
-          <div className="w-full pt-6 px-4">
+          <div className="w-full pt-6 px-4 ">
             <div>
               <div>
                 <div className="">
-                  {cartItems.length === 0 ? (
+                  {cartProducts.length === 0 && !isLoading ? (
                     <div className="flex flex-col items-center justify-center gap-1 py-12">
                       <div className="flex flex-col items-center justify-center gap-1">
                         <ShoppingBag className="w-12 h-12" />
@@ -127,7 +204,7 @@ export default function CartSheet() {
                     </div>
                   ) : (
                     <div className="py-6">
-                      {cartItems.map((item, index) => (
+                      {cartProducts.map((item, index) => (
                         <div key={item.product._id}>
                           <div className="">
                             <CartSheetCard item={item} />

@@ -13,7 +13,7 @@ const AddToCartButton = ({ product }: { product: TProduct }) => {
 
   const handleAddToCart = () => {
     const alreadyCart = cartItems.some(
-      (item) => item.product._id === product._id
+      (item) => item.productId === product._id,
     );
 
     if (alreadyCart) {
@@ -21,7 +21,7 @@ const AddToCartButton = ({ product }: { product: TProduct }) => {
     } else if (product.stock === 0) {
       toast.error("Out of stock!");
     } else {
-      dispatch(addToCart({ product, quantity: 1 }));
+      dispatch(addToCart({ productId: product._id, quantity: 1 }));
 
       toast.success("Add to cart success");
     }

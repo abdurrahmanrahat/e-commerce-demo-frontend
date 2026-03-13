@@ -1,7 +1,7 @@
 "use client";
 
 import { Heart } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -14,15 +14,79 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { useAppSelector } from "@/redux/hooks";
+import { TProduct } from "@/types";
 import { useRouter } from "next/navigation";
 import WishlistCard from "./WishListCard";
 
 export default function WishlistSheet() {
   const [isOpen, setIsOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [products, setProducts] = useState<TProduct[]>([]);
 
   const router = useRouter();
 
   const wishlists = useAppSelector((state) => state.wishlist.items);
+  console.log("wishlists", wishlists);
+
+  useEffect(() => {
+    if (!isOpen) return;
+
+    let active = true;
+
+    const fetchProducts = async () => {
+      setIsLoading(true);
+
+      if (wishlists.length === 0) {
+        if (active) {
+          setProducts([]);
+          setIsLoading(false);
+        }
+        return;
+      }
+
+      try {
+        const ids = wishlists.map((item) => item.productId);
+
+        const res = await fetch("/api/products/byIds", {
+          method: "POST",
+          body: JSON.stringify({ ids }),
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+
+        const data = await res.json();
+        if (active && data.success) {
+          setProducts(data.data);
+        }
+      } catch (error) {
+        console.error(error);
+      } finally {
+        if (active) setIsLoading(false);
+      }
+    };
+
+    fetchProducts();
+
+    return () => {
+      active = false;
+    };
+  }, [wishlists, isOpen]);
+
+  const wishlistProducts = useMemo(() => {
+    if (!products.length || !wishlists.length) return [];
+
+    const productMap = new Map(products.map((p) => [p._id, p]));
+
+    return wishlists
+      .map((item) => {
+        const product = productMap.get(item.productId);
+        return product ? { product } : undefined;
+      })
+      .filter(Boolean) as { product: TProduct }[];
+  }, [wishlists, products]);
+
+  console.log("wishlistProducts", wishlistProducts);
 
   const handleContinueShopping = () => {
     setIsOpen((prev) => !prev);
@@ -63,7 +127,7 @@ export default function WishlistSheet() {
             <div>
               <div>
                 <div className="">
-                  {wishlists.length === 0 ? (
+                  {wishlists.length === 0 && !isLoading ? (
                     <div className="flex flex-col items-center justify-center gap-1 py-12">
                       <div className="flex flex-col items-center justify-center gap-1">
                         <Heart className="w-12 h-12" />
@@ -80,7 +144,7 @@ export default function WishlistSheet() {
                     </div>
                   ) : (
                     <div className="py-6">
-                      {wishlists.map((product, index) => (
+                      {wishlistProducts.map(({ product }, index) => (
                         <div key={product._id}>
                           <WishlistCard
                             product={product}

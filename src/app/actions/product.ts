@@ -50,6 +50,59 @@ export const getAllProductsFromDB = async (
 };
 
 /* ============================================
+   Get Products By IDs
+============================================ */
+export const getProductsByIdsFromDB = async (
+  ids: string[],
+): Promise<TServerResponse> => {
+  try {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_BACKED_URL}/products/by-ids`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ ids }),
+        cache: "no-store",
+      },
+    );
+
+    if (!res.ok) {
+      return {
+        success: false,
+        data: null,
+        message: "Failed to fetch products",
+      };
+    }
+
+    const data = await res.json();
+
+    if (data?.success) {
+      return {
+        success: data?.success ?? true,
+        data: data?.data || [],
+        message: data?.message,
+      };
+    } else {
+      return {
+        success: data?.success ?? false,
+        data: data?.data || null,
+        message: data?.errorSources?.[0]?.message || data?.message,
+      };
+    }
+  } catch (error: any) {
+    console.error("Error fetching products by ids:", error);
+
+    return {
+      success: false,
+      data: null,
+      message: "Network or server error",
+    };
+  }
+};
+
+/* ============================================
    Get Single Product
 ============================================ */
 export const getSingleProductFromDB = async (

@@ -17,6 +17,7 @@ export type TOrder = {
   shippingOption: "dhaka" | "outside";
   orderItems: TOrderItem[];
   subtotal: number;
+  shippingCost: number;
   total: number;
   status: "pending" | "processing" | "shipped" | "delivered" | "cancelled";
   paymentMethod: string;
