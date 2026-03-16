@@ -7,6 +7,7 @@ import MYTextArea from "@/components/shared/Forms/MYTextArea";
 import MyImage from "@/components/shared/Ui/Image/MyImage";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { cloudinaryFolderKey } from "@/constants/authKey";
 import { ImageUp, Loader } from "lucide-react";
 import Link from "next/link";
 import { ChangeEvent, useState } from "react";
@@ -32,9 +33,6 @@ const reviewDefaultValues = {
   rating: 0,
   review: "",
 };
-
-const img_hosting_token = process.env.NEXT_PUBLIC_imgBB_token;
-const img_hosting_url = `https://api.imgbb.com/1/upload?key=${img_hosting_token}`;
 
 export const ReviewForm = ({
   productId,
@@ -103,19 +101,24 @@ export const ReviewForm = ({
 
         const formData = new FormData();
         formData.append("image", file);
+        formData.append("folder", cloudinaryFolderKey);
 
-        const res = await fetch(img_hosting_url, {
-          method: "POST",
-          body: formData,
-        });
-        const imageRes = await res.json();
+        const res = await fetch(
+          `${process.env.NEXT_PUBLIC_BACKED_URL}/upload/image`,
+          {
+            method: "POST",
+            body: formData,
+          },
+        );
 
-        if (imageRes.success) return imageRes.data.display_url;
+        const data = await res.json();
+
+        if (data.success) return data.data.url;
         return null;
       });
 
       const uploaded = (await Promise.all(uploadPromises)).filter(
-        Boolean
+        Boolean,
       ) as string[];
 
       setImages((prev) => [...prev, ...uploaded]);

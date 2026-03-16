@@ -8,6 +8,7 @@ import MYSelect from "@/components/shared/Forms/MYSelect";
 import MYTextEditor from "@/components/shared/Forms/MYTextEditor";
 import MyImage from "@/components/shared/Ui/Image/MyImage";
 import { Button } from "@/components/ui/button";
+import { cloudinaryFolderKey } from "@/constants/authKey";
 import { createSlug } from "@/utils/createSlug";
 import { ImageUp, Loader } from "lucide-react";
 import { useRouter } from "next/navigation";
@@ -28,9 +29,6 @@ const productSchema = z.object({
 });
 
 type ProductFormValues = z.infer<typeof productSchema>;
-
-const img_hosting_token = process.env.NEXT_PUBLIC_imgBB_token;
-const img_hosting_url = `https://api.imgbb.com/1/upload?key=${img_hosting_token}`;
 
 type TAddProductFormProps = {
   categories: { value: string; label: string }[];
@@ -109,19 +107,24 @@ const AddProductForm = ({
 
         const formData = new FormData();
         formData.append("image", file);
+        formData.append("folder", cloudinaryFolderKey);
 
-        const res = await fetch(img_hosting_url, {
-          method: "POST",
-          body: formData,
-        });
-        const imageRes = await res.json();
+        const res = await fetch(
+          `${process.env.NEXT_PUBLIC_BACKED_URL}/upload/image`,
+          {
+            method: "POST",
+            body: formData,
+          },
+        );
 
-        if (imageRes.success) return imageRes.data.display_url;
+        const data = await res.json();
+
+        if (data.success) return data.data.url;
         return null;
       });
 
       const uploaded = (await Promise.all(uploadPromises)).filter(
-        Boolean
+        Boolean,
       ) as string[];
 
       setImages((prev) => [...prev, ...uploaded]);

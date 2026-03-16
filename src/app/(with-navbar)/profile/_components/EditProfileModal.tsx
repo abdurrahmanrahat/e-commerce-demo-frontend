@@ -13,6 +13,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import { cloudinaryFolderKey } from "@/constants/authKey";
 import { ImageUp, Loader } from "lucide-react";
 import { ChangeEvent, useState } from "react";
 import { FieldValues } from "react-hook-form";
@@ -25,9 +26,6 @@ const userProfileSchema = z.object({
   fullAddress: z.string(),
   country: z.string(),
 });
-
-const img_hosting_token = process.env.NEXT_PUBLIC_imgBB_token;
-const img_hosting_url = `https://api.imgbb.com/1/upload?key=${img_hosting_token}`;
 
 const EditProfileModal = ({ userInfo }: { userInfo: any }) => {
   const [isLoading, setIsLoading] = useState(false);
@@ -72,16 +70,22 @@ const EditProfileModal = ({ userInfo }: { userInfo: any }) => {
 
     const formData = new FormData();
     formData.append("image", file);
+    formData.append("folder", cloudinaryFolderKey);
 
     try {
-      const res = await fetch(img_hosting_url, {
-        method: "POST",
-        body: formData,
-      });
-      const imageRes = await res.json();
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_BACKED_URL}/upload/image`,
+        {
+          method: "POST",
+          body: formData,
+        },
+      );
 
-      if (imageRes.success) {
-        const imageUrl = imageRes.data.display_url;
+      const data = await res.json();
+
+      if (data.success) {
+        const imageUrl = data.data.url; // cloudinary url
+
         setImage(imageUrl);
 
         toast.success("Image uploaded successfully!");

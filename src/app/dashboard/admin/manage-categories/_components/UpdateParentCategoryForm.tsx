@@ -5,6 +5,7 @@ import MYForm from "@/components/shared/Forms/MYForm";
 import MYInput from "@/components/shared/Forms/MYInput";
 import { Button } from "@/components/ui/button";
 import { DialogClose } from "@/components/ui/dialog";
+import { cloudinaryFolderKey } from "@/constants/authKey";
 import { TUpdateCategory } from "@/types";
 import { createSlug } from "@/utils/createSlug";
 import { ImageUp, Loader } from "lucide-react";
@@ -18,9 +19,6 @@ const categorySchema = z.object({
 });
 
 type CategoryFormValues = z.infer<typeof categorySchema>;
-
-const img_hosting_token = process.env.NEXT_PUBLIC_imgBB_token;
-const img_hosting_url = `https://api.imgbb.com/1/upload?key=${img_hosting_token}`;
 
 const UpdateParentCategoryForm = ({
   category,
@@ -76,16 +74,22 @@ const UpdateParentCategoryForm = ({
 
     const formData = new FormData();
     formData.append("image", file);
+    formData.append("folder", cloudinaryFolderKey);
 
     try {
-      const res = await fetch(img_hosting_url, {
-        method: "POST",
-        body: formData,
-      });
-      const imageRes = await res.json();
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_BACKED_URL}/upload/image`,
+        {
+          method: "POST",
+          body: formData,
+        },
+      );
 
-      if (imageRes.success) {
-        const imageUrl = imageRes.data.display_url;
+      const data = await res.json();
+
+      if (data.success) {
+        const imageUrl = data.data.url; // cloudinary url
+
         setImage(imageUrl);
 
         toast.success("Image uploaded successfully!");
