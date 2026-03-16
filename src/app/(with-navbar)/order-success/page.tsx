@@ -7,7 +7,7 @@ import { Metadata } from "next";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { CheckoutSteps } from "../../../components/common/Cart/CheckoutSteps";
-import { InvoiceDownloadButton } from "./_components/InvoiceDownloadButton";
+import InvoiceViewer from "./_components/InvoiceViewer";
 import OrderDetails from "./_components/OrderDetails";
 import OrderItems from "./_components/OrderItems";
 import OrderSummary from "./_components/OrderSummary";
@@ -75,8 +75,8 @@ const OrderSuccessPage = async (props: {
                   </Button>
                 </Link>
 
-                {/* Invoice Download */}
-                <InvoiceDownloadButton order={order} />
+                {/* Invoice  */}
+                <InvoiceViewer order={order} />
               </div>
 
               <Card>
