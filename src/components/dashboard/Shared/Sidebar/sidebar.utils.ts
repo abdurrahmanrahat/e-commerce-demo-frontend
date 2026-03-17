@@ -28,6 +28,11 @@ export const adminSidebarItems = [
     icon: Settings,
   },
   {
+    text: "Manage Coupons",
+    href: "/dashboard/admin/manage-coupons",
+    icon: Settings,
+  },
+  {
     text: "Upload Product",
     href: "/dashboard/admin/add-product",
     icon: MessageSquarePlus,
