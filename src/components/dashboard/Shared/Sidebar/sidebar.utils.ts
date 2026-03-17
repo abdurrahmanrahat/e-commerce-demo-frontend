@@ -7,6 +7,7 @@ import {
   ShoppingBag,
   ShoppingCart,
   Star,
+  Ticket,
   Users,
 } from "lucide-react";
 
@@ -30,7 +31,7 @@ export const adminSidebarItems = [
   {
     text: "Manage Coupons",
     href: "/dashboard/admin/manage-coupons",
-    icon: Settings,
+    icon: Ticket,
   },
   {
     text: "Upload Product",
