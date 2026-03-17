@@ -1,5 +1,6 @@
 "use client";
 
+import { updateUserInDB } from "@/app/actions/users";
 import MYForm from "@/components/shared/Forms/MYForm";
 import MYInput from "@/components/shared/Forms/MYInput";
 import MYTextArea from "@/components/shared/Forms/MYTextArea";
@@ -14,6 +15,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { cloudinaryFolderKey } from "@/constants/authKey";
+import { TUser } from "@/types";
 import { ImageUp, Loader } from "lucide-react";
 import { ChangeEvent, useState } from "react";
 import { FieldValues } from "react-hook-form";
@@ -21,37 +23,43 @@ import { toast } from "sonner";
 import z from "zod";
 
 const userProfileSchema = z.object({
-  fullName: z.string().min(2),
-  phone: z.string().min(11),
-  fullAddress: z.string(),
-  country: z.string(),
+  name: z.string().min(2),
+  phone: z.string().min(11).optional(),
+  email: z.string().min(1),
+  fullAddress: z.string().optional(),
+  country: z.string().optional(),
 });
 
-const EditProfileModal = ({ userInfo }: { userInfo: any }) => {
+const EditProfileModal = ({ userInfo }: { userInfo: TUser }) => {
+  const [isOpen, setIsOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [image, setImage] = useState<string | null>(null);
+  const [image, setImage] = useState<string | null>(userInfo.photoUrl || null);
   const [isImageUploading, setIsImageUploading] = useState(false);
 
   const handleUpdateUserInfo = async (values: FieldValues) => {
     setIsLoading(true);
     try {
-      if (!image) {
-        toast.error("Please upload an image for the category.");
-      }
-
-      const updatedData = {};
-
-      // const res = await addCategoryToDB(updatedData);
-
-      // if (res?.success) {
-      //   toast.success("Parent category added successfully!");
-      // } else {
-      //   toast.error(res?.message || "Something went wrong!");
+      // if (!image) {
+      //   toast.error("Please upload an image for the category.");
       // }
+
+      const updatedData = {
+        ...(image && { photoUrl: image }),
+        ...values,
+      };
+
+      const res = await updateUserInDB(userInfo._id, updatedData);
+
+      if (res?.success) {
+        toast.success("Information updated successfully!");
+      } else {
+        toast.error(res?.message || "Something went wrong!");
+      }
     } catch (error: any) {
       toast.error(error?.message || "Something went wrong!");
     } finally {
       setIsLoading(false);
+      setIsOpen((prev) => !prev);
     }
   };
 
@@ -98,31 +106,39 @@ const EditProfileModal = ({ userInfo }: { userInfo: any }) => {
     }
   };
 
+  const userDefaultValues = {
+    name: userInfo.name || "",
+    phone: userInfo.phone || "",
+    email: userInfo.email || "",
+    fullAddress: userInfo.fullAddress || "",
+    country: userInfo.country || "",
+  };
+
   return (
-    <Dialog>
+    <Dialog open={isOpen} onOpenChange={setIsOpen}>
       {/* Trigger Button */}
       <DialogTrigger asChild>
         <Button
-          variant="ghost"
+          variant="default"
           size="icon"
-          className="h-8 w-8 2xl:h-9 2xl:w-9 hover:bg-muted"
+          className="h-8 2xl:h-9 hover:bg-muted w-full px-3"
         >
           Edit Profile
         </Button>
       </DialogTrigger>
 
       {/* Modal Content */}
-      <DialogContent className="max-w-md">
+      <DialogContent className="max-w-3xl!">
         <DialogHeader>
           <DialogTitle className="text-lg font-semibold">
-            Update Order Status
+            Update Your Profile
           </DialogTitle>
         </DialogHeader>
 
         <MYForm
           onSubmit={handleUpdateUserInfo}
           schema={userProfileSchema}
-          defaultValues={userInfo}
+          defaultValues={userDefaultValues}
         >
           <div className="space-y-5">
             {/* image */}
@@ -131,7 +147,7 @@ const EditProfileModal = ({ userInfo }: { userInfo: any }) => {
                 htmlFor="name"
                 className="text-sm 2xl:text-base font-medium text-gray-700 dark:text-gray-300"
               >
-                Image <span className="text-red-500 font-medium">*</span>
+                Your Image
               </label>
 
               <div>
@@ -187,42 +203,48 @@ const EditProfileModal = ({ userInfo }: { userInfo: any }) => {
               </div>
             </div>
 
-            {/* Full Name */}
-            <div className="grid gap-1">
-              <label className="text-sm font-medium">
-                Full Name <span className="text-red-500">*</span>
-              </label>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-[6px]">
+              {/* Full Name */}
+              <div className="grid gap-1">
+                <label className="text-sm font-medium">
+                  Full Name <span className="text-red-500">*</span>
+                </label>
 
-              <MYInput
-                name="fullName"
-                type="text"
-                placeholder="Enter your full name"
-              />
-            </div>
+                <MYInput
+                  name="name"
+                  type="text"
+                  placeholder="Enter your full name"
+                />
+              </div>
 
-            {/* Email */}
-            <div className="grid gap-1">
-              <label className="text-sm font-medium">Email</label>
+              {/* Email */}
+              <div className="grid gap-1">
+                <label className="text-sm font-medium">Email</label>
 
-              <MYInput
-                name="email"
-                type="email"
-                placeholder="Enter your email"
-                readOnly={true}
-              />
-            </div>
+                <MYInput
+                  name="email"
+                  type="email"
+                  placeholder="Enter your email"
+                  readOnly={true}
+                />
+              </div>
 
-            {/* Phone */}
-            <div className="grid gap-1">
-              <label className="text-sm font-medium">
-                Phone <span className="text-red-500">*</span>
-              </label>
+              {/* Phone */}
+              <div className="grid gap-1">
+                <label className="text-sm font-medium">Phone Number</label>
 
-              <MYInput
-                name="phone"
-                type="tel"
-                placeholder="Enter phone number"
-              />
+                <MYInput
+                  name="phone"
+                  type="tel"
+                  placeholder="Enter phone number"
+                />
+              </div>
+              {/* Country */}
+              <div className="grid gap-1">
+                <label className="text-sm font-medium">Country</label>
+
+                <MYInput name="country" type="text" placeholder="Country" />
+              </div>
             </div>
 
             {/* Address */}
@@ -230,13 +252,6 @@ const EditProfileModal = ({ userInfo }: { userInfo: any }) => {
               <label className="text-sm font-medium">Full Address</label>
 
               <MYTextArea name="fullAddress" placeholder="Enter full address" />
-            </div>
-
-            {/* Country */}
-            <div className="grid gap-1">
-              <label className="text-sm font-medium">Country</label>
-
-              <MYInput name="country" type="text" placeholder="Country" />
             </div>
 
             {/* Buttons */}
@@ -247,21 +262,19 @@ const EditProfileModal = ({ userInfo }: { userInfo: any }) => {
                 </Button>
               </DialogClose>
 
-              <DialogClose asChild>
-                <Button
-                  className="bg-primary text-white hover:bg-primary/90"
-                  disabled={isLoading}
-                >
-                  {isLoading ? (
-                    <span className="flex items-center gap-2">
-                      <Loader className="h-4 w-4 animate-spin [animation-duration:1.4s]" />
-                      <span>Updating...</span>
-                    </span>
-                  ) : (
-                    "Save Changes"
-                  )}
-                </Button>
-              </DialogClose>
+              <Button
+                className="bg-primary text-white hover:bg-primary/90"
+                disabled={isLoading}
+              >
+                {isLoading ? (
+                  <span className="flex items-center gap-2">
+                    <Loader className="h-4 w-4 animate-spin [animation-duration:1.4s]" />
+                    <span>Updating...</span>
+                  </span>
+                ) : (
+                  "Save Changes"
+                )}
+              </Button>
             </div>
           </div>
         </MYForm>

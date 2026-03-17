@@ -2,11 +2,12 @@
 
 import { tagLists } from "@/constants/tag";
 import { TServerResponse } from "@/types/action.type";
+import { revalidateTag } from "next/cache";
 import { fetchWithAuth } from "./fetchWithAuth";
 
 export const getMeFromDB = async () => {
   const res = await fetchWithAuth(
-    `${process.env.NEXT_PUBLIC_BACKED_URL}/users/current/me`
+    `${process.env.NEXT_PUBLIC_BACKED_URL}/users/current/me`,
   );
 
   if (!res.ok) {
@@ -21,7 +22,7 @@ export const getMeFromDB = async () => {
    Get Single User
 ============================================ */
 export const getSingleUserFromDB = async (
-  userId: string
+  userId: string,
 ): Promise<TServerResponse> => {
   try {
     const res = await fetch(
@@ -29,7 +30,7 @@ export const getSingleUserFromDB = async (
       {
         cache: "force-cache",
         next: { tags: [tagLists.USER] },
-      }
+      },
     );
 
     if (!res.ok) {
@@ -54,5 +55,59 @@ export const getSingleUserFromDB = async (
   } catch (error: any) {
     console.error("Error fetching single user:", error);
     return { success: false, data: null, message: "Network or server error" };
+  }
+};
+
+/* ============================================
+  Update User
+============================================ */
+export const updateUserInDB = async (
+  userId: string,
+  updatedData: Record<string, any>,
+): Promise<TServerResponse> => {
+  try {
+    const res = await fetchWithAuth(
+      `${process.env.NEXT_PUBLIC_BACKED_URL}/users/${userId}`,
+      {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(updatedData),
+        cache: "no-store",
+      },
+    );
+
+    if (!res.ok) {
+      return {
+        success: false,
+        data: null,
+        message: "Failed to update user",
+      };
+    }
+
+    const data = await res.json();
+    revalidateTag(tagLists.USER, "max");
+
+    if (data?.success) {
+      return {
+        success: data?.success ?? true,
+        data: data?.data || [],
+        message: data?.message,
+      };
+    } else {
+      return {
+        success: data?.success ?? false,
+        data: data?.data || null,
+        message: data?.errorSources?.[0]?.message || data?.message,
+      };
+    }
+  } catch (error: any) {
+    console.error("Error updating user:", error);
+    return {
+      success: false,
+      data: null,
+      message: "Network or server error",
+    };
   }
 };
