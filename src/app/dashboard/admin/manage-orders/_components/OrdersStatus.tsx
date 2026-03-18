@@ -61,7 +61,7 @@ const OrdersStatus = () => {
 
   return (
     <Select value={status} onValueChange={handleStatusChange}>
-      <SelectTrigger className="w-full sm:w-[180px] bg-card">
+      <SelectTrigger className="w-full sm:w-45 bg-card">
         <SelectValue placeholder="Status by" />
       </SelectTrigger>
       <SelectContent>

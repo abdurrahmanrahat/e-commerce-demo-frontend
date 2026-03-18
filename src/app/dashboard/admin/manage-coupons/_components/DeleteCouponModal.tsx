@@ -49,7 +49,7 @@ export default function DeleteCouponModal({ couponId }: { couponId: string }) {
       </DialogTrigger>
 
       {/* Dialog content */}
-      <DialogContent className="max-w-[460px]! border border-gray-200 dark:border-gray-800 shadow-lg">
+      <DialogContent className="max-w-115! border border-gray-200 dark:border-gray-800 shadow-lg">
         <DialogHeader>
           <DialogTitle className="text-lg font-semibold text-red-600 dark:text-red-400 flex items-center gap-2">
             <Trash2 className="h-5 w-5 text-red-500" /> Delete coupon
@@ -76,7 +76,7 @@ export default function DeleteCouponModal({ couponId }: { couponId: string }) {
             >
               {isLoading ? (
                 <span className="flex items-center gap-2">
-                  <Loader className="h-4 w-4 animate-spin [animation-duration:1.4s]" />{" "}
+                  <Loader className="h-4 w-4 animate-spin animation-duration-[1.4s]" />{" "}
                   <span>Deleting...</span>
                 </span>
               ) : (

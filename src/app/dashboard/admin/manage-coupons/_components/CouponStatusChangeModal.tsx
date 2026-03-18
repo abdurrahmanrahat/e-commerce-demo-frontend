@@ -66,7 +66,7 @@ export default function CouponStatusChangeModal({
       </DialogTrigger>
 
       {/* Modal */}
-      <DialogContent className="max-w-[460px] border border-gray-200 dark:border-gray-800 shadow-lg">
+      <DialogContent className="max-w-115 border border-gray-200 dark:border-gray-800 shadow-lg">
         <DialogHeader>
           <DialogTitle
             className={`text-lg font-semibold flex items-center gap-2 ${

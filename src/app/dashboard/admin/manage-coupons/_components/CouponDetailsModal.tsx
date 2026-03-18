@@ -52,7 +52,7 @@ const CouponDetailsModal = ({ coupon }: { coupon: TCoupon }) => {
       </DialogTrigger>
 
       <DialogContent
-        className="!max-w-3xl max-h-[90vh] overflow-y-auto"
+        className="max-w-3xl! max-h-[90vh] overflow-y-auto"
         // showCloseButton={false}
       >
         <DialogHeader className="">
@@ -95,7 +95,7 @@ const CouponDetailsModal = ({ coupon }: { coupon: TCoupon }) => {
 
             {/* Min Order */}
             <div>
-              <p className="text-sm text-muted-foreground">Min Order</p>
+              <p className="text-sm text-muted-foreground">Min Order Amount</p>
               <p className="font-medium">
                 {coupon.minOrder ? `$${coupon.minOrder}` : "No minimum order"}
               </p>

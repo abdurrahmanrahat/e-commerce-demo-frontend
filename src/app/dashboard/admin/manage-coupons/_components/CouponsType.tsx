@@ -58,7 +58,7 @@ const CouponsType = () => {
 
   return (
     <Select value={type} onValueChange={handleSortChange}>
-      <SelectTrigger className="w-auto sm:w-[180px] bg-card">
+      <SelectTrigger className="w-auto sm:w-45 bg-card">
         <SelectValue placeholder="Select Type" />
       </SelectTrigger>
       <SelectContent>

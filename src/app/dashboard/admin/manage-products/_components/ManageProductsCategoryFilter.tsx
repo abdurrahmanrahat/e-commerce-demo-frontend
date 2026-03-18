@@ -47,7 +47,7 @@ const ManageProductsCategoryFilter = ({
 
   return (
     <Select value={selectedCategory} onValueChange={setSelectedCategory}>
-      <SelectTrigger className="w-full sm:w-[180px] bg-card">
+      <SelectTrigger className="w-full sm:w-45 bg-card">
         <SelectValue placeholder="All Categories" />
       </SelectTrigger>
       <SelectContent>

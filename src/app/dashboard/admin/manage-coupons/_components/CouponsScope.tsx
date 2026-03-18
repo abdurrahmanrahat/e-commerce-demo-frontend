@@ -58,7 +58,7 @@ const CouponsScope = () => {
 
   return (
     <Select value={scope} onValueChange={handleSortChange}>
-      <SelectTrigger className="w-auto sm:w-[180px] bg-card">
+      <SelectTrigger className="w-auto sm:w-45 bg-card">
         <SelectValue placeholder="Select Scope" />
       </SelectTrigger>
       <SelectContent>
