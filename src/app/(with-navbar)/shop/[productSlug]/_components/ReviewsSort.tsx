@@ -42,7 +42,7 @@ const ReviewsSort = () => {
       : window.location.pathname;
 
     router.push(newUrl, { scroll: false });
-  }, [sort, router, searchParams]);
+  }, [sort]);
 
   const handleChange = (value: string) => {
     setSort(value === "all" ? "" : value);

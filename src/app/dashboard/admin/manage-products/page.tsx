@@ -82,7 +82,7 @@ const ManageProductsPage = async (props: {
       label: category.name,
     };
 
-    // sub categories options if avaiable
+    // sub categories options if available
     const subOptions = category.subCategories?.map((sub) => ({
       value: sub.slug,
       label: `${category.name} > ${sub.name}`,
@@ -220,7 +220,7 @@ const ManageProductsPage = async (props: {
                               </div>
                             </TableCell>
                           </tr>
-                        )
+                        ),
                       )}
                     </TableBody>
                   </Table>

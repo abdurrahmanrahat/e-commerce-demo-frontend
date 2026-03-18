@@ -37,7 +37,7 @@ const ReviewSearch = () => {
     //   : "/dashboard/admin/manage-products";
 
     router.push(newUrl, { scroll: false });
-  }, [debouncedSearchTerm, router, searchParams]);
+  }, [debouncedSearchTerm]);
 
   // Optional: Handle Enter press for instant search
   const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {

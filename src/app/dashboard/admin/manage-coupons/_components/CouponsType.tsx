@@ -12,35 +12,30 @@ import { useEffect, useState } from "react";
 
 const sortOptions = [
   { label: "Default", value: "all" },
-  { label: "Price: Low to High", value: "price:low_to_high" },
-  { label: "Price: High to Low", value: "price:high_to_low" },
-  { label: "Newest", value: "newest" },
-  { label: "Best Selling", value: "best_selling" },
-  { label: "Top Rated", value: "top_rated" },
-  { label: "Ascending (A–Z)", value: "ascending" },
-  { label: "Descending (Z–A)", value: "descending" },
+  { label: "Fixed", value: "fixed" },
+  { label: "Percentage", value: "percentage" },
 ];
 
-const ProductsSort = () => {
+const CouponsType = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const [sort, setSort] = useState("");
+  const [type, setSort] = useState("");
 
   // Initialize state from URL
   useEffect(() => {
-    const existingSort = searchParams.get("sort") || "";
+    const existingSort = searchParams.get("type") || "";
 
     setSort(existingSort);
   }, [searchParams]);
 
-  // Update URL whenever sort changes
+  // Update URL whenever type changes
   useEffect(() => {
     const params = new URLSearchParams(searchParams.toString());
 
-    if (sort && sort !== "all") {
-      params.set("sort", sort);
+    if (type && type !== "all") {
+      params.set("type", type);
     } else {
-      params.delete("sort");
+      params.delete("type");
     }
 
     const newUrl = params.toString()
@@ -51,7 +46,7 @@ const ProductsSort = () => {
     //   : "/dashboard/admin/manage-products";
 
     router.push(newUrl, { scroll: false });
-  }, [sort]);
+  }, [type]);
 
   const handleSortChange = (value: string) => {
     if (value === "all") {
@@ -62,9 +57,9 @@ const ProductsSort = () => {
   };
 
   return (
-    <Select value={sort} onValueChange={handleSortChange}>
+    <Select value={type} onValueChange={handleSortChange}>
       <SelectTrigger className="w-auto sm:w-[180px] bg-card">
-        <SelectValue placeholder="Sort by" />
+        <SelectValue placeholder="Type by" />
       </SelectTrigger>
       <SelectContent>
         {sortOptions.map((option) => (
@@ -77,4 +72,4 @@ const ProductsSort = () => {
   );
 };
 
-export default ProductsSort;
+export default CouponsType;

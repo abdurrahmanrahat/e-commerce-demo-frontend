@@ -41,7 +41,7 @@ const ReviewsStatusFilter = () => {
       : window.location.pathname;
 
     router.push(newUrl, { scroll: false });
-  }, [status, router, searchParams]);
+  }, [status]);
 
   const handleChange = (value: string) => {
     setStatus(value === "all" ? "" : value);

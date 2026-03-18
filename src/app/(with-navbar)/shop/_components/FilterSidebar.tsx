@@ -34,10 +34,10 @@ export const FilterSidebar = ({ categories }: { categories: TCategory[] }) => {
   const handleCategoryToggle = (
     slug: string,
     checked: boolean,
-    categoryId?: string
+    categoryId?: string,
   ) => {
     setSelectedCategories((prev) =>
-      checked ? [...new Set([...prev, slug])] : prev.filter((x) => x !== slug)
+      checked ? [...new Set([...prev, slug])] : prev.filter((x) => x !== slug),
     );
 
     // auto-open accordion if category has subcategories
@@ -76,7 +76,7 @@ export const FilterSidebar = ({ categories }: { categories: TCategory[] }) => {
       : window.location.pathname;
 
     router.push(newUrl, { scroll: false });
-  }, [selectedCategories, router, searchParams]);
+  }, [selectedCategories]);
 
   // Price input validation
   const handlePriceInputChange = () => {
@@ -168,7 +168,7 @@ export const FilterSidebar = ({ categories }: { categories: TCategory[] }) => {
                           handleCategoryToggle(
                             category.slug,
                             checked as boolean,
-                            category._id
+                            category._id,
                           )
                         }
                         className="cursor-pointer"
@@ -203,7 +203,7 @@ export const FilterSidebar = ({ categories }: { categories: TCategory[] }) => {
                                 onCheckedChange={(checked) =>
                                   handleCategoryToggle(
                                     sub.slug,
-                                    checked as boolean
+                                    checked as boolean,
                                   )
                                 }
                                 className="cursor-pointer"

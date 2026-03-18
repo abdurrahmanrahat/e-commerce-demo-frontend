@@ -1,7 +1,9 @@
 import { getAllCategoriesFromDB } from "@/app/actions/categories";
+import { Button } from "@/components/ui/button";
 import { TResponseUser } from "@/types";
 import { getUserFromCookies } from "@/utils/getUserFromCookies";
 import { decodedToken } from "@/utils/jwt";
+import { User } from "lucide-react";
 import Link from "next/link";
 import ActiveLink from "../ActiveLink";
 import Container from "../Container";
@@ -97,9 +99,15 @@ export default async function Navbar() {
             ) : (
               <Link
                 href="/login"
-                className="text-primary hover:text-primary/90 font-medium 2xl:text-lg"
+                // className="text-primary hover:text-primary/90 font-medium 2xl:text-lg"
               >
-                Login
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="relative rounded-full border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 transition"
+                >
+                  <User className="h-5 2xl:h-6 w-5 2xl:w-6 text-gray-700 dark:text-gray-300" />
+                </Button>
               </Link>
             )}
           </div>

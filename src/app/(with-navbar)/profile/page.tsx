@@ -24,7 +24,7 @@ const UserProfilePage = async () => {
           <div className="flex items-center gap-6">
             <div className="relative flex flex-col items-center gap-3">
               <Image
-                src={user.photo || "/images/shared/user-avater.svg"}
+                src={user?.photoUrl || "/images/shared/user-avater.svg"}
                 alt="profile"
                 width={80}
                 height={80}

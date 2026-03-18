@@ -16,7 +16,7 @@ export const getAllCouponsFromDB = async (
       ? "?" + new URLSearchParams(params).toString()
       : "";
 
-    const res = await fetch(
+    const res = await fetchWithAuth(
       `${process.env.NEXT_PUBLIC_BACKED_URL}/coupons${queryParams}`,
       {
         cache: "no-store",
@@ -56,7 +56,7 @@ export const getSingleCouponFromDB = async (
   couponId: string,
 ): Promise<TServerResponse> => {
   try {
-    const res = await fetchWithAuth(
+    const res = await fetch(
       `${process.env.NEXT_PUBLIC_BACKED_URL}/coupons/${couponId}`,
       {
         cache: "no-store",

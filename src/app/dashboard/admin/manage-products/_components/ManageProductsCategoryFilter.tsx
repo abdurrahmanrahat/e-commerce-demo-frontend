@@ -43,7 +43,7 @@ const ManageProductsCategoryFilter = ({
       : window.location.pathname;
 
     router.push(newUrl, { scroll: false });
-  }, [selectedCategory, router, searchParams]);
+  }, [selectedCategory]);
 
   return (
     <Select value={selectedCategory} onValueChange={setSelectedCategory}>

@@ -44,7 +44,7 @@ const ReviewRatingFilter = () => {
       : window.location.pathname;
 
     router.push(newUrl, { scroll: false });
-  }, [rating, router, searchParams]);
+  }, [rating]);
 
   const handleChange = (value: string) => {
     setRating(value === "all" ? "" : value);

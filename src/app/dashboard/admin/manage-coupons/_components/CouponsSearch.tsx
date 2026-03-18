@@ -6,7 +6,7 @@ import { Search } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
-const OrdersSearch = () => {
+const CouponsSearch = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const debouncedSearchTerm = useDebounced(searchTerm, 600);
 
@@ -59,7 +59,7 @@ const OrdersSearch = () => {
       <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
       <Input
         type="search"
-        placeholder="Search order..."
+        placeholder="Search coupons..."
         value={searchTerm}
         onKeyDown={handleKeyPress}
         onChange={(e) => setSearchTerm(e.target.value)}
@@ -69,4 +69,4 @@ const OrdersSearch = () => {
   );
 };
 
-export default OrdersSearch;
+export default CouponsSearch;

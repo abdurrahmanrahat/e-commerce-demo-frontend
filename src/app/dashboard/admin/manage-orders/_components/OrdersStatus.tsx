@@ -49,7 +49,7 @@ const OrdersStatus = () => {
     //   : "/dashboard/admin/manage-products";
 
     router.push(newUrl, { scroll: false });
-  }, [status, router, searchParams]);
+  }, [status]);
 
   const handleStatusChange = (value: string) => {
     if (value === "all") {
