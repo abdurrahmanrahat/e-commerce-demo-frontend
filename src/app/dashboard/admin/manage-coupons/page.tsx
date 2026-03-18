@@ -9,28 +9,15 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
-import { Infinity, Pencil } from "lucide-react";
 import { Metadata } from "next";
 import AddCouponForm from "./_components/AddCouponForm";
 import CouponsSearch from "./_components/CouponsSearch";
 import CouponsType from "./_components/CouponsType";
 
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
 import { TCoupon } from "@/types";
-import CouponDetailsModal from "./_components/CouponDetailsModal";
 import CouponsScope from "./_components/CouponsScope";
 import CouponsStatus from "./_components/CouponsStatus";
-import DeleteCouponModal from "./_components/DeleteCouponModal";
-import ExpiryRemaining from "./_components/ExpiryRemaining";
+import TableList from "./_components/TableList";
 
 export const metadata: Metadata = {
   title: "Manage Coupons > Dashboard | Gadgetoria",
@@ -88,6 +75,16 @@ const ManageCouponsPage = async (props: {
 
   const totalData = couponsResponse?.data?.totalCount || 0;
 
+  const expiredCoupons = couponsResponse?.data?.data?.filter(
+    (coupon: TCoupon) =>
+      coupon.expiresAt && new Date(coupon.expiresAt) < new Date(),
+  );
+
+  const unexpiredCoupons = couponsResponse?.data?.data?.filter(
+    (coupon: TCoupon) =>
+      !coupon.expiresAt || new Date(coupon.expiresAt) >= new Date(),
+  );
+
   return (
     <div className="min-h-screen w-full">
       <Card className="border border-gray-200 dark:border-gray-700">
@@ -122,97 +119,49 @@ const ManageCouponsPage = async (props: {
               <CouponsStatus />
             </div>
 
-            {/* Table */}
-            <div className="overflow-x-auto rounded-lg border border-gray-200 dark:border-gray-700 ">
-              {couponsResponse?.data?.data?.length === 0 ? (
-                <NoDataFoundBySearchFilter
-                  title="Coupons not found!"
-                  description="Try searching for something else or clear all filters to explore available collections."
-                />
-              ) : (
-                <Table>
-                  <TableHeader>
-                    <TableRow>
-                      <TableHead>Coupon Code</TableHead>
-                      <TableHead>Type</TableHead>
-                      <TableHead>Discount Amount</TableHead>
-                      <TableHead>Uses</TableHead>
-                      <TableHead>Available</TableHead>
-                      <TableHead>Scope</TableHead>
-                      <TableHead>Status</TableHead>
-                      <TableHead className="text-center">Action</TableHead>
-                    </TableRow>
-                  </TableHeader>
+            {/* table */}
+            {couponsResponse?.data?.data?.length === 0 ? (
+              <NoDataFoundBySearchFilter
+                title="Coupons not found!"
+                description="Try searching for something else or clear all filters to explore available coupons."
+              />
+            ) : (
+              <div>
+                <div>
+                  {/* Unexpired Coupon Table */}
+                  <h2 className="text-xl md:text-2xl 2xl:text-3xl font-semibold mb-4 text-green-600">
+                    Unexpired Coupons:
+                  </h2>
+                  <div className="overflow-x-auto rounded-lg border border-gray-200 dark:border-gray-700 ">
+                    {unexpiredCoupons.length === 0 ? (
+                      <NoDataFoundBySearchFilter
+                        title="Unexpired coupons not found!"
+                        description="Try searching for something else or clear all filters to explore available coupons."
+                      />
+                    ) : (
+                      <TableList coupons={unexpiredCoupons} />
+                    )}
+                  </div>
+                </div>
 
-                  <TableBody>
-                    {couponsResponse?.data?.data?.map((coupon: TCoupon) => (
-                      <tr
-                        key={coupon._id}
-                        className="group border-b border-gray-200 dark:border-gray-700 hover:bg-muted/30 transition-colors"
-                      >
-                        <TableCell className="">{coupon.code}</TableCell>
-
-                        <TableCell className="font-medium capitalize">
-                          {coupon.type}
-                        </TableCell>
-                        <TableCell>
-                          {coupon.type === "percentage"
-                            ? `${coupon.value}%`
-                            : `$${coupon.value}`}
-                        </TableCell>
-                        <TableCell>{coupon.uses}</TableCell>
-                        <TableCell>
-                          {coupon.expiresAt ? (
-                            <ExpiryRemaining expiresAt={coupon?.expiresAt} />
-                          ) : (
-                            <Infinity className="w-5 h-5" />
-                          )}
-                        </TableCell>
-                        <TableCell>
-                          {coupon.scope === "all" ? "All Products" : "Specific"}
-                        </TableCell>
-                        <TableCell>
-                          <TableCell className="p-0">
-                            <Badge
-                              variant="outline"
-                              className={`flex items-center gap-1  text-xs font-medium ${
-                                coupon.isActive
-                                  ? "border-green-500/30 text-green-600 dark:text-green-400"
-                                  : "border-red-500/30 text-red-600 dark:text-red-400"
-                              }`}
-                            >
-                              <span
-                                className={`h-1.5 w-1.5 rounded-full ${
-                                  coupon.isActive
-                                    ? "bg-green-500"
-                                    : "bg-red-500"
-                                }`}
-                              />
-                              {coupon.isActive ? "Active" : "Inactive"}
-                            </Badge>
-                          </TableCell>
-                        </TableCell>
-                        <TableCell>
-                          <div className="flex items-center justify-center gap-1 md:gap-2">
-                            <CouponDetailsModal coupon={coupon} />
-
-                            <Button
-                              variant="ghost"
-                              size="icon"
-                              className="h-8 w-8 hover:bg-muted"
-                            >
-                              <Pencil className="h-4 w-4 text-muted-foreground" />
-                            </Button>
-
-                            <DeleteCouponModal couponId={coupon?._id} />
-                          </div>
-                        </TableCell>
-                      </tr>
-                    ))}
-                  </TableBody>
-                </Table>
-              )}
-            </div>
+                <div className="mt-5">
+                  {/* Expired Coupon Table */}
+                  <h2 className="text-xl md:text-2xl 2xl:text-3xl font-semibold mb-4 text-primary">
+                    Expired Coupons:
+                  </h2>
+                  <div className="overflow-x-auto rounded-lg border border-gray-200 dark:border-gray-700 ">
+                    {expiredCoupons.length === 0 ? (
+                      <NoDataFoundBySearchFilter
+                        title="Expired coupons not found!"
+                        description="Try searching for something else or clear all filters to explore available coupons."
+                      />
+                    ) : (
+                      <TableList coupons={expiredCoupons} />
+                    )}
+                  </div>
+                </div>
+              </div>
+            )}
 
             {couponsResponse?.data?.data?.length !== 0 &&
               MANAGE_COUPONS_DATA_LIMIT < totalData && (
