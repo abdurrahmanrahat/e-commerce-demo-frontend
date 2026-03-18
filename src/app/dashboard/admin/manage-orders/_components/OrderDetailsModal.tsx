@@ -1,6 +1,11 @@
 import MyImage from "@/components/shared/Ui/Image/MyImage";
 import { Button } from "@/components/ui/button";
-import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 import { Separator } from "@/components/ui/separator";
 import { cn } from "@/lib/utils";
 import { TOrder } from "@/types/order.type";
@@ -24,16 +29,16 @@ const OrderDetailsModal = ({ order }: { order: TOrder }) => {
       </DialogTrigger>
 
       <DialogContent
-        className="!max-w-4xl max-h-[90vh] overflow-y-auto scroll-hidden"
+        className="max-w-4xl! max-h-[90vh] overflow-y-auto scroll-hidden"
         // showCloseButton={false}
         aria-describedby={undefined}
       >
         {/* Header */}
         <div className="space-y-1 mb-4">
-          <h2 className="text-lg md:text-xl 2xl:text-2xl font-semibold">
+          <DialogTitle className="text-lg md:text-xl 2xl:text-2xl font-semibold">
             Order Details —{" "}
             <span className="text-primary">{order.orderNumber}</span>
-          </h2>
+          </DialogTitle>
           <div className="flex flex-wrap items-center gap-2 text-sm 2xl:text-base text-muted-foreground">
             <Calendar className="h-4 w-4" />
             <p>
@@ -171,7 +176,7 @@ const OrderDetailsModal = ({ order }: { order: TOrder }) => {
         </div>
 
         {/* Order Summary */}
-        <div className="space-y-2 text-sm 2xl:text-base md:text-base mt-4 mb-2">
+        <div className="space-y-1 text-sm 2xl:text-base md:text-base mt-4 mb-2">
           <div className="flex justify-between">
             <span className="text-muted-foreground">Subtotal:</span>
             <span className="font-medium">${order.subtotal.toFixed(2)}</span>
@@ -182,8 +187,14 @@ const OrderDetailsModal = ({ order }: { order: TOrder }) => {
               ${order.shippingCost.toFixed(2)}
             </span>
           </div>
+          {order?.discountAmount && order?.discountAmount > 0 && (
+            <div className="flex justify-between text-sm 2xl:text-base text-green-600 dark:text-green-400">
+              <span>Discount ({order?.discountCouponCode}):</span>
+              <span>-${order?.discountAmount.toFixed(2)}</span>
+            </div>
+          )}
           <Separator />
-          <div className="flex justify-between font-semibold text-base">
+          <div className="flex justify-between font-semibold text-base 2xl:text-lg">
             <span>Total:</span>
             <span>${order.total.toFixed(2)}</span>
           </div>

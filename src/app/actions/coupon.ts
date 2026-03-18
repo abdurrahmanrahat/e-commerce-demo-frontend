@@ -53,11 +53,11 @@ export const getAllCouponsFromDB = async (
    Get Single Coupon
 ============================================ */
 export const getSingleCouponFromDB = async (
-  couponId: string,
+  code: string,
 ): Promise<TServerResponse> => {
   try {
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_BACKED_URL}/coupons/${couponId}`,
+      `${process.env.NEXT_PUBLIC_BACKED_URL}/coupons/${code}`,
       {
         cache: "no-store",
       },

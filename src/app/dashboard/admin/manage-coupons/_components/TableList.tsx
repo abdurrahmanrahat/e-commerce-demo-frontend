@@ -58,25 +58,25 @@ const TableList = ({ coupons }: { coupons: TCoupon[] }) => {
             <TableCell>
               {coupon.scope === "all" ? "All Products" : "Specific"}
             </TableCell>
-            <TableCell>
-              <TableCell className="p-0">
-                <Badge
-                  variant="outline"
-                  className={`flex items-center gap-1  text-xs font-medium ${
-                    coupon.isActive
-                      ? "border-green-500/30 text-green-600 dark:text-green-400"
-                      : "border-red-500/30 text-red-600 dark:text-red-400"
+
+            <TableCell className="p-0">
+              <Badge
+                variant="outline"
+                className={`flex items-center gap-1  text-xs font-medium ${
+                  coupon.isActive
+                    ? "border-green-500/30 text-green-600 dark:text-green-400"
+                    : "border-red-500/30 text-red-600 dark:text-red-400"
+                }`}
+              >
+                <span
+                  className={`h-1.5 w-1.5 rounded-full ${
+                    coupon.isActive ? "bg-green-500" : "bg-red-500"
                   }`}
-                >
-                  <span
-                    className={`h-1.5 w-1.5 rounded-full ${
-                      coupon.isActive ? "bg-green-500" : "bg-red-500"
-                    }`}
-                  />
-                  {coupon.isActive ? "Active" : "Inactive"}
-                </Badge>
-              </TableCell>
+                />
+                {coupon.isActive ? "Active" : "Inactive"}
+              </Badge>
             </TableCell>
+
             <TableCell>
               <div className="flex items-center justify-center gap-1 md:gap-2">
                 <CouponDetailsModal coupon={coupon} />

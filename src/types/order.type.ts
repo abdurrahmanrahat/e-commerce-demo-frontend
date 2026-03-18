@@ -18,6 +18,8 @@ export type TOrder = {
   orderItems: TOrderItem[];
   subtotal: number;
   shippingCost: number;
+  discountCouponCode?: string;
+  discountAmount?: number;
   total: number;
   status: "pending" | "processing" | "shipped" | "delivered" | "cancelled";
   paymentMethod: string;

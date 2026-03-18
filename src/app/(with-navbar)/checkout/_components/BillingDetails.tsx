@@ -25,6 +25,7 @@ import { useEffect, useMemo, useState } from "react";
 import { FieldValues } from "react-hook-form";
 import { toast } from "sonner";
 import z from "zod";
+import CheckoutCoupon from "./CheckoutCoupon";
 import CheckoutProductCard from "./CheckoutProductCard";
 import { CheckoutProductCardSkeleton } from "./CheckoutProductCardSkeleton";
 
@@ -51,6 +52,8 @@ const BillingDetails = () => {
   const [isButtonLoading, setIsButtonLoading] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [products, setProducts] = useState<TProduct[]>([]);
+  const [discount, setDiscount] = useState<number>(0);
+  const [appliedCoupon, setAppliedCoupon] = useState<string | null>(null);
 
   const router = useRouter();
   const dispatch = useAppDispatch();
@@ -135,6 +138,8 @@ const BillingDetails = () => {
       : outsideDhakaShippingCost;
   const total = subtotal + shippingCost;
 
+  const finalTotal = total - discount;
+
   const handleSubmit = async (values: FieldValues) => {
     setIsButtonLoading(true);
 
@@ -145,6 +150,11 @@ const BillingDetails = () => {
       // subtotal,
       // total,
       paymentMethod: "CASH-ON-DELIVERY", // will be dynamic
+      ...(discount > 0 &&
+        appliedCoupon && {
+          discountCouponCode: appliedCoupon,
+          discountAmount: discount,
+        }),
     };
 
     // send to db
@@ -295,8 +305,8 @@ const BillingDetails = () => {
                       </>
                     ) : (
                       <>
-                        {cartProducts.map((item) => (
-                          <CheckoutProductCard item={item} />
+                        {cartProducts.map((item, index) => (
+                          <CheckoutProductCard key={index} item={item} />
                         ))}
                       </>
                     )}
@@ -305,12 +315,20 @@ const BillingDetails = () => {
               </div>
 
               <Separator />
-
-              {/* Subtotal */}
-              <div className="flex justify-between text-sm 2xl:text-base">
-                <span className="">Subtotal:</span>
-                <span className="font-medium">${subtotal.toFixed(2)}</span>
-              </div>
+              {discount === 0 && (
+                <CheckoutCoupon
+                  subtotal={subtotal}
+                  cartItems={cartItems}
+                  onApply={(discount, code) => {
+                    setDiscount(discount);
+                    setAppliedCoupon(code);
+                  }}
+                  onRemove={() => {
+                    setDiscount(0);
+                    setAppliedCoupon(null);
+                  }}
+                />
+              )}
 
               {/* Shipping */}
               <div>
@@ -347,10 +365,31 @@ const BillingDetails = () => {
 
               <Separator />
 
+              <div className="space-y-1">
+                {/* Subtotal */}
+                <div className="flex justify-between text-sm 2xl:text-base">
+                  <span className="">Subtotal:</span>
+                  <span className="font-medium">${subtotal.toFixed(2)}</span>
+                </div>
+
+                <div className="flex justify-between text-sm 2xl:text-base">
+                  <span className="">Shipping:</span>
+                  <span className="font-medium">
+                    ${shippingCost.toFixed(2)}
+                  </span>
+                </div>
+                {discount > 0 && (
+                  <div className="flex justify-between text-sm 2xl:text-base text-green-600 dark:text-green-400">
+                    <span>Discount ({appliedCoupon}):</span>
+                    <span>-${discount.toFixed(2)}</span>
+                  </div>
+                )}
+              </div>
+
               {/* Total */}
               <div className="flex justify-between text-base 2xl:text-lg font-bold">
                 <span>Total</span>
-                <span className="text-primary">${total.toFixed(2)}</span>
+                <span className="text-primary">${finalTotal.toFixed(2)}</span>
               </div>
 
               {/* Payment Method */}
@@ -396,7 +435,7 @@ const BillingDetails = () => {
               >
                 {isButtonLoading ? (
                   <span className="flex items-center gap-2">
-                    <Loader className="h-4 w-4 animate-spin [animation-duration:1.4s]" />
+                    <Loader className="h-4 w-4 animate-spin animation-duration-[1.4s]" />
                     <span>Processing...</span>
                   </span>
                 ) : (

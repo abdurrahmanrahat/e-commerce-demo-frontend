@@ -17,6 +17,12 @@ const OrderSummary = ({ order }: { order: TOrder }) => {
           <span className="text-muted-foreground">Shipping:</span>
           <span className="font-medium">${order.shippingCost.toFixed(2)}</span>
         </div>
+        {order?.discountAmount && order?.discountAmount > 0 && (
+          <div className="flex justify-between text-sm 2xl:text-base text-green-600 dark:text-green-400">
+            <span>Discount ({order?.discountCouponCode}):</span>
+            <span>-${order?.discountAmount.toFixed(2)}</span>
+          </div>
+        )}
         <Separator />
         <div className="flex justify-between text-lg font-semibold">
           <span>Total:</span>

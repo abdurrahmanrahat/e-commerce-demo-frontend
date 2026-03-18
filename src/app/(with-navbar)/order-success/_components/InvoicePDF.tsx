@@ -170,8 +170,6 @@ const styles = StyleSheet.create({
 export function InvoicePDF({ order }: { order: TOrder }) {
   const formattedDate = new Date(order.createdAt).toLocaleDateString("en-GB");
 
-  const discount = (order as any).discountApplied || 0;
-
   const shippingText =
     order.shippingOption === "dhaka"
       ? "Inside Dhaka (1-2 Days)"
@@ -297,10 +295,12 @@ export function InvoicePDF({ order }: { order: TOrder }) {
               </Text>
             </View>
 
-            {discount > 0 && (
+            {order?.discountAmount && order?.discountAmount > 0 && (
               <View style={styles.totalsRow}>
                 <Text style={styles.totalsLabel}>Discount</Text>
-                <Text style={styles.totalsValue}>-${discount.toFixed(2)}</Text>
+                <Text style={styles.totalsValue}>
+                  -${order?.discountAmount.toFixed(2)}
+                </Text>
               </View>
             )}
 

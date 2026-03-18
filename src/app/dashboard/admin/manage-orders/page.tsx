@@ -106,6 +106,7 @@ const ManageOrdersPage = async (props: {
                         <TableHead className="">Username</TableHead>
                         <TableHead>Phone Number</TableHead>
                         <TableHead>Total</TableHead>
+                        <TableHead>Applied Coupon</TableHead>
                         <TableHead>Status</TableHead>
                         <TableHead className="text-center">Action</TableHead>
                       </TableRow>
@@ -124,10 +125,15 @@ const ManageOrdersPage = async (props: {
                           <TableCell>{order.phone}</TableCell>
                           <TableCell>${order.total}</TableCell>
                           <TableCell>
+                            {order?.discountCouponCode
+                              ? order.discountCouponCode
+                              : "N/A"}
+                          </TableCell>
+                          <TableCell>
                             <span
                               className={cn(
                                 "inline-flex items-center justify-center px-3 py-[3px] rounded-full text-xs 2xl:text-sm font-semibold capitalize select-none transition-all duration-200",
-                                getOrderStatusColor(order.status)
+                                getOrderStatusColor(order.status),
                               )}
                             >
                               {order.status}

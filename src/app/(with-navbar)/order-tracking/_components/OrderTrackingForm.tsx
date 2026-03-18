@@ -76,7 +76,7 @@ const OrderTrackingForm = () => {
             >
               {isLoading ? (
                 <span className="flex items-center gap-2">
-                  <Loader className="h-4 w-4 animate-spin [animation-duration:1.4s]" />{" "}
+                  <Loader className="h-4 w-4 animate-spin animation-duration-[1.4s]" />{" "}
                   <span>Adding...</span>
                 </span>
               ) : (
