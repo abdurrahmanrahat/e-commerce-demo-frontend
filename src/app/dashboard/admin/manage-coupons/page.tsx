@@ -23,9 +23,12 @@ import AddCouponForm from "./_components/AddCouponForm";
 import CouponsSearch from "./_components/CouponsSearch";
 import CouponsType from "./_components/CouponsType";
 
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { TCoupon } from "@/types";
 import CouponDetailsModal from "./_components/CouponDetailsModal";
+import CouponsScope from "./_components/CouponsScope";
+import CouponsStatus from "./_components/CouponsStatus";
 import DeleteCouponModal from "./_components/DeleteCouponModal";
 import ExpiryRemaining from "./_components/ExpiryRemaining";
 
@@ -115,6 +118,8 @@ const ManageCouponsPage = async (props: {
               <CouponsSearch />
 
               <CouponsType />
+              <CouponsScope />
+              <CouponsStatus />
             </div>
 
             {/* Table */}
@@ -133,8 +138,8 @@ const ManageCouponsPage = async (props: {
                       <TableHead>Discount Amount</TableHead>
                       <TableHead>Uses</TableHead>
                       <TableHead>Available</TableHead>
-                      <TableHead>isActive</TableHead>
                       <TableHead>Scope</TableHead>
+                      <TableHead>Status</TableHead>
                       <TableHead className="text-center">Action</TableHead>
                     </TableRow>
                   </TableHeader>
@@ -164,14 +169,29 @@ const ManageCouponsPage = async (props: {
                           )}
                         </TableCell>
                         <TableCell>
-                          {coupon.isActive ? "Active" : "Inactive"}
+                          {coupon.scope === "all" ? "All Products" : "Specific"}
                         </TableCell>
                         <TableCell>
-                          {coupon.scope === "all"
-                            ? "All Products"
-                            : "Specific Products"}
+                          <TableCell className="p-0">
+                            <Badge
+                              variant="outline"
+                              className={`flex items-center gap-1  text-xs font-medium ${
+                                coupon.isActive
+                                  ? "border-green-500/30 text-green-600 dark:text-green-400"
+                                  : "border-red-500/30 text-red-600 dark:text-red-400"
+                              }`}
+                            >
+                              <span
+                                className={`h-1.5 w-1.5 rounded-full ${
+                                  coupon.isActive
+                                    ? "bg-green-500"
+                                    : "bg-red-500"
+                                }`}
+                              />
+                              {coupon.isActive ? "Active" : "Inactive"}
+                            </Badge>
+                          </TableCell>
                         </TableCell>
-
                         <TableCell>
                           <div className="flex items-center justify-center gap-1 md:gap-2">
                             <CouponDetailsModal coupon={coupon} />

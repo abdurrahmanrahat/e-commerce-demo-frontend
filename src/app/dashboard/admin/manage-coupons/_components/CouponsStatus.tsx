@@ -10,32 +10,32 @@ import {
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
-const typeOptions = [
+const statusOptions = [
   { label: "Default", value: "all" },
-  { label: "Fixed", value: "fixed" },
-  { label: "Percentage", value: "percentage" },
+  { label: "Active", value: "true" },
+  { label: "Inactive", value: "false" },
 ];
 
-const CouponsType = () => {
+const CouponsStatus = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const [type, setSort] = useState("");
+  const [status, setSort] = useState("");
 
   // Initialize state from URL
   useEffect(() => {
-    const existingSort = searchParams.get("type") || "";
+    const existingSort = searchParams.get("isActive") || "";
 
     setSort(existingSort);
   }, [searchParams]);
 
-  // Update URL whenever type changes
+  // Update URL whenever status changes
   useEffect(() => {
     const params = new URLSearchParams(searchParams.toString());
 
-    if (type && type !== "all") {
-      params.set("type", type);
+    if (status && status !== "all") {
+      params.set("isActive", status);
     } else {
-      params.delete("type");
+      params.delete("isActive");
     }
 
     const newUrl = params.toString()
@@ -46,7 +46,7 @@ const CouponsType = () => {
     //   : "/dashboard/admin/manage-products";
 
     router.push(newUrl, { scroll: false });
-  }, [type]);
+  }, [status]);
 
   const handleSortChange = (value: string) => {
     if (value === "all") {
@@ -57,12 +57,12 @@ const CouponsType = () => {
   };
 
   return (
-    <Select value={type} onValueChange={handleSortChange}>
+    <Select value={status} onValueChange={handleSortChange}>
       <SelectTrigger className="w-auto sm:w-[180px] bg-card">
-        <SelectValue placeholder="Select Type" />
+        <SelectValue placeholder="Select Status" />
       </SelectTrigger>
       <SelectContent>
-        {typeOptions.map((option) => (
+        {statusOptions.map((option) => (
           <SelectItem key={option.value} value={option.value}>
             {option.label}
           </SelectItem>
@@ -72,4 +72,4 @@ const CouponsType = () => {
   );
 };
 
-export default CouponsType;
+export default CouponsStatus;

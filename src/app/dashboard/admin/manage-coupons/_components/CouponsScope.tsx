@@ -10,32 +10,32 @@ import {
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
-const typeOptions = [
-  { label: "Default", value: "all" },
-  { label: "Fixed", value: "fixed" },
-  { label: "Percentage", value: "percentage" },
+const scopeOptions = [
+  { label: "Default", value: "all-value" },
+  { label: "All Products", value: "all" },
+  { label: "Specific", value: "specific" },
 ];
 
-const CouponsType = () => {
+const CouponsScope = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const [type, setSort] = useState("");
+  const [scope, setSort] = useState("");
 
   // Initialize state from URL
   useEffect(() => {
-    const existingSort = searchParams.get("type") || "";
+    const existingSort = searchParams.get("scope") || "";
 
     setSort(existingSort);
   }, [searchParams]);
 
-  // Update URL whenever type changes
+  // Update URL whenever scope changes
   useEffect(() => {
     const params = new URLSearchParams(searchParams.toString());
 
-    if (type && type !== "all") {
-      params.set("type", type);
+    if (scope && scope !== "all-value") {
+      params.set("scope", scope);
     } else {
-      params.delete("type");
+      params.delete("scope");
     }
 
     const newUrl = params.toString()
@@ -46,10 +46,10 @@ const CouponsType = () => {
     //   : "/dashboard/admin/manage-products";
 
     router.push(newUrl, { scroll: false });
-  }, [type]);
+  }, [scope]);
 
   const handleSortChange = (value: string) => {
-    if (value === "all") {
+    if (value === "all-value") {
       setSort("");
     } else {
       setSort(value);
@@ -57,12 +57,12 @@ const CouponsType = () => {
   };
 
   return (
-    <Select value={type} onValueChange={handleSortChange}>
+    <Select value={scope} onValueChange={handleSortChange}>
       <SelectTrigger className="w-auto sm:w-[180px] bg-card">
-        <SelectValue placeholder="Select Type" />
+        <SelectValue placeholder="Select Scope" />
       </SelectTrigger>
       <SelectContent>
-        {typeOptions.map((option) => (
+        {scopeOptions.map((option) => (
           <SelectItem key={option.value} value={option.value}>
             {option.label}
           </SelectItem>
@@ -72,4 +72,4 @@ const CouponsType = () => {
   );
 };
 
-export default CouponsType;
+export default CouponsScope;
