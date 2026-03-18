@@ -3,7 +3,7 @@
 import { getSingleCouponFromDB } from "@/app/actions/coupon";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { TCartItem } from "@/types";
+import { TCartItem, TCartProduct } from "@/types";
 import { Check, Loader, Tag, X } from "lucide-react";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -12,6 +12,7 @@ import { toast } from "sonner";
 type TCheckoutCouponProps = {
   subtotal: number;
   cartItems: TCartItem[];
+  cartProducts: TCartProduct[];
   onApply: (discount: number, couponCode: string) => void;
   onRemove: () => void;
 };
@@ -19,6 +20,7 @@ type TCheckoutCouponProps = {
 const CheckoutCoupon = ({
   subtotal,
   cartItems,
+  cartProducts,
   onApply,
   onRemove,
 }: TCheckoutCouponProps) => {
@@ -73,36 +75,55 @@ const CheckoutCoupon = ({
         return toast.error("Coupon usage limit reached");
       }
 
+      // Build product map (productId → cartProduct)
+      const productMap = new Map(
+        cartProducts.map((item) => [item.product._id, item]),
+      );
+
+      let eligibleSubtotal = subtotal;
+
+      // Handle specific product coupons
       if (coupon.scope === "specific") {
-        const valid = cartItems.some((item) =>
+        const eligibleItems = cartItems.filter((item) =>
           coupon.productIds.includes(item.productId),
         );
 
-        if (!valid) {
+        if (eligibleItems.length === 0) {
           return toast.error("Coupon not applicable to your cart");
         }
+
+        eligibleSubtotal = eligibleItems.reduce((sum, item) => {
+          const cartProduct = productMap.get(item.productId);
+
+          if (!cartProduct) return sum;
+
+          return sum + cartProduct.product.sellingPrice * cartProduct.quantity;
+        }, 0);
       }
 
-      if (coupon.minOrder && subtotal < coupon.minOrder) {
+      // Minimum order check (IMPORTANT FIX)
+      if (coupon.minOrder && eligibleSubtotal < coupon.minOrder) {
         return toast.error(`Minimum order is $${coupon.minOrder}`);
       }
 
-      // CALCULATION
+      // CALCULATION (FIXED)
       let discount = 0;
 
       if (coupon.type === "percentage") {
-        discount = (subtotal * coupon.value) / 100;
+        discount = (eligibleSubtotal * coupon.value) / 100;
       } else {
         discount = coupon.value;
       }
 
+      // Apply max cap
       if (coupon.maxDiscount) {
         discount = Math.min(discount, coupon.maxDiscount);
       }
 
-      discount = Math.min(discount, subtotal);
+      // Safety clamp
+      discount = Math.min(discount, eligibleSubtotal);
 
-      // ✅ APPLY
+      // APPLY
       setAppliedCoupon(coupon.code);
       onApply(discount, coupon.code);
 

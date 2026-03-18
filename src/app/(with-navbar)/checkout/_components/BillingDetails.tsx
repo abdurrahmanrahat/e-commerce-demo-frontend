@@ -319,6 +319,7 @@ const BillingDetails = () => {
                 <CheckoutCoupon
                   subtotal={subtotal}
                   cartItems={cartItems}
+                  cartProducts={cartProducts}
                   onApply={(discount, code) => {
                     setDiscount(discount);
                     setAppliedCoupon(code);
